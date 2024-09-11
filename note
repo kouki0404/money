@@ -7,7 +7,7 @@ st.html(
     #ランキング
 )
 
-other_words = words_df[words_df['問題'] != selected_word['問題']].sample(2)
-choices = other_words['回答'].tolist() + [selected_word['回答']]
+other_words = words_df[words_df['上がった額(円)'] != selected_word['上がった額(円)']].sample(2)
+choices = other_words['イベント'].tolist() + [selected_word['イベント']]
 np.random.shuffle(choices)
 #選択

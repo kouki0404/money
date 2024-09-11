@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 
 if code not in st.session_state:
     st.session_state.code = 0
