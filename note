@@ -1,0 +1,13 @@
+#メモ
+
+st.html(
+    <a href="https://google.com">google</a>
+    #ルール
+    <a href="https://google.com">google</a>
+    #ランキング
+)
+
+other_words = words_df[words_df['問題'] != selected_word['問題']].sample(2)
+choices = other_words['回答'].tolist() + [selected_word['回答']]
+np.random.shuffle(choices)
+#選択
