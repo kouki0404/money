@@ -6,19 +6,16 @@ if code not in st.session_state:
 
 name = st.text_area("名前を入力してください")
 
-st.html(
-    <a href="https://google.com">google</a>
-    #ルール
-    <a href="https://google.com">google</a>
-    #ランキング
-)
+if st.button("次へ"):
+    if name not in "":
+        st.sideber.title("性別を選択してください")
+        gender = st.sideber.radio("",("男", "女"), horizontal=True)
+        st.write("サイドバーから男女を選んでください(月収が変わります)")
 
-if name not in "":
-    st.sideber.title("性別を選択してください")
-    gender = st.sideber.radio("",("男", "女"), horizontal=True)
-    st.write("サイドバーから男女を選んでください(月収が変わります)")
-
-    if gender == "男":
+        if gender == "男":
 
 
-    if gender == "女":
+        if gender == "女":
+
+    else:
+        st.write("名前を入力してください")
