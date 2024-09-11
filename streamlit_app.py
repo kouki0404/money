@@ -12,7 +12,7 @@ if st.button("次へ"):
         st.write("サイドバーから男女を選んでください(月収が変わります)")
 
         if gender == "男":
-
+            
 
         if gender == "女":
 
