@@ -11,3 +11,13 @@ other_words = words_df[words_df['上がった額(円)'] != selected_word['上が
 choices = other_words['イベント'].tolist() + [selected_word['イベント']]
 np.random.shuffle(choices)
 #選択
+
+#ボタンを押して一日を集計する
+
+#20日分の通常イベント設定
+selected_nomalivents = filtered_words_df.sample(20).reset_index(drop=True)
+st.session_state.selected_nomalivents = selected_nomalivents
+
+#10日分の突発イベント
+selected_specalivents= filtered_words_df.sample(10).reset_index(drop=True)
+st.session_state.selected_specalivents = selected_specalivents
