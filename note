@@ -23,9 +23,9 @@ st.session_state.selected_nomalivents = selected_nomalivents
 selected_specalivents= filtered_words_df.sample(10).reset_index(drop=True)
 st.session_state.selected_specalivents = selected_specalivents
 
-if st.button('データを読み込む'):
+if st.button('次の日へ'):
     data = load_data()
-    st.write(data) #次の日の内容を選択
+    st.write(data) #次の日の内容を表示
 
     text = st.text_input("表示したい単語を入力してください")
 
