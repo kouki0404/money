@@ -10,6 +10,8 @@ game_month = month[st.session_state.onemonth]
 if code not in st.session_state:
     st.session_state.code = 0
 
+butonn = "次へ"
+
 @st.cache_date
 def load_data():
     money = pd.read_excel("金銭リスト.xlsx")
@@ -20,7 +22,7 @@ words_df = load_data()
 
 name = st.text_area("名前を入力してください")
 
-if st.button("次へ"):
+if st.button(int(butonn)):
     
     if name not in " ":
         st.sideber.title("性別を選択してください")
