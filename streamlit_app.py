@@ -27,7 +27,7 @@ if st.button("次へ"):
         gender = st.sideber.radio("",("男", "女"), horizontal=True)
         st.write("サイドバーから男女を選んでください(月収が変わります)")
         
-        if st.button("性別を決定")
+        if st.button("性別を決定"):
             
             
             if gender == "男":
