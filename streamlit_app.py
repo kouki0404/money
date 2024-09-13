@@ -31,9 +31,10 @@ if st.button("次へ"):
             
             
             if gender == "男":
-                
+                st.wirte("a")
 
             else:
+                st.write("b")
 
 
     else:
