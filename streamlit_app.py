@@ -21,7 +21,7 @@ words_df = load_data()
 name = st.text_area("名前を入力してください")
 
 if st.button("次へ"):
-    st.button("次へ") = st.button("性別を決定")
+    st.button("次へ") = st.button("性別を決定"):
     if name not in " ":
         st.sideber.title("性別を選択してください")
         gender = st.sideber.radio("",("男", "女"), horizontal=True)
