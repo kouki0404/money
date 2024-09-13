@@ -33,7 +33,8 @@ if st.button("次へ"):
             if gender == "男":
                 
 
-            if gender == "女":
+            else:
+
 
     else:
         st.write("名前を入力してください")
