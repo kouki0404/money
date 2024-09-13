@@ -3,7 +3,9 @@ import pandas as pd
 import time
 import random
 
-poetry add <sky>
+poetry shell
+python <sky>
+
 
 month = [1,2,3,4,5,6,7,8,9,10,11,12]
 if "onemonth" not in st.session_state:
