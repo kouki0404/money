@@ -14,7 +14,7 @@ if code not in st.session_state:
 def load_data():
     money = pd.read_excel("金銭リスト.xlsx")
     ivent = pd.read_excel("基本ストーリー")
-return pd.concat([money, ivent],ignore_index=True)
+    return pd.concat([money, ivent],ignore_index=True)
 
 words_df = load_data()
 
