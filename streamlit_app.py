@@ -6,12 +6,12 @@ import random
 poetry shell
 python <sky>
 
-man = "あいうえお"
+word = "あいうえお"
 
-month = [1,2,3,4,5,6,7,8,9,10,11,12]
-if "onemonth" not in st.session_state:
-    st.session_state.onemonth = random.randint(0,11)
-game_month = month[st.session_state.onemonth]
+if "month" not in st.session_state:
+    st.session_state.month = random.randint(1,12)
+if "days" not in st.session_state:
+    st.session_state.days = 0
 if code not in st.session_state:
     st.session_state.code = 0
 
@@ -25,28 +25,30 @@ def load_data():
 
 words_df = load_data()
 
-name = st.text_area("名前を入力してください")
+name = st.sidebar.selectbox("名前を入力してください", " ")
+st.sideber.title("性別を選択してください")
+gender = st.sideber.radio("",("男", "女"), horizontal=True)
+word = "サイドバーから男女を選んでください(月収が変わります)"
+st.write(word)
 
-if st.button(int(button)):
-    button = "性別を決定"
-    if name not in " ":
-        st.sideber.title("性別を選択してください")
-        gender = st.sideber.radio("",("男", "女"), horizontal=True)
-        st.write("サイドバーから男女を選んでください(月収が変わります)")
+if name not in " ":
+    if st.button(int(button)):
+        button = "性別を決定"
+        if name not in " ":
         
-        if st.button(int(button)):
-            button = "次の日へ"
-            
-            if gender == "男":
-                st.write()
-                st.wirte(man)
-
+            if st.button(int(button)):
+                button = "次の日へ"
                 if st.button(int(button))
-                    man = "かきくけこ"
-                    st.write(man)
+                    st.write(str(month) + "月" + str(st.session_state.days) + "日")
+                    if gender == "男":
+                        st.wirte(word)
 
-            else:
-                st.write("b")
+                        if st.button(int(button))
+                            word = "かきくけこ"
+                            st.write(word)
+
+                    else:
+                        st.write("b")
 
 
     else:
