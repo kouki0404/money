@@ -30,26 +30,22 @@ st.sideber.title("性別を選択してください")
 gender = st.sideber.radio("",("男", "女"), horizontal=True)
 word = "サイドバーから男女を選んでください(月収が変わります)"
 st.write(word)
-
-if name not in " ":
+if not name == " ":
     if st.button(int(button)):
         button = "性別を決定"
-        if name not in " ":
-        
-            if st.button(int(button)):
-                button = "次の日へ"
-                if st.button(int(button))
-                    st.write(str(month) + "月" + str(st.session_state.days) + "日")
-                    if gender == "男":
-                        st.wirte(word)
+        if st.button(int(button)):
+            button = "次の日へ"
+            if st.button(int(button))
+                st.write(str(month) + "月" + str(st.session_state.days) + "日")
+                if gender == "男":
+                    st.wirte(word)
+                    if st.button(int(button))
+                        word = "a"
+                        st.write(word)
+                        
 
-                        if st.button(int(button))
-                            word = "かきくけこ"
-                            st.write(word)
+                elif gender == "女":
+                    st.write("b")
 
-                    else:
-                        st.write("b")
-
-
-    else:
-        st.write("名前を入力してください")
+elif name == " ":
+    st.write("名前を入力してください")
