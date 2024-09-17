@@ -47,4 +47,4 @@ with col2:
 for output_text in st.session_state["text_list"]:
   st.write("", output_text)
 
-  
+#男性27.04万円・女性20.8万円​

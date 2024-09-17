@@ -7,6 +7,8 @@ if energy not in st.session_state:
     st.session_state.energy = random.randint(-200,200)
 word = "あいうえお"
 mens_money = 13000 + st.session_state.energy #光熱費
+mens_total = 270400
+womans_total = 208000
 
 if month not in st.session_state:
     st.session_state.month = random.randint(1,12)
@@ -40,20 +42,19 @@ if name != "":
             st.session_state.total_days = len(selected_days)
             selected_ivents = filtered_words_df.sample(10).reset_index(drop=True)
             st.session_state.selected_ivents = selected_ivents
-            st.session_state.total_questions = len(selected_questions)
+            st.session_state.total_ivents = len(selected_ivents)
             if st.button(button_label):
                 st.session_state.days += 1
                 st.write(str(month) + "月" + str(st.session_state.days) + "日")
                 if gender == "男":
+                    st.write("残金 " + int(mens_total) + "円")
                     st.write(word)
                     if st.button(button_label):
                         word = "a"
                         st.write(word)
 
-                        
-
                 elif gender == "女":
-                    st.write("b")
+                    st.write("残金 " + int(womans_total) + "円")
 
 else:
     st.write("名前を入力してください")
