@@ -7,8 +7,8 @@ if energy not in st.session_state:
     st.session_state.energy = random.randint(-200,200)
 word = "あいうえお"
 mens_money = 13000 + st.session_state.energy #光熱費
-mens_total = 270400
-womans_total = 208000
+mens_total = 270400 #男の平均月給
+womans_total = 208000 #女の平均月給
 
 if month not in st.session_state:
     st.session_state.month = random.randint(1,12)
