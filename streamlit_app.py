@@ -18,9 +18,13 @@ button_label = "次へ"
 
 @st.cache_data
 def load_data():
-    money = pd.read_excel("金銭リスト.xlsx")
-    ivent = pd.read_excel("基本ストーリー.xlsx")
-    return pd.concat([money, ivent], ignore_index=True)
+    try:
+        money = pd.read_excel("金銭リスト.xlsx")
+        ivent = pd.read_excel("基本ストーリー.xlsx")
+        return pd.concat([money, ivent], ignore_index=True)
+    except Exception as e:
+        st.error(f"データの読み込み中にエラーが発生しました: {e}")
+        return pd.DataFrame()  # エラー時は空のデータフレームを返す
 
 # データの読み込み
 words_df = load_data()
@@ -37,7 +41,7 @@ mens_money = 13000 + st.session_state.energy
 word = "サイドバーから男女を選んでください(月収が変わります)"
 st.write(word)
 
-if name != "":
+if name:
     if st.button(button_label):
         button_label = "性別を決定"
         if st.button(button_label):
