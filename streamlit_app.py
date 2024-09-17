@@ -5,9 +5,9 @@ import random
 
 word = "あいうえお"
 
-if "month" not in st.session_state:
+if month not in st.session_state:
     st.session_state.month = random.randint(1,12)
-if "days" not in st.session_state:
+if days not in st.session_state:
     st.session_state.days = 0
 if code not in st.session_state:
     st.session_state.code = 0
