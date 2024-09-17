@@ -3,9 +3,6 @@ import pandas as pd
 import time
 import random
 
-poetry shell
-python <sky>
-
 word = "あいうえお"
 
 if "month" not in st.session_state:
