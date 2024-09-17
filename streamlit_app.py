@@ -21,7 +21,7 @@ if days not in st.session_state:
 if code not in st.session_state:
     st.session_state.code = 0
 
-button = "次へ"
+button_label = "次へ"
 
 @st.cache_date
 def load_data():
@@ -36,17 +36,17 @@ st.sideber.title("性別を選択してください")
 gender = st.sideber.radio("",("男", "女"), horizontal=True)
 word = "サイドバーから男女を選んでください(月収が変わります)"
 st.write(word)
-if not name == " ":
-    if st.button(int(button)):
+if name != "":
+    if st.button(button_label):
         button = "性別を決定"
-        if st.button(int(button)):
+        if st.button(button_label):
             button = "次の日へ"
-            if st.button(int(button)):
+            if st.button(button_label):
                 st.session_state.days += 1
                 st.write(str(month) + "月" + str(st.session_state.days) + "日")
                 if gender == "男":
                     st.write(word)
-                    if st.button(int(button)):
+                    if st.button(button_label):
                         word = "a"
                         st.write(word)
 
@@ -55,5 +55,5 @@ if not name == " ":
                 elif gender == "女":
                     st.write("b")
 
-elif name == " ":
+else:
     st.write("名前を入力してください")
