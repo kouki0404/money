@@ -8,6 +8,12 @@ if energy not in st.session_state:
 word = "あいうえお"
 mens_money = 13000 + st.session_state.energy #光熱費
 
+selected_nomalivents = filtered_words_df.sample(20).reset_index(drop=True)
+st.session_state.selected_nomalivents = selected_nomalivents
+
+selected_specalivents= filtered_words_df.sample(10).reset_index(drop=True)
+st.session_state.selected_specalivents = selected_specalivents
+
 if month not in st.session_state:
     st.session_state.month = random.randint(1,12)
 if days not in st.session_state:
@@ -36,12 +42,14 @@ if not name == " ":
         if st.button(int(button)):
             button = "次の日へ"
             if st.button(int(button)):
+                st.session_state.days += 1
                 st.write(str(month) + "月" + str(st.session_state.days) + "日")
                 if gender == "男":
-                    st.wirte(word)
+                    st.write(word)
                     if st.button(int(button)):
                         word = "a"
                         st.write(word)
+
                         
 
                 elif gender == "女":
