@@ -27,7 +27,7 @@ def load_data():
 
 words_df = load_data()
 
-name = st.sidebar.selectbox("名前を入力してください", " ")
+name = st.sidebar.selectbox("名前を入力してください", "")
 st.sideber.title("性別を選択してください")
 gender = st.sidebar.radio("",("男", "女"), horizontal=True)
 word = "サイドバーから男女を選んでください(月収が変わります)"
