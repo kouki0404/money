@@ -32,11 +32,11 @@ if not name == " ":
         button = "性別を決定"
         if st.button(int(button)):
             button = "次の日へ"
-            if st.button(int(button))
+            if st.button(int(button)):
                 st.write(str(month) + "月" + str(st.session_state.days) + "日")
                 if gender == "男":
                     st.wirte(word)
-                    if st.button(int(button))
+                    if st.button(int(button)):
                         word = "a"
                         st.write(word)
                         
