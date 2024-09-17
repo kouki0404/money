@@ -1,10 +1,10 @@
 #メモ
 
 st.html(
-    <a href="https://google.com">google</a>
-    #ルール
-    <a href="https://google.com">google</a>
-    #ランキング
+  <a href="https://google.com">google</a>
+  #ルール
+  <a href="https://google.com">google</a>
+  #ランキング
 )
 
 other_words = words_df[words_df['上がった額(円)'] != selected_word['上がった額(円)']].sample(2)

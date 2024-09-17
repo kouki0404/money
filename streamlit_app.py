@@ -3,7 +3,10 @@ import pandas as pd
 import time
 import random
 
+if energy not in st.session_state:
+    st.session_state.energy = random.randint(-200,200)
 word = "あいうえお"
+mens_money = 13000 + st.session_state.energy #光熱費
 
 if month not in st.session_state:
     st.session_state.month = random.randint(1,12)
