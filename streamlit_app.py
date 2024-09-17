@@ -16,7 +16,7 @@ if 'code' not in st.session_state:
 # ボタンのラベルを文字列として設定
 button_label = "次へ"
 
-@st.cache
+@st.cache_data
 def load_data():
     money = pd.read_excel("金銭リスト.xlsx")
     ivent = pd.read_excel("基本ストーリー.xlsx")
