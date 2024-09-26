@@ -11,7 +11,7 @@ womans_total = 208000 #女の平均月給
 if 'month' not in st.session_state:
     st.session_state.month = random.randint(1,12)
 if 'days' not in st.session_state:
-    st.session_state.days = 0
+    st.session_state.days = 1
 if 'code' not in st.session_state:
     st.session_state.code = 0
 st.sidebar.title("性別を選択してください")
@@ -22,12 +22,12 @@ st.write(word)
 button_label = "性別を決定"
 if st.button(button_label):
     button_label = "次の日へ"
-    st.session_state.days += 1
     st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
     if gender == "男":
         st.write("残金 " + str(mens_total) + "円")
         st.write(word)
         if st.button(button_label):
+            st.session_state.days += 1
             word = "a" #この部分もexcelで出力
             st.write(word)
                 
