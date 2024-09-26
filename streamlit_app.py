@@ -39,3 +39,25 @@ if gender == "男":
             
 elif gender == "女":
     st.write("残金 " + str(womans_total) + "円")
+
+if st.session_state.month == 1:
+    if st.session_state.days == 31:
+        st.write("finish!!")
+elif st.session_state.month == 3:
+    if st.session_state.days == 31:
+        st.write("finish!!")
+elif st.session_state.days == 5:
+    if st.session_state.days == 31:
+        st.write("finish!!")
+elif st.session_state.days == 7:
+    if st.session_state.days == 31:
+        st.write("finish!!")
+elif st.session_state.days == 8:
+    if st.session_state.days == 31:
+        st.write("finish!!")
+elif st.session_state.days == 10:
+    if st.session_state.days == 31:
+        st.write("finish!!")
+elif st.session_state.days == 12:
+    if st.session_state.days == 31:
+        st.write("finish!!")
