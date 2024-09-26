@@ -56,10 +56,12 @@ def load_data():
     return pd.concat([money, ivent],ignore_index=True)
 
 words_df = load_data()
-
-selected_days = filtered_words_df.sample(20).reset_index(drop=True)
+if 'number' not in st.session_state:
+  st.session_state.number = random.randint(1,10)
+x = 30 - st.session_state.number
+selected_days = filtered_words_df.sample(int(x)).reset_index(drop=True)
     st.session_state.selected_days = selected_days
     st.session_state.total_days = len(selected_days)
-    selected_ivents = filtered_words_df.sample(10).reset_index(drop=True)
+    selected_ivents = filtered_words_df.sample(st.session_state.number).reset_index(drop=True)
     st.session_state.selected_ivents = selected_ivents
     st.session_state.total_ivents = len(selected_ivents)
