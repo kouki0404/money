@@ -39,6 +39,7 @@ if gender == "男":
             if key == "牛肉200g 500円":
                 mens_total -= 500
                 st.session_state.xx += 1
+            st.write("残金 " + str(mens_total) + "円")
         
         else:
             st.session_state.finished = True
@@ -47,3 +48,4 @@ elif gender == "女":
     st.write("残金 " + str(womans_total) + "円")
 
 def display_results():
+    st.write("終了！残金" )
