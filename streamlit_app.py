@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import time
 import random
 
 if energy not in st.session_state:
