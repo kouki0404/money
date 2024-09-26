@@ -31,6 +31,8 @@ if gender == "男":
         st.session_state.days += 1
         word = "a" #この部分もexcelで出力
         st.write(word)
+        words = ["a","i"]
+        st.selectbox("あ",words)
             
 elif gender == "女":
     st.write("残金 " + str(womans_total) + "円")
