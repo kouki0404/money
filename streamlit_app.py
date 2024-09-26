@@ -28,10 +28,10 @@ st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日
 if gender == "男":
     st.write("残金 " + str(mens_total) + "円")
     if st.button("次の日へ"):
+        st.session_state.days += 1
         if  st.session_state.days <= total_days:
             st.session_state.started = True
             st.session_state.finished = False
-            st.session_state.days += 1
             word = "a" #この部分もexcelで出力
             st.write(word)
             words = ["牛肉200g 500円","豚肉300g 450円"]
@@ -45,3 +45,5 @@ if gender == "男":
             
 elif gender == "女":
     st.write("残金 " + str(womans_total) + "円")
+
+def display_results():
