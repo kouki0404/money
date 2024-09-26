@@ -50,8 +50,9 @@ if name != "":
                     st.write("残金 " + int(mens_total) + "円")
                     st.write(word)
                     if st.button(button_label):
-                        word = "a"
+                        word = "a" #この部分もexcelで出力
                         st.write(word)
+                        if 
 
                 elif gender == "女":
                     st.write("残金 " + int(womans_total) + "円")
