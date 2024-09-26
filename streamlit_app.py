@@ -25,11 +25,11 @@ if st.button(button_label):
     st.session_state.days += 1
     st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
     if gender == "男":
-        st.write("残金 " + int(mens_total) + "円")
+        st.write("残金 " + str(mens_total) + "円")
         st.write(word)
         if st.button(button_label):
             word = "a" #この部分もexcelで出力
             st.write(word)
                 
     elif gender == "女":
-        st.write("残金 " + int(womans_total) + "円")
+        st.write("残金 " + str(womans_total) + "円")
