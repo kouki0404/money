@@ -17,7 +17,7 @@ if 'days' not in st.session_state:
 if 'code' not in st.session_state:
     st.session_state.code = 0
 totalcount_days = [0,31,28,31,30,31,30,31,31,30,31,30,31]
-total_days = totalcount_days(st.session_state.month)
+total_days = totalcount_days[st.session_state.month]
 st.sidebar.title("性別を選択してください")
 gender = st.sidebar.radio("",("男", "女"), horizontal=True)
 word = "サイドバーから男女を選んでください(月収が変わります)"
