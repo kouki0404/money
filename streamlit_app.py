@@ -4,6 +4,8 @@ import random
 
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200,200)
+if 'creck' not in st.session_state:
+    st.session_state.creck = 0
 mens_money = 13000 + st.session_state.energy #光熱費
 mens_total = 270400 #男の平均月給
 womans_total = 208000 #女の平均月給
@@ -21,12 +23,15 @@ st.write(word)
 
 button_label = "性別を決定"
 if st.button(button_label):
+    st.session_state.creck += 1
     button_label = "次の日へ"
     st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
     if gender == "男":
+        st.session_state.creck += 1
         st.write("残金 " + str(mens_total) + "円")
         st.write(word)
         if st.button(button_label):
+            st.session_state.creck += 1
             st.session_state.days += 1
             word = "a" #この部分もexcelで出力
             st.write(word)
