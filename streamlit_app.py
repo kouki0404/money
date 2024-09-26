@@ -18,7 +18,7 @@ if 'code' not in st.session_state:
 button_label = "次へ"
 
 name = st.sidebar.selectbox("名前を入力してください", "")
-st.sideber.title("性別を選択してください")
+st.sidebar.title("性別を選択してください")
 gender = st.sidebar.radio("",("男", "女"), horizontal=True)
 word = "サイドバーから男女を選んでください(月収が変わります)"
 st.write(word)
