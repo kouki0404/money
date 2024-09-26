@@ -23,7 +23,7 @@ button_label = "性別を決定"
 if st.button(button_label):
     button_label = "次の日へ"
     st.session_state.days += 1
-    st.write(str(month) + "月" + str(st.session_state.days) + "日")
+    st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
     if gender == "男":
         st.write("残金 " + int(mens_total) + "円")
         st.write(word)
