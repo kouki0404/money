@@ -19,14 +19,6 @@ if code not in st.session_state:
 
 button_label = "次へ"
 
-@st.cache_data
-def load_data():
-    money = pd.read_excel("金銭リスト.xlsx")
-    ivent = pd.read_excel("基本ストーリー")
-    return pd.concat([money, ivent],ignore_index=True)
-
-words_df = load_data()
-
 name = st.sidebar.selectbox("名前を入力してください", "")
 st.sideber.title("性別を選択してください")
 gender = st.sidebar.radio("",("男", "女"), horizontal=True)

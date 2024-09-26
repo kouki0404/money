@@ -48,3 +48,11 @@ for output_text in st.session_state["text_list"]:
   st.write("", output_text)
 
 #男性27.04万円・女性20.8万円​
+
+@st.cache_data
+def load_data():
+    money = pd.read_excel("金銭リスト.xlsx")
+    ivent = pd.read_excel("基本ストーリー")
+    return pd.concat([money, ivent],ignore_index=True)
+
+words_df = load_data()
