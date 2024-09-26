@@ -2,17 +2,17 @@ import streamlit as st
 import pandas as pd
 import random
 
-if energy not in st.session_state:
+if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200,200)
 mens_money = 13000 + st.session_state.energy #光熱費
 mens_total = 270400 #男の平均月給
 womans_total = 208000 #女の平均月給
 
-if month not in st.session_state:
+if 'month' not in st.session_state:
     st.session_state.month = random.randint(1,12)
-if days not in st.session_state:
+if 'days' not in st.session_state:
     st.session_state.days = 0
-if code not in st.session_state:
+if 'code' not in st.session_state:
     st.session_state.code = 0
 
 button_label = "次へ"
