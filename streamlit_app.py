@@ -36,11 +36,7 @@ if gender == "男":
         if key == "牛肉200g 500円":
             mens_total -= 500
             st.session_state.xx += 1
-            
-elif gender == "女":
-    st.write("残金 " + str(womans_total) + "円")
-
-if st.session_state.month == 1:
+            if st.session_state.month == 1:
     if st.session_state.days == 31:
         st.write("finish!!")
 elif st.session_state.month == 3:
@@ -61,3 +57,6 @@ elif st.session_state.days == 10:
 elif st.session_state.days == 12:
     if st.session_state.days == 31:
         st.write("finish!!")
+            
+elif gender == "女":
+    st.write("残金 " + str(womans_total) + "円")
