@@ -4,8 +4,8 @@ import random
 
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200,200)
-if 'creck' not in st.session_state:
-    st.session_state.creck = 0
+if 'xx' not in st.session_state:
+    st.session_state.xx = 0
 mens_money = 13000 + st.session_state.energy #光熱費
 mens_total = 270400 #男の平均月給
 womans_total = 208000 #女の平均月給
@@ -35,6 +35,7 @@ if gender == "男":
         key = st.selectbox("何を買う？",words)
         if key == "牛肉200g 500円":
             mens_total -= 500
+            st.session_state.xx
             
 elif gender == "女":
     st.write("残金 " + str(womans_total) + "円")
