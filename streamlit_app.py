@@ -26,10 +26,15 @@ word = "サイドバーから男女を選んでください(月収が変わり�
 st.write(word)
 if name != "":
     if st.button(button_label):
-        button = "性別を決定"
+        button_label = "性別を決定"
         if st.button(button_label):
-            button = "次の日へ"
-            
+            button_label = "次の日へ"
+            selected_days = filtered_words_df.sample(20).reset_index(drop=True)
+            st.session_state.selected_days = selected_days
+            st.session_state.total_days = len(selected_days)
+            selected_ivents = filtered_words_df.sample(10).reset_index(drop=True)
+            st.session_state.selected_ivents = selected_ivents
+            st.session_state.total_ivents = len(selected_ivents)
             if st.button(button_label):
                 st.session_state.days += 1
                 st.write(str(month) + "月" + str(st.session_state.days) + "日")
