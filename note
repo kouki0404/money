@@ -1,0 +1,58 @@
+#メモ
+
+st.html(
+  <a href="https://google.com">google</a>
+  #ルール
+  <a href="https://google.com">google</a>
+  #ランキング(%計算なら男女分けずにいける)
+)
+
+other_words = words_df[words_df['上がった額(円)'] != selected_word['上がった額(円)']].sample(2)
+choices = other_words['イベント'].tolist() + [selected_word['イベント']]
+np.random.shuffle(choices)
+#選択
+
+#一人暮らしの1ヶ月の光熱費の平均は13,098円、１～３月は1400円くらい上がる
+#ボタンを押して一日を集計する
+
+range_start, range_end = map(int, selected_range.split('-'))
+filtered_words_df = words_df[(words_df['No.'] >= range_start) & (words_df['No.'] <= range_end)].sort_values(by='No.')
+#20日分の通常イベント設定
+selected_nomalivents = filtered_words_df.sample(20).reset_index(drop=True)
+st.session_state.selected_nomalivents = selected_nomalivents
+
+#10日分の突発イベント
+selected_specalivents= filtered_words_df.sample(10).reset_index(drop=True)
+st.session_state.selected_specalivents = selected_specalivents
+
+if st.button('次の日へ'):
+    data = load_data()
+    st.write(data) #次の日の内容を表示
+
+    text = st.text_input("表示したい単語を入力してください")
+
+if 'text_list' not in st.session_state:
+  st.session_state["text_list"] = []
+
+col1, col2 = st.columns(2)
+
+with col1:
+  if st.button("追加", key=2):
+    st.session_state["text_list"].append(text)
+
+with col2:
+  if st.button("削除", key=3): 
+    st.session_state["text_list"].remove(text)
+      
+for output_text in st.session_state["text_list"]:
+  st.write("", output_text)
+
+#男性27.04万円・女性20.8万円​
+
+@st.cache_data
+def load_data():
+    money = pd.read_excel("金銭リスト.xlsx")
+    ivent = pd.read_excel("基本ストーリー")
+    return pd.concat([money, ivent],ignore_index=True)
+
+words_df = load_data()
