@@ -33,7 +33,7 @@ if gender == "男":
             st.session_state.finished = False
             word = "a" #この部分もexcelで出力
             st.write(word)
-            words = ["牛肉200g 500円","豚肉300g 450円"]
+            words = [" ","牛肉200g 500円","豚肉300g 450円"]
             key = st.selectbox("何を買う？",words)
             if key == "牛肉200g 500円":
                 mens_total -= 500
