@@ -35,7 +35,7 @@ if gender == "男":
         key = st.selectbox("何を買う？",words)
         if key == "牛肉200g 500円":
             mens_total -= 500
-            st.session_state.xx
+            st.session_state.xx += 1
             
 elif gender == "女":
     st.write("残金 " + str(womans_total) + "円")
