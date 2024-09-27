@@ -27,6 +27,7 @@ st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日
 if gender == "男":
     st.session_state.started = True
     st.session_state.finished = False
+    st.write("初期金額" + str(mens_total - mens_money) + "円(光熱費が引かれています)")
     if st.button("次の日へ"):
         st.session_state.days += 1
         if  st.session_state.days <= total_days:
@@ -36,7 +37,7 @@ if gender == "男":
             if key == "牛肉200g 500円":
                 mens_total -= 500
                 st.session_state.xx += 1
-            st.write("残金 " + str(mens_total) + "円")
+                st.write("残金 " + str(mens_total) + "円")
         
         else:
             st.session_state.finished = True
