@@ -19,17 +19,17 @@ if 'code' not in st.session_state:
 totalcount_days = [0,31,28,31,30,31,30,31,31,30,31,30,31]
 total_days = totalcount_days[st.session_state.month]
 st.sidebar.title("性別を選択してください")
-gender = st.sidebar.radio("",("男", "女"), horizontal=True)
+gender = st.sidebar.radio("",("以下から選択してください","男", "女"), horizontal=True)
 word = "サイドバーから男女を選んでください(月収が変わります)"
 st.write(word)
 
 st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
 if gender == "男":
+    st.session_state.started = True
+    st.session_state.finished = False
     if st.button("次の日へ"):
         st.session_state.days += 1
         if  st.session_state.days <= total_days:
-            st.session_state.started = True
-            st.session_state.finished = False
             word = "a" #この部分もexcelで出力
             words = [" ","牛肉200g 500円","豚肉300g 450円"]
             key = st.selectbox("何を買う？",words)
