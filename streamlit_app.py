@@ -23,7 +23,6 @@ gender = st.sidebar.radio("",("男", "女"), horizontal=True)
 word = "サイドバーから男女を選んでください(月収が変わります)"
 st.write(word)
 
-
 st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
 if gender == "男":
     if st.button("次の日へ"):
@@ -32,7 +31,6 @@ if gender == "男":
             st.session_state.started = True
             st.session_state.finished = False
             word = "a" #この部分もexcelで出力
-            st.write(word)
             words = [" ","牛肉200g 500円","豚肉300g 450円"]
             key = st.selectbox("何を買う？",words)
             if key == "牛肉200g 500円":
@@ -47,4 +45,4 @@ elif gender == "女":
     st.write("残金 " + str(womans_total) + "円")
 
 def display_results():
-    st.write("終了！残金" )
+    st.write("終了！残金" str)
