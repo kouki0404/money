@@ -40,9 +40,8 @@ if gender == "男":
         
         else:
             st.session_state.finished = True
-            
+            def display_results():
+                st.write("終了！残金" + str(mens_total) + "円")
 elif gender == "女":
     st.write("残金 " + str(womans_total) + "円")
 
-def display_results():
-    st.write("終了！残金" str)
