@@ -16,6 +16,7 @@ if 'days' not in st.session_state:
     st.session_state.days = 1
 if 'code' not in st.session_state:
     st.session_state.code = 0
+item_date = ["卵 1パック 300円","米 5kg 2500円","大根 1本200円","豚肉 100g 200円","キャベツ 1玉200円"]
 totalcount_days = [0,31,28,31,30,31,30,31,31,30,31,30,31]
 total_days = totalcount_days[st.session_state.month]
 st.sidebar.title("性別を選択してください")
@@ -29,6 +30,10 @@ if gender == "男":
     st.session_state.finished = False
     st.write("初期金額" + str(mens_total - mens_money) + "円(光熱費が引かれています)")
     mens_wallet = mens_total - mens_money
+    for option in st.session_state.options:
+        if st.button(option, key=f"{st.session_state.current_question}-{option}"):
+            update_question(option)
+            st.experimental_rerun()
     if st.button("次の日へ"):
         st.session_state.days += 1
         if  st.session_state.days <= total_days:
