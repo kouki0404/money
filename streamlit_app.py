@@ -23,6 +23,7 @@ st.sidebar.title("性別を選択してください")
 gender = st.sidebar.radio("",("以下から選択してください","男", "女"), horizontal=True)
 word = "サイドバーから男女を選んでください(月収が変わります)"
 st.write(word)
+st.sidebar.selectbox("基本値段",item_date)
 
 st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
 if gender == "男":
