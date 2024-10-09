@@ -34,7 +34,7 @@ if gender == "男":
         st.session_state.month : random.randint(1,12),
         st.session_state.days : 1,
         st.session_state.code : 0,
-        total_days  totalcount_days[st.session_state.month],
+        total_days : totalcount_days[st.session_state.month],
     })
     st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
     st.session_state.started = True
