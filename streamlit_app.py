@@ -21,8 +21,9 @@ totalcount_days = [0,31,28,31,30,31,30,31,31,30,31,30,31]
 total_days = totalcount_days[st.session_state.month]
 st.sidebar.title("性別を選択してください")
 gender = st.sidebar.radio("",("以下から選択してください","男", "女"), horizontal=True)
-word = "サイドバーから男女を選んでください(月収が変わります)"
-st.write(word)
+if gender == "以下から選択してください":
+    word = "サイドバーから男女を選んでください(月収が変わります)"
+    st.write(word)
 st.sidebar.selectbox("基本値段",item_date)
 
 if gender == "男":
