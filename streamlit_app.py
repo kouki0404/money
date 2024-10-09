@@ -11,12 +11,13 @@ mens_total = 270400 #男の平均月給
 womans_total = 208000 #女の平均月給
 
 @st.cache_data
-def load_data():
-    main = pd.read_excel("基本ストーリー.xlsx")
-    special = pd.read_excel("金銭リスト.xlsx")
+def load_data(main_file, special_file):
+    main = pd.read_excel(main_file)
+    special = pd.read_excel(special_file)
     return pd.concat([main, special], ignore_index=True)
-
-words_df = load_data()
+main_file = st.file_uploader("基本ストーリー.xlsxをアップロード", type=["xlsx"])
+special_file = st.file_uploader("金銭リスト.xlsxをアップロード", type=["xlsx"])
+words_df = load_data(main_file, special_file)
 
 item_date = ["卵 1パック 300円","米 5kg 2500円","大根 1本200円","豚肉 100g 200円","キャベツ 1玉200円"]
 totalcount_days = [0,31,28,31,30,31,30,31,31,30,31,30,31]
