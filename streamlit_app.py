@@ -15,7 +15,6 @@ if 'days' not in st.session_state:
     st.session_state.days = 1
 if 'code' not in st.session_state:
     st.session_state.code = 0
-total_days = totalcount_days[st.session_state.month]
 
 @st.cache_data
 def load_data():
@@ -27,6 +26,7 @@ words_df = load_data()
 
 item_date = ["卵 1パック 300円","米 5kg 2500円","大根 1本200円","豚肉 100g 200円","キャベツ 1玉200円"]
 totalcount_days = [0,31,28,31,30,31,30,31,31,30,31,30,31]
+total_days = totalcount_days[st.session_state.month]
 st.sidebar.title("性別を選択してください")
 gender = st.sidebar.radio("",("以下から選択してください","男", "女"), horizontal=True)
 if gender == "以下から選択してください":
