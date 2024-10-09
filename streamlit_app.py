@@ -34,23 +34,21 @@ if gender == "男":
     mens_wallet = mens_total - mens_money
     for option in st.session_state.options:
         if st.button(option, key=f"{st.session_state.current_question}-{option}"):
+            st.session_state.days += 1
             update_question(option)
+            if  st.session_state.days <= total_days:
+                word = "a" #この部分もexcelで出力
+                words = [" ","牛肉200g 500円","豚肉300g 450円"]
+                key = st.selectbox("何を買う？",words)
+                if key == "牛肉200g 500円":
+                    mens_total -= 500
+                    st.session_state.xx += 1
+                    st.write("残金 " + str(mens_wallet) + "円")
+            else:
+                st.session_state.finished = True
+                def display_results():
+                    st.write("終了！残金" + str(mens_total) + "円")
             st.experimental_rerun()
-    if st.button("次の日へ"):
-        st.session_state.days += 1
-        if  st.session_state.days <= total_days:
-            word = "a" #この部分もexcelで出力
-            words = [" ","牛肉200g 500円","豚肉300g 450円"]
-            key = st.selectbox("何を買う？",words)
-            if key == "牛肉200g 500円":
-                mens_total -= 500
-                st.session_state.xx += 1
-                st.write("残金 " + str(mens_wallet) + "円")
-        
-        else:
-            st.session_state.finished = True
-            def display_results():
-                st.write("終了！残金" + str(mens_total) + "円")
 elif gender == "女":
     st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
     st.write("残金 " + str(womans_total) + "円")
