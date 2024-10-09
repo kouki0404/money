@@ -25,8 +25,8 @@ word = "サイドバーから男女を選んでください(月収が変わり�
 st.write(word)
 st.sidebar.selectbox("基本値段",item_date)
 
-st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
 if gender == "男":
+    st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
     st.session_state.started = True
     st.session_state.finished = False
     st.write("初期金額" + str(mens_total - mens_money) + "円(光熱費が引かれています)")
@@ -51,5 +51,6 @@ if gender == "男":
             def display_results():
                 st.write("終了！残金" + str(mens_total) + "円")
 elif gender == "女":
+    st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
     st.write("残金 " + str(womans_total) + "円")
 
