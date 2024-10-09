@@ -15,6 +15,7 @@ if 'days' not in st.session_state:
     st.session_state.days = 1
 if 'code' not in st.session_state:
     st.session_state.code = 0
+total_days = totalcount_days[st.session_state.month]
 
 @st.cache_data
 def load_data():
