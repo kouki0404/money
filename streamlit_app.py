@@ -49,9 +49,9 @@ else:
     selected_item = st.sidebar.selectbox("基本値段", item_date)
 
     if gender == "男":
-        words = [" ", "牛肉200g 500円", "豚肉300g 450円"]
-        key = st.selectbox("何を買う？", words)
         if st.butonn("次の日へ"):
+            words = [" ", "牛肉200g 500円", "豚肉300g 450円"]
+            key = st.selectbox("何を買う？", words)
             if key == "牛肉200g 500円":
                 current_total -= 500
                 st.session_state.xx += 1
