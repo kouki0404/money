@@ -48,10 +48,12 @@ if gender == "男":
     st.session_state.finished = False
     st.write("初期金額" + str(mens_total - mens_money) + "円(光熱費が引かれています)")
     mens_wallet = mens_total - mens_money
-    for option in st.session_state.options:
-        if st.button(option, key=f"{st.session_state.current_question}-{option}"):
-            st.session_state.days += 1
-            update_question(option)
+    if 'test_started' in st.session_state and not st.session_state.finished:
+        st.subheader(f"問題 {st.session_state.current_question + 1} / {st.session_state.total_questions}")
+        st.subheader(f"{st.session_state.current_question_data['単語']}" if test_type == '英語→日本語' else f"{st.session_state.current_question_data['語の意味']}")
+        st.markdown('<div class="choices-container">', unsafe_allow_html=True)
+        for idx, option in enumerate(st.session_state.options):
+            st.button(option, key=f"button_{st.session_state.current_question}_{idx}", on_click=update_question, args=(option,))
             if  st.session_state.days <= total_days:
                 word = "a" #この部分もexcelで出力
                 words = [" ","牛肉200g 500円","豚肉300g 450円"]
@@ -60,11 +62,10 @@ if gender == "男":
                     mens_total -= 500
                     st.session_state.xx += 1
                     st.write("残金 " + str(mens_wallet) + "円")
-            else:
-                st.session_state.finished = True
-                def display_results():
-                    st.write("終了！残金" + str(mens_total) + "円")
-            st.experimental_rerun()
+                st.experimental_rerun()
+    else:
+        if 'test_started' in st.session_state and st.session_state.finished:
+            display_results()
 elif gender == "女":
     st.write(str(st.session_state.month) + "月" + str(st.session_state.days) + "日")
     st.write("残金 " + str(womans_total) + "円")
