@@ -49,10 +49,6 @@ else:
     selected_item = st.sidebar.selectbox("基本値段", item_date)
 
     if gender == "男":
-        st.subheader(f"問題 {st.session_state.current_question + 1} / {st.session_state.total_questions}")
-        question_text = st.session_state.current_question_data['単語'] if st.session_state.test_type == '英語→日本語' else st.session_state.current_question_data['語の意味']
-        st.subheader(question_text)
-
         words = [" ", "牛肉200g 500円", "豚肉300g 450円"]
         key = st.selectbox("何を買う？", words)
 
