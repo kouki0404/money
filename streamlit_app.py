@@ -55,10 +55,10 @@ else:
             if key == "牛肉200g 500円":
                 current_total -= 500
                 st.session_state.xx += 1
-                st.write(f"残金 {current_total} 円")
+                st.experimental_rerun()
             st.session_state.code += 1
             st.experimental_rerun()
-        st.write(str(current_total) + "円")
+            st.write(str(current_total) + "円")
 
     elif gender == "女":
         st.write(f"残金 {womans_total} 円")
