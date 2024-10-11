@@ -51,7 +51,6 @@ else:
             st.session_state.days += 1
             st.session_state.code += 1
             st.session_state.current_total -= 500
-            st.experimental_rerun()  
         st.write(f"現在の合計金額: {st.session_state.current_total}円")
 
     elif gender == "女":
