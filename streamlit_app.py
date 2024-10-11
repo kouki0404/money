@@ -31,8 +31,7 @@ words_df = load_data()
 item_date = ["卵 1パック 300円", "米 5kg 2500円", "大根 1本 200円", "豚肉 100g 200円", "キャベツ 1玉 200円"]
 st.sidebar.title("性別を選択してください")
 gender = st.sidebar.radio("", ("以下から選択してください", "男", "女"), horizontal=True)
-words = [" ", "牛肉200g 500円", "豚肉300g 450円"]
-key = st.selectbox("何を買う？", words)
+selected_item = st.sidebar.selectbox("基本値段", item_date)
 
 if gender == "以下から選択してください":
     st.write("サイドバーから男女を選んでください(月収が変わります)")
@@ -45,13 +44,12 @@ else:
         current_total = mens_total - mens_money
     else:
         current_total = womans_total
-
     st.write(f"初期金額 {current_total} 円 (光熱費が引かれています)")
-
-    selected_item = st.sidebar.selectbox("基本値段", item_date)
 
     if gender == "男":
         if st.button("次の日へ"):
+            words = [" ", "牛肉200g 500円", "豚肉300g 450円"]
+            key = st.selectbox("何を買う？", words)
             if key == "牛肉200g 500円":
                 current_total -= 500
                 st.session_state.xx += 1
