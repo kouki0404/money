@@ -7,7 +7,7 @@ if 'energy' not in st.session_state:
 if 'month' not in st.session_state:
     st.session_state.month = random.randint(1, 12)
 if 'days' not in st.session_state:
-    st.session_state.days = 1
+    st.session_state.days = 0
 if 'code' not in st.session_state:
     st.session_state.code = 0
 if 'xx' not in st.session_state:
@@ -47,16 +47,10 @@ else:
     st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
 
     if gender == "男":
-        if st.button("次の日へ"):
-            words = [" ", "牛肉200g 500円", "豚肉300g 450円"]
-            key = st.selectbox("何を買う？", words)
-
-            if key == "牛肉200g 500円":
-                st.session_state.current_total -= 500
-                st.session_state.xx += 1
-                st.experimental_rerun()  
-
+        if st.button("次の日へ"): 
+            st.session_state.days += 1
             st.session_state.code += 1
+            st.session_state.current_total -= 500
             st.experimental_rerun()  
         st.write(f"現在の合計金額: {st.session_state.current_total}円")
 
