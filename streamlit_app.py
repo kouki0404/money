@@ -12,7 +12,16 @@ if 'code' not in st.session_state:
     st.session_state.code = 0
 if 'xx' not in st.session_state:
     st.session_state.xx = 0
-
+if 'number' not in st.session_state:
+    st.session_state.number = 
+if 3 <= st.session_state.month <= 5:
+    month_serrect = "3~5"
+elif 6 <= st.session_state.month <= 8:
+    month_serrect = "6~8"
+elif 9 <= st.session_state.month <= 11:
+    month_serrect = "9~11"
+elif st.session_state.month == 12 or st.session_state.month in (1, 2):
+    month_serrect - "12~2"
 mens_money = 13000 + st.session_state.energy
 mens_total = 270400
 womans_total = 208000
@@ -39,6 +48,7 @@ else:
     st.session_state.app_started = True
     st.session_state.finished = False
     st.write(f"{st.session_state.month}月 {st.session_state.days}日")
+    filtered_words_df = words_df[(words_df['No.'] >= range_start) & (words_df['No.'] <= range_end)].sort_values(by='No.')
 
     if gender == "男":
         st.session_state.current_total = mens_total - mens_money

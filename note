@@ -66,3 +66,14 @@ selected_days = filtered_words_df.sample(int(x)).reset_index(drop=True)
     selected_ivents = filtered_words_df.sample(st.session_state.number).reset_index(drop=True)
     st.session_state.selected_ivents = selected_ivents
     st.session_state.total_ivents = len(selected_ivents)
+
+min_value = st.number_input("最小値", value=1)
+max_value = st.number_input("最大値", value=10)
+count = st.number_input("生成する乱数の数", min_value=1, max_value=max_value-min_value+1, value=3)
+
+if st.button("乱数を生成"):
+    if count <= (max_value - min_value + 1):
+        random_numbers = random.sample(range(min_value, max_value + 1), count)
+        st.write(f"生成された重複しない乱数: {random_numbers}")
+    else:
+        st.error("生成する乱数の数が範囲を超えています。")
