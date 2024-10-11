@@ -41,10 +41,10 @@ else:
     st.write(f"{st.session_state.month}月 {st.session_state.days}日")
 
     if gender == "男":
-        current_total = mens_total - mens_money
+        st.session_state.current_total = mens_total - mens_money
     else:
-        current_total = womans_total
-    st.write(f"初期金額 {current_total} 円 (光熱費が引かれています)")
+        st.session_state.current_total = womans_total
+    st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
 
     if gender == "男":
         if st.button("次の日へ"):
