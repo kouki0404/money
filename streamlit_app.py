@@ -54,13 +54,11 @@ else:
             if key == "牛肉200g 500円":
                 st.session_state.current_total -= 500
                 st.session_state.xx += 1
-                st.experimental_rerun()  # 状態を更新後に再実行
+                st.experimental_rerun()  
 
             st.session_state.code += 1
-            st.experimental_rerun()  # ボタンが押された後に再実行
-
-    # 現在の合計金額を表示
-    st.write(f"現在の合計金額: {st.session_state.current_total}円")
+            st.experimental_rerun()  
+        st.write(f"現在の合計金額: {st.session_state.current_total}円")
 
     elif gender == "女":
         st.write(f"残金 {womans_total} 円")
