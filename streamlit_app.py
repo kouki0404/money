@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import random
+import altair as alt
 
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200, 200)
