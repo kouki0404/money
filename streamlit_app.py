@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 import random
 import altair as alt
+import numpy as np
+from PIL import Image
+
 
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200, 200)
@@ -22,7 +25,7 @@ elif 6 <= st.session_state.month <= 8:
 elif 9 <= st.session_state.month <= 11:
     month_serrect = "9~11"
 elif st.session_state.month == 12 or st.session_state.month in (1, 2):
-    month_serrect - "12~2"
+    month_serrect = "12~2"
 mens_money = 13000 + st.session_state.energy
 mens_total = 270400
 womans_total = 208000
@@ -34,6 +37,7 @@ total_days = totalcount_days[st.session_state.month]
 def load_data():
     main = pd.read_excel("基本ストーリー.xlsx")
     special = pd.read_excel("金銭リスト.xlsx")
+    cook = pd.read_excel("栄養・材料の量の内訳")
     return pd.concat([main, special], ignore_index=True)
 
 words_df = load_data()
@@ -50,7 +54,8 @@ else:
     st.session_state.finished = False
     st.write(f"{st.session_state.month}月 {st.session_state.days}日")
     filtered_words_df = words_df[(words_df['No.'] >= range_start) & (words_df['No.'] <= range_end)].sort_values(by='No.')
-
+    selected_month = filtered_words_df.sample(month_serrect).reset_index(drop=True)
+    all_month = filtered_words_df.sample()
     if gender == "男":
         st.session_state.current_total = mens_total - mens_money
     else:
