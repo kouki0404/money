@@ -6,7 +6,42 @@ import numpy as np
 from PIL import Image
 import os
 
-img = image.open('food/キャベツ.jpg')
+imga = Image.open('/workspaces/money/food/キャベツ.jpg')
+imgb = Image.open('/workspaces/money/food/きゅうり.jpg')
+imgc = Image.open('/workspaces/money/food/グリーンピース.jpg')
+imgd = Image.open('/workspaces/money/food/ごぼう.jpg')
+imge = Image.open('/workspaces/money/food/さば.jpg')
+imgf = Image.open('/workspaces/money/food/サラダ油.jpg')
+imgh = Image.open('/workspaces/money/food/しいたけ.jpg')
+imgi = Image.open('/workspaces/money/food/しめじ.jpg')
+imgj = Image.open('/workspaces/money/food/じゃがいも.jpg')
+imgk = Image.open('/workspaces/money/food/そば.jpg')
+imgl = Image.open('/workspaces/money/food/トマト.jpg')
+imgm = Image.open('/workspaces/money/food/ニラ.jpg')
+imgn = Image.open('/workspaces/money/food/にんにく.jpg')
+imgn = Image.open('/workspaces/money/food/ネギ.jpg')
+imgo = Image.open('/workspaces/money/food/パスタ.jpg')
+imgp = Image.open('/workspaces/money/food/バター.jpg')
+imgq = Image.open('/workspaces/money/food/ピーマン.jpg')
+imgr = Image.open('/workspaces/money/food/ブロッコリー.jpg')
+imgs = Image.open('/workspaces/money/food/ベーコン.jpg')
+imgt = Image.open('/workspaces/money/food/みそ.jpg')
+imgu = Image.open('/workspaces/money/food/レタス.jpg')
+imgv = Image.open('/workspaces/money/food/塩.jpg')
+imgw = Image.open('/workspaces/money/food/海老.jpg')
+imgx = Image.open('/workspaces/money/food/牛肉.jpg')
+imgy = Image.open('/workspaces/money/food/玉ねぎ.jpg')
+imgz = Image.open('/workspaces/money/food/鶏肉.jpg')
+imgab = Image.open('/workspaces/money/food/合いびき肉.jpg')
+imgac = Image.open('/workspaces/money/food/砂糖.jpg')
+imgad = Image.open('/workspaces/money/food/醤油.jpg')
+imgae = Image.open('/workspaces/money/food/人参.jpg')
+imgaf = Image.open('/workspaces/money/food/生姜.jpg')
+imgag = Image.open('/workspaces/money/food/豆腐.jpg')
+imgah = Image.open('/workspaces/money/food/豚肉.jpg')
+imgai = Image.open('/workspaces/money/food/米.jpg')
+imgaj = Image.open('/workspaces/money/food/卵.jpg')
+imgak = Image.open('/workspaces/money/food/筍.jpg')
 
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200, 200)
@@ -74,7 +109,32 @@ else:
                 st.session_state.current_total -= 500
             st.write(f"現在の合計金額: {st.session_state.current_total}円")
         elif choose == "冷蔵庫":
-            
+            imga.show()
+            imgb.show()
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i
+            i            
             
 
     elif gender == "女":
