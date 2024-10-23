@@ -17,7 +17,7 @@ if 'code' not in st.session_state:
 if 'xx' not in st.session_state:
     st.session_state.xx = 0
 if 'number' not in st.session_state:
-    st.session_state.number = 
+    st.session_state.number = 1
 if 3 <= st.session_state.month <= 5:
     month_serrect = "3~5"
 elif 6 <= st.session_state.month <= 8:
