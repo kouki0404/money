@@ -4,7 +4,9 @@ import random
 import altair as alt
 import numpy as np
 from PIL import Image
+import os
 
+img = image.open('food/キャベツ.jpg')
 
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200, 200)
@@ -56,6 +58,7 @@ else:
     filtered_words_df = words_df[(words_df['No.'] >= range_start) & (words_df['No.'] <= range_end)].sort_values(by='No.')
     selected_month = filtered_words_df.sample(month_serrect).reset_index(drop=True)
     all_month = filtered_words_df.sample()
+    
     if gender == "男":
         st.session_state.current_total = mens_total - mens_money
     else:
@@ -63,11 +66,16 @@ else:
     st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
 
     if gender == "男":
-        if st.button("次の日へ"): 
-            st.session_state.days += 1
-            st.session_state.code += 1
-            st.session_state.current_total -= 500
-        st.write(f"現在の合計金額: {st.session_state.current_total}円")
+        choose = st.sidebar.radio("", ("ゲーム画面", "冷蔵庫"), horizontal=True)
+        if choose == "ゲーム画面":
+            if st.button("次の日へ"): 
+                st.session_state.days += 1
+                st.session_state.code += 1
+                st.session_state.current_total -= 500
+            st.write(f"現在の合計金額: {st.session_state.current_total}円")
+        elif choose == "冷蔵庫":
+            
+            
 
     elif gender == "女":
         st.write(f"残金 {womans_total} 円")
