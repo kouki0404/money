@@ -52,29 +52,20 @@ image_file_choumiryou = [
     'サラダ油.jpg'
 ]
 
-# 画像を格納するリスト
-images = []
+# 画像を格納する辞書
+images = {}
 
 # 画像を読み込む
-for image_file in image_files:
-    image_path = os.path.join('/workspaces/money/food/', image_file)
-    img = Image.open(image_path)
-    images.append(img)
-
-for image_fileA in image_file_meat:
-    image_pathA = os.path.join('/workspaces/money/food/', image_fileA)
-    imgA = Image.open(image_pathA)
-    images.append(imgA)
-
-for image_fileB in image_file_yasai:
-    image_pathB = os.path.join('/workspaces/money/food/', image_fileB)
-    imgB = Image.open(image_pathB)
-    images.append(imgB)
-
-for image_fileC in image_file_choumiryou:
-    image_pathC = os.path.join('/workspaces/money/food/', image_fileC)
-    imgC = Image.open(image_pathC)
-    images.append(imgC)
+def load_images(image_list):
+    images = {}
+    for image_file in image_list:
+        image_path = os.path.join('/workspaces/money/food/', image_file)
+        try:
+            img = Image.open(image_path)
+            images[image_file] = img
+        except FileNotFoundError:
+            st.error(f"Error: {image_file} not found.")
+    return images
 
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200, 200)
@@ -141,11 +132,17 @@ else:
                 st.session_state.code += 1
                 st.session_state.current_total -= 500
             st.write(f"現在の合計金額: {st.session_state.current_total}円")
-        elif choose == "肉類":
-            for img in images:
-                st.image(img, caption=os.path.basename(img.filename), use_column_width=True)
-        elif choose == "野菜":
-            for imgB in imageB:
-                st.image(imgB, caption=os.path.basename(imgB.filename), use_column_width=True)
+        if choose == "肉類":
+    for imgA in images_meat.values():
+        st.image(imgA, caption=os.path.basename(imgA.filename), use_column_width=True)
+elif choose == "野菜":
+    for imgB in images_yasai.values():
+        st.image(imgB, caption=os.path.basename(imgB.filename), use_column_width=True)
+elif choose == "調味料":
+    for imgC in images_choumiryou.values():
+        st.image(imgC, caption=os.path.basename(imgC.filename), use_column_width=True)
+elif choose == "その他":
+    for img in images_other.values():
+        st.image(img, caption=os.path.basename(img.filename), use_column_width=True)
     elif gender == "女":
         st.write(f"残金 {womans_total} 円")
