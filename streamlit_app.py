@@ -111,31 +111,39 @@ else:
         elif choose == "冷蔵庫":
             imga.show()
             imgb.show()
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i
-            i            
-            
+            imgc.show()
+            imgd.show()
+            imge.show()
+            imgf.show()
+            imgh.show()
+            imgi.show()
+            imgj.show()
+            imgk.show()
+            imgl.show()
+            imgm.show()
+            imgn.show()
+            imgo.show()
+            imgp.show()
+            imgq.show()
+            imgr.show()
+            imgs.show()
+            imgt.show()
+            imgu.show()
+            imgv.show()
+            imgw.show()
+            imgx.show()
+            imgy.show()
+            imgz.show()
+            imgab.show()   
+            imgac.show()
+            imgad.show()
+            imgae.show()
+            imgaf.show()
+            imgag.show()
+            imgah.show()
+            imgai.show()
+            imgaj.show()
+            imgak.show()            
 
     elif gender == "女":
         st.write(f"残金 {womans_total} 円")
