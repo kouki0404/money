@@ -6,42 +6,75 @@ import numpy as np
 from PIL import Image
 import os
 
-imga = Image.open('/workspaces/money/food/キャベツ.jpg')
-imgb = Image.open('/workspaces/money/food/きゅうり.jpg')
-imgc = Image.open('/workspaces/money/food/グリーンピース.jpg')
-imgd = Image.open('/workspaces/money/food/ごぼう.jpg')
-imge = Image.open('/workspaces/money/food/さば.jpg')
-imgf = Image.open('/workspaces/money/food/サラダ油.jpg')
-imgh = Image.open('/workspaces/money/food/しいたけ.jpg')
-imgi = Image.open('/workspaces/money/food/しめじ.jpg')
-imgj = Image.open('/workspaces/money/food/じゃがいも.jpg')
-imgk = Image.open('/workspaces/money/food/そば.jpg')
-imgl = Image.open('/workspaces/money/food/トマト.jpg')
-imgm = Image.open('/workspaces/money/food/ニラ.jpg')
-imgn = Image.open('/workspaces/money/food/にんにく.jpg')
-imgn = Image.open('/workspaces/money/food/ネギ.jpg')
-imgo = Image.open('/workspaces/money/food/パスタ.jpg')
-imgp = Image.open('/workspaces/money/food/バター.jpg')
-imgq = Image.open('/workspaces/money/food/ピーマン.jpg')
-imgr = Image.open('/workspaces/money/food/ブロッコリー.jpg')
-imgs = Image.open('/workspaces/money/food/ベーコン.jpg')
-imgt = Image.open('/workspaces/money/food/みそ.jpg')
-imgu = Image.open('/workspaces/money/food/レタス.jpg')
-imgv = Image.open('/workspaces/money/food/塩.jpg')
-imgw = Image.open('/workspaces/money/food/海老.jpg')
-imgx = Image.open('/workspaces/money/food/牛肉.jpg')
-imgy = Image.open('/workspaces/money/food/玉ねぎ.jpg')
-imgz = Image.open('/workspaces/money/food/鶏肉.jpg')
-imgab = Image.open('/workspaces/money/food/合いびき肉.jpg')
-imgac = Image.open('/workspaces/money/food/砂糖.jpg')
-imgad = Image.open('/workspaces/money/food/醤油.jpg')
-imgae = Image.open('/workspaces/money/food/人参.jpg')
-imgaf = Image.open('/workspaces/money/food/生姜.jpg')
-imgag = Image.open('/workspaces/money/food/豆腐.jpg')
-imgah = Image.open('/workspaces/money/food/豚肉.jpg')
-imgai = Image.open('/workspaces/money/food/米.jpg')
-imgaj = Image.open('/workspaces/money/food/卵.jpg')
-imgak = Image.open('/workspaces/money/food/筍.jpg')
+# 画像ファイル名のリスト
+image_file_meat = [
+    '牛肉.jpg',
+    '豚肉.jpg',
+    '鶏肉.jpg',
+    '合いびき肉.jpg'
+]
+image_file_yasai = [
+    'キャベツ.jpg',
+    'きゅうり.jpg',
+    'グリーンピース.jpg',
+    'ごぼう.jpg',
+    'しいたけ.jpg',
+    'しめじ.jpg',
+    'じゃがいも.jpg',
+    'トマト.jpg',
+    'ニラ.jpg',
+    'にんにく.jpg',
+    'ネギ.jpg',
+    'ピーマン.jpg',
+    'ブロッコリー.jpg',
+    'レタス.jpg',
+    '玉ねぎ.jpg',
+    '人参.jpg',
+    '生姜.jpg',
+    '筍.jpg'
+]
+image_files = [
+    '米.jpg',
+    '卵.jpg',
+    'さば.jpg',
+    'そば.jpg',
+    'パスタ.jpg',
+    'バター.jpg',
+    'ベーコン.jpg',
+    '海老.jpg',
+    '豆腐.jpg'
+]
+image_file_choumiryou = [
+    '塩.jpg',
+    '砂糖.jpg',
+    '醤油.jpg',
+    'みそ.jpg',
+    'サラダ油.jpg'
+]
+
+# 画像を格納するリスト
+images = []
+
+# 画像を読み込む
+for image_file in image_files:
+    image_path = os.path.join('/workspaces/money/food/', image_file)
+    img = Image.open(image_path)
+    images.append(img)
+
+for image_fileA in image_file_meat:
+    image_pathA = os.path.join('/workspaces/money/food/', image_fileA)
+    imgA = Image.open(image_pathA)
+    images.append(imgA)
+
+for image_fileB in image_file_yasai:
+    image_pathB = os.path.join('/workspaces/money/food/', image_fileB)
+    imgB = Image.open(image_pathB)
+    images.append(imgB)
+
+for image_fileC in image_file_choumiryou:
+    image_pathC = os.path.join('/workspaces/money/food/', image_fileC)
+    imgC = Image.open(image_pathC)
+    images.append(imgC)
 
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200, 200)
@@ -101,49 +134,18 @@ else:
     st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
 
     if gender == "男":
-        choose = st.sidebar.radio("", ("ゲーム画面", "冷蔵庫"), horizontal=True)
+        choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
         if choose == "ゲーム画面":
             if st.button("次の日へ"): 
                 st.session_state.days += 1
                 st.session_state.code += 1
                 st.session_state.current_total -= 500
             st.write(f"現在の合計金額: {st.session_state.current_total}円")
-        elif choose == "冷蔵庫":
-            imga.show()
-            imgb.show()
-            imgc.show()
-            imgd.show()
-            imge.show()
-            imgf.show()
-            imgh.show()
-            imgi.show()
-            imgj.show()
-            imgk.show()
-            imgl.show()
-            imgm.show()
-            imgn.show()
-            imgo.show()
-            imgp.show()
-            imgq.show()
-            imgr.show()
-            imgs.show()
-            imgt.show()
-            imgu.show()
-            imgv.show()
-            imgw.show()
-            imgx.show()
-            imgy.show()
-            imgz.show()
-            imgab.show()   
-            imgac.show()
-            imgad.show()
-            imgae.show()
-            imgaf.show()
-            imgag.show()
-            imgah.show()
-            imgai.show()
-            imgaj.show()
-            imgak.show()            
-
+        elif choose == "肉類":
+            for img in images:
+                st.image(img, caption=os.path.basename(img.filename), use_column_width=True)
+        elif choose == "野菜":
+            for imgB in imageB:
+                st.image(imgB, caption=os.path.basename(imgB.filename), use_column_width=True)
     elif gender == "女":
         st.write(f"残金 {womans_total} 円")
