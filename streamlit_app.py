@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
 import random
+from PIL import Image
 import altair as alt
 import numpy as np
-from PIL import Image
 import os
 
 # 画像ファイル名のリスト
@@ -33,7 +33,14 @@ image_file_yasai = [
     '生姜.jpg',
     '筍.jpg'
 ]
-image_files = [
+image_file_choumiryou = [
+    '塩.jpg',
+    '砂糖.jpg',
+    '醤油.jpg',
+    'みそ.jpg',
+    'サラダ油.jpg'
+]
+image_files_other = [
     '米.jpg',
     '卵.jpg',
     'さば.jpg',
@@ -44,18 +51,8 @@ image_files = [
     '海老.jpg',
     '豆腐.jpg'
 ]
-image_file_choumiryou = [
-    '塩.jpg',
-    '砂糖.jpg',
-    '醤油.jpg',
-    'みそ.jpg',
-    'サラダ油.jpg'
-]
 
-# 画像を格納する辞書
-images = {}
-
-# 画像を読み込む
+# 画像を読み込む関数
 def load_images(image_list):
     images = {}
     for image_file in image_list:
@@ -67,6 +64,13 @@ def load_images(image_list):
             st.error(f"Error: {image_file} not found.")
     return images
 
+# 画像をロード
+images_meat = load_images(image_file_meat)
+images_yasai = load_images(image_file_yasai)
+images_choumiryou = load_images(image_file_choumiryou)
+images_other = load_images(image_files_other)
+
+# セッションステートの初期化
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200, 200)
 if 'month' not in st.session_state:
@@ -79,6 +83,8 @@ if 'xx' not in st.session_state:
     st.session_state.xx = 0
 if 'number' not in st.session_state:
     st.session_state.number = 1
+
+# 月に応じた条件設定
 if 3 <= st.session_state.month <= 5:
     month_serrect = "3~5"
 elif 6 <= st.session_state.month <= 8:
@@ -87,6 +93,7 @@ elif 9 <= st.session_state.month <= 11:
     month_serrect = "9~11"
 elif st.session_state.month == 12 or st.session_state.month in (1, 2):
     month_serrect = "12~2"
+
 mens_money = 13000 + st.session_state.energy
 mens_total = 270400
 womans_total = 208000
@@ -114,35 +121,36 @@ else:
     st.session_state.app_started = True
     st.session_state.finished = False
     st.write(f"{st.session_state.month}月 {st.session_state.days}日")
-    filtered_words_df = words_df[(words_df['No.'] >= range_start) & (words_df['No.'] <= range_end)].sort_values(by='No.')
-    selected_month = filtered_words_df.sample(month_serrect).reset_index(drop=True)
-    all_month = filtered_words_df.sample()
-    
+
     if gender == "男":
         st.session_state.current_total = mens_total - mens_money
     else:
         st.session_state.current_total = womans_total
+
     st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
 
-    if gender == "男":
-        choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
-        if choose == "ゲーム画面":
-            if st.button("次の日へ"): 
-                st.session_state.days += 1
-                st.session_state.code += 1
-                st.session_state.current_total -= 500
-            st.write(f"現在の合計金額: {st.session_state.current_total}円")
-        if choose == "肉類":
-    for imgA in images_meat.values():
-        st.image(imgA, caption=os.path.basename(imgA.filename), use_column_width=True)
-elif choose == "野菜":
-    for imgB in images_yasai.values():
-        st.image(imgB, caption=os.path.basename(imgB.filename), use_column_width=True)
-elif choose == "調味料":
-    for imgC in images_choumiryou.values():
-        st.image(imgC, caption=os.path.basename(imgC.filename), use_column_width=True)
-elif choose == "その他":
-    for img in images_other.values():
-        st.image(img, caption=os.path.basename(img.filename), use_column_width=True)
-    elif gender == "女":
+    choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
+
+    if choose == "ゲーム画面":
+        if st.button("次の日へ"): 
+            st.session_state.days += 1
+            st.session_state.code += 1
+            st.session_state.current_total -= 500
+        st.write(f"現在の合計金額: {st.session_state.current_total}円")
+
+    elif choose == "肉類":
+        for imgA in images_meat.values():
+            st.image(imgA, caption=os.path.basename(imgA.filename), use_column_width=True)
+    elif choose == "野菜":
+        for imgB in images_yasai.values():
+            st.image(imgB, caption=os.path.basename(imgB.filename), use_column_width=True)
+    elif choose == "調味料":
+        for imgC in images_choumiryou.values():
+            st.image(imgC, caption=os.path.basename(imgC.filename), use_column_width=True)
+    elif choose == "その他":
+        for img in images_other.values():
+            st.image(img, caption=os.path.basename(img.filename), use_column_width=True)
+
+    if gender == "女":
         st.write(f"残金 {womans_total} 円")
+
