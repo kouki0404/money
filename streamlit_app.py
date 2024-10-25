@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import random
 from PIL import Image
+import os
 import altair as alt
 import numpy as np
-import os
 
 # 画像ファイル名のリスト
 image_file_meat = [
@@ -84,37 +84,11 @@ if 'xx' not in st.session_state:
 if 'number' not in st.session_state:
     st.session_state.number = 1
 
-# 月に応じた条件設定
-if 3 <= st.session_state.month <= 5:
-    month_serrect = "3~5"
-elif 6 <= st.session_state.month <= 8:
-    month_serrect = "6~8"
-elif 9 <= st.session_state.month <= 11:
-    month_serrect = "9~11"
-elif st.session_state.month == 12 or st.session_state.month in (1, 2):
-    month_serrect = "12~2"
-
-mens_money = 13000 + st.session_state.energy
-mens_total = 270400
-womans_total = 208000
-
-totalcount_days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-total_days = totalcount_days[st.session_state.month]
-
-@st.cache_data
-def load_data():
-    main = pd.read_excel("基本ストーリー.xlsx")
-    special = pd.read_excel("金銭リスト.xlsx")
-    cook = pd.read_excel("栄養・材料の量の内訳")
-    return pd.concat([main, special], ignore_index=True)
-
-words_df = load_data()
-
-item_date = ["卵 1パック 300円", "米 5kg 2500円", "大根 1本 200円", "豚肉 100g 200円", "キャベツ 1玉 200円"]
+# 性別選択
 st.sidebar.title("性別を選択してください")
 gender = st.sidebar.radio("", ("以下から選択してください", "男", "女"), horizontal=True)
-selected_item = st.sidebar.selectbox("基本値段", item_date)
 
+# ゲームの進行
 if gender == "以下から選択してください":
     st.write("サイドバーから男女を選んでください(月収が変わります)")
 else:
@@ -123,9 +97,12 @@ else:
     st.write(f"{st.session_state.month}月 {st.session_state.days}日")
 
     if gender == "男":
+        mens_total = 270400
+        mens_money = 13000 + st.session_state.energy
         st.session_state.current_total = mens_total - mens_money
     else:
-        st.session_state.current_total = womans_total
+        womens_total = 208000
+        st.session_state.current_total = womens_total
 
     st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
 
@@ -139,18 +116,17 @@ else:
         st.write(f"現在の合計金額: {st.session_state.current_total}円")
 
     elif choose == "肉類":
-        for imgA in images_meat.values():
-            st.image(imgA, caption=os.path.basename(imgA.filename), use_column_width=True)
+        for img in images_meat.values():
+            st.image(img, caption=os.path.basename(img.filename), use_column_width=True)
     elif choose == "野菜":
-        for imgB in images_yasai.values():
-            st.image(imgB, caption=os.path.basename(imgB.filename), use_column_width=True)
+        for img in images_yasai.values():
+            st.image(img, caption=os.path.basename(img.filename), use_column_width=True)
     elif choose == "調味料":
-        for imgC in images_choumiryou.values():
-            st.image(imgC, caption=os.path.basename(imgC.filename), use_column_width=True)
+        for img in images_choumiryou.values():
+            st.image(img, caption=os.path.basename(img.filename), use_column_width=True)
     elif choose == "その他":
         for img in images_other.values():
             st.image(img, caption=os.path.basename(img.filename), use_column_width=True)
 
     if gender == "女":
-        st.write(f"残金 {womans_total} 円")
-
+        st.write(f"残金 {womens_total} 円")
