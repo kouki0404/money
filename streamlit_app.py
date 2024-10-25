@@ -70,6 +70,18 @@ images_yasai = load_images(image_file_yasai)
 images_choumiryou = load_images(image_file_choumiryou)
 images_other = load_images(image_files_other)
 
+def load_images(image_list):
+    images = {}
+    for image_file in image_list:
+        image_path = os.path.join('/workspaces/money/food/', image_file)
+        print(f"Trying to load: {image_path}")  # 追加したデバッグメッセージ
+        try:
+            img = Image.open(image_path)
+            images[image_file] = img
+        except FileNotFoundError:
+            st.error(f"Error: {image_file} not found at {image_path}.")
+    return images
+
 # セッションステートの初期化
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200, 200)
