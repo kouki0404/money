@@ -8,48 +8,48 @@ import numpy as np
 
 # 画像ファイル名のリスト
 image_file_meat = [
-    '牛肉.jpg',
-    '豚肉.jpg',
-    '鶏肉.jpg',
-    '合いびき肉.jpg'
+    '牛肉.png',
+    '豚肉.png',
+    '鶏肉.png',
+    '合いびき肉.png'
 ]
 image_file_yasai = [
-    'キャベツ.jpg',
-    'きゅうり.jpg',
-    'グリーンピース.jpg',
-    'ごぼう.jpg',
-    'しいたけ.jpg',
-    'しめじ.jpg',
-    'じゃがいも.jpg',
-    'トマト.jpg',
-    'ニラ.jpg',
-    'にんにく.jpg',
-    'ネギ.jpg',
-    'ピーマン.jpg',
-    'ブロッコリー.jpg',
-    'レタス.jpg',
-    '玉ねぎ.jpg',
-    '人参.jpg',
-    '生姜.jpg',
-    '筍.jpg'
+    'キャベツ.png',
+    'きゅうり.png',
+    'グリーンピース.png',
+    'ごぼう.png',
+    'しいたけ.png',
+    'しめじ.png',
+    'じゃがいも.png',
+    'トマト.png',
+    'ニラ.png',
+    'にんにく.png',
+    'ネギ.png',
+    'ピーマン.png',
+    'ブロッコリー.png',
+    'レタス.png',
+    '玉ねぎ.png',
+    '人参.png',
+    '生姜.png',
+    '筍.png'
 ]
 image_file_choumiryou = [
-    '塩.jpg',
-    '砂糖.jpg',
-    '醤油.jpg',
-    'みそ.jpg',
-    'サラダ油.jpg'
+    '塩.png',
+    '砂糖.png',
+    '醤油.png',
+    'みそ.png',
+    'サラダ油.png'
 ]
 image_files_other = [
-    '米.jpg',
-    '卵.jpg',
-    'さば.jpg',
-    'そば.jpg',
-    'パスタ.jpg',
-    'バター.jpg',
-    'ベーコン.jpg',
-    '海老.jpg',
-    '豆腐.jpg'
+    '米.png',
+    '卵.png',
+    'さば.png',
+    'そば.png',
+    'パスタ.png',
+    'バター.png',
+    'ベーコン.png',
+    '海老.png',
+    '豆腐.png'
 ]
 
 # 画像を読み込む関数
