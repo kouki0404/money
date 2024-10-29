@@ -112,11 +112,29 @@ else:
             st.image(imagec)
             st.image(imaged)
         elif choose == "野菜":
-            images_to_show = images_yasai
+            st.image(imagef)
+            st.image(imageg)
+            st.image(imageh)
+            st.image(imagei)
+            st.image(imagej)
+            st.image(imagek)
+            st.image(imagel)
+            st.image(imagem)
+            st.image(imagen)
+            st.image(imageo)
+            st.image(imagep)
+            st.image(imageq)
+            st.image(imager)
+            st.image(images)
+            st.image(imaget)
+            st.image(imageu)
+            st.image(imagev)
+            st.image(imagew)
+            st.image(imagex)
         elif choose == "調味料":
-            images_to_show = images_choumiryou
+            
         elif choose == "その他":
-            images_to_show = images_other
+            
 
     if gender == "女":
         st.write(f"残金 {womans_total} 円")
