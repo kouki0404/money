@@ -114,7 +114,6 @@ else:
         elif choose == "野菜":
             st.image(imagef)
             st.image(imageg)
-            st.image(imageh)
             st.image(imagei)
             st.image(imagej)
             st.image(imagek)
