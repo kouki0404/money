@@ -5,70 +5,30 @@ from PIL import Image
 import os
 import altair as alt
 import numpy as np
-
-# 画像ファイル名のリスト
-image_file_meat = [
-    '牛肉.png',
-    '豚肉.png',
-    '鶏肉.png',
-    '合いびき肉.png'
-]
-image_file_yasai = [
-    'キャベツ.png',
-    'きゅうり.png',
-    'グリーンピース.png',
-    'ごぼう.png',
-    'しいたけ.png',
-    'しめじ.png',
-    'じゃがいも.png',
-    'トマト.png',
-    'ニラ.png',
-    'にんにく.png',
-    'ネギ.png',
-    'ピーマン.png',
-    'ブロッコリー.png',
-    'レタス.png',
-    '玉ねぎ.png',
-    '人参.png',
-    '生姜.png',
-    '筍.png'
-]
-image_file_choumiryou = [
-    '塩.png',
-    '砂糖.png',
-    '醤油.png',
-    'みそ.png',
-    'サラダ油.png'
-]
-image_files_other = [
-    '米.png',
-    '卵.png',
-    'さば.png',
-    'そば.png',
-    'パスタ.png',
-    'バター.png',
-    'ベーコン.png',
-    '海老.png',
-    '豆腐.png'
-]
-
-# 画像を読み込む関数
-def load_images(image_list):
-    images = {}
-    for image_file in image_list:
-        image_path = os.path.join('/workspaces/money/food/', image_file)
-        try:
-            img = Image.open(image_path)
-            images[image_file] = img
-        except FileNotFoundError:
-            st.error(f"Error: {image_file} not found.")
-    return images
-
-# 画像をロード
-images_meat = load_images(image_file_meat)
-images_yasai = load_images(image_file_yasai)
-images_choumiryou = load_images(image_file_choumiryou)
-images_other = load_images(image_files_other)
+#肉
+imagea = Image.open('牛肉.png')
+imageb = Image.open('豚肉.png')
+imagec = Image.open('鶏肉.png')
+imaged = Image.open('合いびき肉.png')
+#野菜
+imagef = Image.open('人参.png')
+imageg = Image.open('じゃがいも.png')
+imagei = Image.open('玉ねぎ.png')
+imagej = Image.open('キャベツ.png')
+imagek = Image.open('レタス.png')
+imagel = Image.open('トマト.png')
+imagem = Image.open('きゅうり.png')
+imagen = Image.open('しめじ.png')
+imageo = Image.open('しいたけ.png')
+imagep = Image.open('ごぼう.png')
+imageq = Image.open('ブロッコリー.png')
+imager = Image.open('ネギ.png')
+images = Image.open('ニラ.png')
+imaget = Image.open('にんにく.png')
+imageu = Image.open('ピーマン.png')
+imagev = Image.open('生姜.png')
+imagew = Image.open('グリーンピース.png')
+imagex = Image.open('筍.png')
 
 # セッションステートの初期化
 if 'energy' not in st.session_state:
@@ -145,22 +105,16 @@ else:
         images_to_show = []
 
         if choose == "肉類":
-            images_to_show = images_meat
+            st.image(imagea)
+            st.image(imageb)
+            st.image(imagec)
+            st.image(imaged)
         elif choose == "野菜":
             images_to_show = images_yasai
         elif choose == "調味料":
             images_to_show = images_choumiryou
         elif choose == "その他":
             images_to_show = images_other
-
-        # カラムに画像を表示
-        for index, (img_key, img_value) in enumerate(images_to_show.items()):
-            if index % 2 == 0:
-                with col1:
-                    st.image(img_value, caption=os.path.basename(img_value.filename), use_column_width=True)
-            else:
-                with col2:
-                    st.image(img_value, caption=os.path.basename(img_value.filename), use_column_width=True)
 
     if gender == "女":
         st.write(f"残金 {womans_total} 円")

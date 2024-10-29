@@ -1,0 +1,65 @@
+
+# 画像ファイル名のリスト
+image_file_meat = [
+    '牛肉.png',
+    '豚肉.png',
+    '鶏肉.png',
+    '合いびき肉.png'
+]
+image_file_yasai = [
+    'キャベツ.png',
+    'きゅうり.png',
+    'グリーンピース.png',
+    'ごぼう.png',
+    'しいたけ.png',
+    'しめじ.png',
+    'じゃがいも.png',
+    'トマト.png',
+    'ニラ.png',
+    'にんにく.png',
+    'ネギ.png',
+    'ピーマン.png',
+    'ブロッコリー.png',
+    'レタス.png',
+    '玉ねぎ.png',
+    '人参.png',
+    '生姜.png',
+    '筍.png'
+]
+image_file_choumiryou = [
+    '塩.png',
+    '砂糖.png',
+    '醤油.png',
+    'みそ.png',
+    'サラダ油.png'
+]
+image_files_other = [
+    '米.png',
+    '卵.png',
+    'さば.png',
+    'そば.png',
+    'パスタ.png',
+    'バター.png',
+    'ベーコン.png',
+    '海老.png',
+    '豆腐.png'
+]
+
+# 画像を読み込む関数
+def load_images(image_list):
+    images = {}
+    for image_file in image_list:
+        image_path = os.path.join('/workspaces/money/food/', image_file)
+        try:
+            img = Image.open(image_path)
+            images[image_file] = img
+        except FileNotFoundError:
+            st.error(f"Error: {image_file} not found.")
+    return images
+
+
+# 画像をロード
+images_meat = load_images(image_file_meat)
+images_yasai = load_images(image_file_yasai)
+images_choumiryou = load_images(image_file_choumiryou)
+images_other = load_images(image_files_other)
