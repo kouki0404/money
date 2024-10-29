@@ -132,9 +132,9 @@ else:
             st.image(imagew)
             st.image(imagex)
         elif choose == "調味料":
-            
+            st.write("a")
         elif choose == "その他":
-            
+            st.write("a")
 
     if gender == "女":
         st.write(f"残金 {womans_total} 円")
