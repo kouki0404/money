@@ -36,7 +36,7 @@ if 'energy' not in st.session_state:
 if 'month' not in st.session_state:
     st.session_state.month = random.randint(1, 12)
 if 'days' not in st.session_state:
-    st.session_state.days = 0
+    st.session_state.days = 1
 if 'code' not in st.session_state:
     st.session_state.code = 0
 if 'xx' not in st.session_state:
@@ -105,6 +105,9 @@ else:
 
         if choose == "肉類":
             st.image(imagea)
+            #仮
+            a = 100
+            st.subtitle("残り" + str(a) + "g")
             st.image(imageb)
             st.image(imagec)
             st.image(imaged)
