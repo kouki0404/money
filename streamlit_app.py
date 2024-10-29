@@ -66,7 +66,7 @@ total_days = totalcount_days[st.session_state.month]
 def load_data():
     main = pd.read_excel("基本ストーリー.xlsx")
     special = pd.read_excel("金銭リスト.xlsx")
-    cook = pd.read_excel("栄養・材料の量の内訳")
+    cook = pd.read_excel("栄養・材料の量の内訳.xlsx")
     return pd.concat([main, special], ignore_index=True)
 
 words_df = load_data()
