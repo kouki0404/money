@@ -88,11 +88,10 @@ else:
     else:
         st.session_state.current_total = womans_total
 
-    st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
-
     choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
 
     if choose == "ゲーム画面":
+        st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
         if st.button("次の日へ"): 
             st.session_state.days += 1
             st.session_state.code += 1
