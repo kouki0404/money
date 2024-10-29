@@ -107,7 +107,7 @@ else:
             st.image(imagea)
             #仮
             a = 100
-            st.subtitle("残り" + str(a) + "g")
+            st.subheader("残り" + str(a) + "g")
             st.image(imageb)
             st.image(imagec)
             st.image(imaged)
