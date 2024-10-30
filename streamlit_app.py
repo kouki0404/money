@@ -47,7 +47,7 @@ imageak = Image.open("海老.png")
 imageal = Image.open("豆腐.png")
 # セッションステートの初期化
 if 'energy' not in st.session_state:
-    st.session_state.energy = random.randint(-200, 200)
+    st.session_state.energy = random.randint(-700, 700)
 if 'month' not in st.session_state:
     st.session_state.month = random.randint(1, 12)
 if 'days' not in st.session_state:
