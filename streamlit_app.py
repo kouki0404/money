@@ -86,7 +86,7 @@ def load_data():
 
 words_df = load_data()
 
-item_date = ["卵 1パック 300円", "米 5kg 2500円", "大根 1本 200円", "豚肉 100g 200円", "キャベツ 1玉 200円"]
+item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
 st.sidebar.title("性別を選択してください")
 gender = st.sidebar.radio("", ("以下から選択してください", "男", "女"), horizontal=True)
 selected_item = st.sidebar.selectbox("基本値段", item_date)
