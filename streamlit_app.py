@@ -29,6 +29,13 @@ imageu = Image.open('ピーマン.png')
 imagev = Image.open('生姜.png')
 imagew = Image.open('グリーンピース.png')
 imagex = Image.open('筍.png')
+#調味料
+imagey = Image.open("塩.png")
+imagez = Image.open("砂糖.png")
+imageaa = Image.open("醤油.png")
+imageab = Image.open("味噌.png")
+imageac = Image.open("サラダ油.png")
+#その他
 
 # セッションステートの初期化
 if 'energy' not in st.session_state:
@@ -131,7 +138,11 @@ else:
             st.image(imagew)
             st.image(imagex)
         elif choose == "調味料":
-            st.write("a")
+            st.image(imagey)
+            st.image(imagez)
+            st.image(imageaa)
+            st.image(imageab)
+            st.image(imageac)
         elif choose == "その他":
             st.write("a")
 
