@@ -33,7 +33,7 @@ imagex = Image.open('筍.png')
 imagey = Image.open("塩.png")
 imagez = Image.open("砂糖.png")
 imageaa = Image.open("醤油.png")
-imageab = Image.open("味噌.png")
+imageab = Image.open("みそ.png")
 imageac = Image.open("サラダ油.png")
 #その他
 
