@@ -36,7 +36,15 @@ imageaa = Image.open("醤油.png")
 imageab = Image.open("みそ.png")
 imageac = Image.open("サラダ油.png")
 #その他
-
+imagead = Image.open(".png")
+imageae = Image.open(".png")
+imageaf = Image.open(".png")
+imageag = Image.open(".png")
+imageah = Image.open(".png")
+imageai = Image.open(".png")
+imageaj = Image.open(".png")
+imageak = Image.open(".png")
+imageal = Image.open(".png")
 # セッションステートの初期化
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-200, 200)
@@ -144,7 +152,14 @@ else:
             st.image(imageab)
             st.image(imageac)
         elif choose == "その他":
-            st.write("a")
-
+            st.image(imagead)
+            st.image(imageae)
+            st.image(imageaf)
+            st.image(imageag)
+            st.image(imageah)
+            st.image(imageai)
+            st.image(imageaj)
+            st.image(imageak)
+            st.image(imageal)
     if gender == "女":
         st.write(f"残金 {womans_total} 円")
