@@ -94,14 +94,14 @@ selected_item = st.sidebar.selectbox("基本値段", item_date)
 if gender == "以下から選択してください":
     st.write("サイドバーから男女を選んでください(月収が変わります)")
     date=pd.DataFrame({
-            'a':list('CCCDDDEEE'),
-            'b':[2,7,4,1,2,6,8,4,7]
-        })
-        chart=alt.Chart(data).mark_bar().encode(
-            x='a',
-            y='b'
-        )
-        st.altair_chart(chart)
+        'a':list('CCCDDDEEE'),
+        'b':[2,7,4,1,2,6,8,4,7]
+    })
+    chart=alt.Chart(data).mark_bar().encode(
+        x='a',
+        y='b'
+    )
+    st.altair_chart(chart)            
 else:
     st.session_state.app_started = True
     st.session_state.finished = False
