@@ -6,6 +6,7 @@ import os
 import altair as alt
 import numpy as np
 import sqlite3
+import html
 #肉
 imagea = Image.open('牛肉.png')
 imageb = Image.open('豚肉.png')
