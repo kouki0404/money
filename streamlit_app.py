@@ -123,13 +123,23 @@ else:
 
     if choose == "ゲーム画面":
         st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
-        
-        if st.button("次の日へ"): 
-            st.session_state.days += 1
-            st.session_state.code += 1
-            st.session_state.current_total -= 500
-        st.write(f"現在の合計金額: {st.session_state.current_total}円")
-
+        components.html(
+            """
+            <script>
+                window.embeddedChatbotConfig = {
+                chatbotId: "uZHqK1b61C7QU9eF1MmxO",
+                domain: "www.chatbase.co"
+                }
+                </script>
+                <script
+                    src="https://www.chatbase.co/embed.min.js"
+                    chatbotId="uZHqK1b61C7QU9eF1MmxO"
+                    domain="www.chatbase.co"
+                    defer>
+                    </script>
+                    """,
+                    height=400 # 高さを調整
+                )
     elif choose in ["肉類", "野菜", "調味料", "その他"]:
         # 画像を2カラムに表示
         col1, col2 = st.columns(2)
