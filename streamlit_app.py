@@ -5,6 +5,7 @@ from PIL import Image
 import os
 import altair as alt
 import numpy as np
+import sqlite3
 #肉
 imagea = Image.open('牛肉.png')
 imageb = Image.open('豚肉.png')
@@ -86,6 +87,21 @@ def load_data():
 
 words_df = load_data()
 
+# 新しいユーザーを追加する関数
+def add_user(conn, username, password):
+    c = conn.cursor()
+    c.execute('INSERT INTO userstable(username, password) VALUES (?, ?)', (username, password))
+    conn.commit()
+# ユーザー名の存在を確認する関数
+def check_user_exists(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
+    return c.fetchone() is not None
+# ユーザーの学習データを取得する関数
+def get_study_data(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT date, study_hours, score, subject FROM study_data WHERE username = ?', (username,))
+    return c.fetchall()
 item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
 st.sidebar.title("性別を選択してください")
 gender = st.sidebar.radio("", ("以下から選択してください", "男", "女"), horizontal=True)
