@@ -6,7 +6,6 @@ import os
 import altair as alt
 import numpy as np
 import sqlite3
-import html
 #肉
 imagea = Image.open('牛肉.png')
 imageb = Image.open('豚肉.png')
@@ -124,23 +123,14 @@ else:
 
     if choose == "ゲーム画面":
         st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
-        components.html(
-            """
-            <script>
-                window.embeddedChatbotConfig = {
-                chatbotId: "uZHqK1b61C7QU9eF1MmxO",
-                domain: "www.chatbase.co"
-                }
-                </script>
-                <script
-                    src="https://www.chatbase.co/embed.min.js"
-                    chatbotId="uZHqK1b61C7QU9eF1MmxO"
-                    domain="www.chatbase.co"
-                    defer>
-                    </script>
-                    """,
-                    height=400 # 高さを調整
-                )
+        st.markdown("""
+        <iframe
+            src="https://www.chatbase.co/chatbot-iframe/nVm1Yf2i4qWPwWDlr9itc"
+            width="100%" 
+            style="height: 100%; min-height: 700px"
+            frameborder="0">
+        </iframe>
+        """, unsafe_allow_html=True)
     elif choose in ["肉類", "野菜", "調味料", "その他"]:
         # 画像を2カラムに表示
         col1, col2 = st.columns(2)
