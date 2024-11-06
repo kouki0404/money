@@ -101,7 +101,7 @@ else:
             st.session_state.current_total = womans_total
 
         options = ("ゲーム画面", "肉類", "野菜", "調味料", "その他")
-        selected_option = st.sidebar.radio(
+        choose = st.sidebar.radio(
             "選択してください", options, index=0
         )
 
