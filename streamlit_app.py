@@ -102,7 +102,7 @@ else:
             st.session_state.current_total = mens_total - mens_money
             choose = st.sidebar.radio("選択してください", 
             ["ゲーム画面", "肉類", "野菜", "調味料", "その他"],
-            key="category_radio_1234")
+            key="category_radio_12")
             st.session_state.choose = choose
         else:
             st.session_state.current_total = womans_total
