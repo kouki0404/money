@@ -94,7 +94,6 @@ if gender == "以下から選択してください":
 else:
     st.session_state.app_started = True
     st.session_state.finished = False
-    st.write(f"{st.session_state.month}月 {st.session_state.days}日{youbi}曜日")
     while st.session_state.days <= 7:
         if gender == "男":
             st.session_state.current_total = mens_total - mens_money
