@@ -5,7 +5,6 @@ from PIL import Image
 import os
 import altair as alt
 import numpy as np
-import sqlite3
 #肉
 imagea = Image.open('牛肉.png')
 imageb = Image.open('豚肉.png')
@@ -59,7 +58,8 @@ if 'xx' not in st.session_state:
     st.session_state.xx = 0
 if 'number' not in st.session_state:
     st.session_state.number = 1
-
+youbi_list = [0,"月","火","水","木","金","土","日"]
+youbi = youbi_list[st.session_state.days]
 # 月に応じた条件設定
 month_serrect = ""
 if 3 <= st.session_state.month <= 5:
@@ -75,9 +75,6 @@ mens_money = 13000 + st.session_state.energy
 mens_total = 270400
 womans_total = 208000
 
-totalcount_days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-total_days = totalcount_days[st.session_state.month]
-
 @st.cache_data
 def load_data():
     main = pd.read_excel("基本ストーリー.xlsx")
@@ -87,21 +84,6 @@ def load_data():
 
 words_df = load_data()
 
-# 新しいユーザーを追加する関数
-def add_user(conn, username, password):
-    c = conn.cursor()
-    c.execute('INSERT INTO userstable(username, password) VALUES (?, ?)', (username, password))
-    conn.commit()
-# ユーザー名の存在を確認する関数
-def check_user_exists(conn, username):
-    c = conn.cursor()
-    c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
-    return c.fetchone() is not None
-# ユーザーの学習データを取得する関数
-def get_study_data(conn, username):
-    c = conn.cursor()
-    c.execute('SELECT date, study_hours, score, subject FROM study_data WHERE username = ?', (username,))
-    return c.fetchall()
 item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
 st.sidebar.title("性別を選択してください")
 gender = st.sidebar.radio("", ("以下から選択してください", "男", "女"), horizontal=True)
@@ -112,74 +94,77 @@ if gender == "以下から選択してください":
 else:
     st.session_state.app_started = True
     st.session_state.finished = False
-    st.write(f"{st.session_state.month}月 {st.session_state.days}日")
+    st.write(f"{st.session_state.month}月 {st.session_state.days}日{youbi}曜日")
+    while st.session_state.days <= 7:
+        if gender == "男":
+            st.session_state.current_total = mens_total - mens_money
+        else:
+            st.session_state.current_total = womans_total
 
-    if gender == "男":
-        st.session_state.current_total = mens_total - mens_money
-    else:
-        st.session_state.current_total = womans_total
+        choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
 
-    choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
+        if choose == "ゲーム画面":
+            st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
+            #食費1日1500円
+            # Chatbot iframe を "ゲーム画面" の選択時に表示
+            st.markdown("""
+            <iframe
+                src="https://www.chatbase.co/chatbot-iframe/nVm1Yf2i4qWPwWDlr9itc"
+                width="100%" 
+                style="height: 100%; min-height: 700px"
+                frameborder="0">
+            </iframe>
+            """, unsafe_allow_html=True)
 
-    if choose == "ゲーム画面":
-        st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
-        # Chatbot iframe を "ゲーム画面" の選択時に表示
-        st.markdown("""
-        <iframe
-            src="https://www.chatbase.co/chatbot-iframe/nVm1Yf2i4qWPwWDlr9itc"
-            width="100%" 
-            style="height: 100%; min-height: 700px"
-            frameborder="0">
-        </iframe>
-        """, unsafe_allow_html=True)
+        elif choose in ["肉類", "野菜", "調味料", "その他"]:
+            # 画像を2カラムに表示
+            col1, col2 = st.columns(2)
+            images_to_show = []
 
-    elif choose in ["肉類", "野菜", "調味料", "その他"]:
-        # 画像を2カラムに表示
-        col1, col2 = st.columns(2)
-        images_to_show = []
-
-        if choose == "肉類":
-            st.image(imagea)
-            #仮
-            a = 100
-            st.subheader("残り" + str(a) + "g")
-            st.image(imageb)
-            st.image(imagec)
-            st.image(imaged)
-        elif choose == "野菜":
-            st.image(imagef)
-            st.image(imageg)
-            st.image(imagei)
-            st.image(imagej)
-            st.image(imagek)
-            st.image(imagel)
-            st.image(imagem)
-            st.image(imagen)
-            st.image(imageo)
-            st.image(imagep)
-            st.image(imageq)
-            st.image(imager)
-            st.image(images)
-            st.image(imaget)
-            st.image(imageu)
-            st.image(imagev)
-            st.image(imagew)
-            st.image(imagex)
-        elif choose == "調味料":
-            st.image(imagey)
-            st.image(imagez)
-            st.image(imageaa)
-            st.image(imageab)
-            st.image(imageac)
-        elif choose == "その他":
-            st.image(imagead)
-            st.image(imageae)
-            st.image(imageaf)
-            st.image(imageag)
-            st.image(imageah)
-            st.image(imageai)
-            st.image(imageaj)
-            st.image(imageak)
-            st.image(imageal)
-    if gender == "女":
-        st.write(f"残金 {womans_total} 円")
+            if choose == "肉類":
+                st.image(imagea)
+                #仮
+                a = 100
+                st.subheader("残り" + str(a) + "g")
+                st.image(imageb)
+                st.image(imagec)
+                st.image(imaged)
+            elif choose == "野菜":
+                st.image(imagef)
+                st.image(imageg)
+                st.image(imagei)
+                st.image(imagej)
+                st.image(imagek)
+                st.image(imagel)
+                st.image(imagem)
+                st.image(imagen)
+                st.image(imageo)
+                st.image(imagep)
+                st.image(imageq)
+                st.image(imager)
+                st.image(images)
+                st.image(imaget)
+                st.image(imageu)
+                st.image(imagev)
+                st.image(imagew)
+                st.image(imagex)
+            elif choose == "調味料":
+                st.image(imagey)
+                st.image(imagez)
+                st.image(imageaa)
+                st.image(imageab)
+                st.image(imageac)
+            elif choose == "その他":
+                st.image(imagead)
+                st.image(imageae)
+                st.image(imageaf)
+                st.image(imageag)
+                st.image(imageah)
+                st.image(imageai)
+                st.image(imageaj)
+                st.image(imageak)
+                st.image(imageal)
+        if gender == "女":
+            st.write(f"残金 {womans_total} 円")
+    
+    st.title("終了！")
