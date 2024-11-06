@@ -46,8 +46,6 @@ imageaj = Image.open("ベーコン.png")
 imageak = Image.open("海老.png")
 imageal = Image.open("豆腐.png")
 # セッションステートの初期化
-if 'choose' not in st.session_state:
-    st.session_state.choose = "ゲーム画面"  # 初期値を設定
 if 'energy' not in st.session_state:
     st.session_state.energy = random.randint(-700, 700)
 if 'month' not in st.session_state:
@@ -100,16 +98,10 @@ else:
     while st.session_state.days <= 7:
         if gender == "男":
             st.session_state.current_total = mens_total - mens_money
-            choose = st.sidebar.radio("選択してください", 
-            ["ゲーム画面", "肉類", "野菜", "調味料", "その他"],
-            key="category_radio_12")
-            st.session_state.choose = choose
+            choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
         else:
             st.session_state.current_total = womans_total
-            choose = st.sidebar.radio("選択してください", 
-            ["ゲーム画面", "肉類", "野菜", "調味料", "その他"],
-            key="category_radio_1234")
-            st.session_state.choose = choose
+            choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
 
         if choose == "ゲーム画面":
             st.write(f"{st.session_state.month}月 {st.session_state.days}日{youbi}曜日")
