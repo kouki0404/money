@@ -94,14 +94,15 @@ if gender == "以下から選択してください":
 else:
     st.session_state.app_started = True
     st.session_state.finished = False
+
     while st.session_state.days <= 7:
         if gender == "男":
             st.session_state.current_total = mens_total - mens_money
         else:
             st.session_state.current_total = womans_total
 
-        choose = st.sidebar.radio("", 
-                                ("ゲーム画面", "肉類", "野菜", "調味料", "その他"))
+        choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
+
         if choose == "ゲーム画面":
             st.write(f"{st.session_state.month}月 {st.session_state.days}日{youbi}曜日")
             st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
