@@ -5,7 +5,6 @@ from PIL import Image
 import os
 import altair as alt
 import numpy as np
-pip install --upgrade streamlit
 #肉
 imagea = Image.open('牛肉.png')
 imageb = Image.open('豚肉.png')
@@ -105,7 +104,7 @@ else:
             st.session_state.current_total = womans_total
 
         choose = st.sidebar.radio("選択してください", 
-        ("ゲーム画面", "肉類", "野菜", "調味料", "その他"),
+        ["ゲーム画面", "肉類", "野菜", "調味料", "その他"],
         key="category_radio_1234")
         st.session_state.choose = choose
         if choose == "ゲーム画面":
