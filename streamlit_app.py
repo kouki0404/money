@@ -5,6 +5,7 @@ from PIL import Image
 import os
 import altair as alt
 import numpy as np
+pip install --upgrade streamlit
 #肉
 imagea = Image.open('牛肉.png')
 imageb = Image.open('豚肉.png')
