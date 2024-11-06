@@ -104,6 +104,7 @@ else:
         choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
 
         if choose == "ゲーム画面":
+            st.write(f"{st.session_state.month}月 {st.session_state.days}日{youbi}曜日")
             st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
             #食費1日1500円
             # Chatbot iframe を "ゲーム画面" の選択時に表示
