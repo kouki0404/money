@@ -101,7 +101,7 @@ else:
         else:
             st.session_state.current_total = womans_total
 
-        choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
+        choose = st.sidebar.radio("食材の量を確認", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
 
         if choose == "ゲーム画面":
             st.write(f"{st.session_state.month}月 {st.session_state.days}日{youbi}曜日")
