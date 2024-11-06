@@ -100,11 +100,8 @@ else:
         else:
             st.session_state.current_total = womans_total
 
-        options = ("ゲーム画面", "肉類", "野菜", "調味料", "その他")
-        choose = st.sidebar.radio(
-            "選択してください", options, index=0
-        )
-
+        choose = st.sidebar.radio("", 
+                                ("ゲーム画面", "肉類", "野菜", "調味料", "その他"))
         if choose == "ゲーム画面":
             st.write(f"{st.session_state.month}月 {st.session_state.days}日{youbi}曜日")
             st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
