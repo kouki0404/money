@@ -135,8 +135,6 @@ def main():
     selected_item = st.sidebar.selectbox("基本値段", item_date)
     if 'username' in st.session_state:
         username = st.session_state['username']
-            st.session_state.app_started = True
-            st.session_state.finished = False
             choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
             while st.session_state.days <= 7:
                 if gender == "男":
