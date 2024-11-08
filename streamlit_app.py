@@ -79,6 +79,17 @@ elif st.session_state.month == 12 or st.session_state.month in (1, 2):
 mens_money = 13000 + st.session_state.energy
 mens_total = 270400
 womans_total = 208000
+def create_tables(con):
+    cc = con.cursor()
+    cc.execute('''
+        CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            message TEXT NOT NULL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    con.commit()
 # テーブルを作成（存在しない場合）
 def create_user_table(conn):
     c = conn.cursor()
