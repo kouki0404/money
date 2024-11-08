@@ -7,9 +7,7 @@ import altair as alt
 import numpy as np
 import sqlite3
 import hashlib
-import streamlit.components.v1 as components
 import os
-#文字のフォント変更
 #肉
 imagea = Image.open('牛肉.png')
 imageb = Image.open('豚肉.png')
