@@ -5,6 +5,11 @@ from PIL import Image
 import os
 import altair as alt
 import numpy as np
+import sqlite3
+import hashlib
+import streamlit.components.v1 as components
+import os
+#文字のフォント変更
 #肉
 imagea = Image.open('牛肉.png')
 imageb = Image.open('豚肉.png')
@@ -74,6 +79,38 @@ elif st.session_state.month == 12 or st.session_state.month in (1, 2):
 mens_money = 13000 + st.session_state.energy
 mens_total = 270400
 womans_total = 208000
+# テーブルを作成（存在しない場合）
+def create_user_table(conn):
+    c = conn.cursor()
+    c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS user_data(username TEXT PRIMARY KEY, text_content TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS study_data(username TEXT, date TEXT, study_hours REAL, score INTEGER, subject TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS class_data(username TEXT PRIMARY KEY, class_grade TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS goals(username TEXT PRIMARY KEY, goal TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS projects(username TEXT, project_name TEXT, progress REAL)')
+    c.execute('CREATE TABLE IF NOT EXISTS events(username TEXT, date TEXT, description TEXT)')
+# 新しいユーザーを追加する関数
+def add_user(conn, username, password):
+    hashed_password = make_hashes(password)
+    c = conn.cursor()
+    c.execute('INSERT INTO userstable(username, password) VALUES (?, ?)', (username, hashed_password))
+    conn.commit()
+# ユーザー名の存在を確認する関数
+def check_user_exists(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
+    return c.fetchone() is not None
+# 学習データを保存する関数
+def save_study_data(conn, username, date, study_hours, score, subject):
+    c = conn.cursor()
+    c.execute('INSERT INTO study_data(username, date, study_hours, score, subject) VALUES (?, ?, ?, ?, ?)',
+              (username, date, study_hours, score, subject))
+    conn.commit()
+# ユーザーの学習データを取得する関数
+def get_study_data(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT date, study_hours, score, subject FROM study_data WHERE username = ?', (username,))
+    return c.fetchall()
 
 @st.cache_data
 def load_data():
