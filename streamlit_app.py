@@ -125,7 +125,7 @@ item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "
 st.sidebar.title("性別を選択してください")
 gender = st.selectbox(
     "性別を選んでください",  # タイトルを追加
-    ["男", "女"],  # オプションのリストを変更
+    ["性別を選択してください","男", "女"],  # オプションのリストを変更
 )
 selected_item = st.sidebar.selectbox("基本値段", item_date)
 
