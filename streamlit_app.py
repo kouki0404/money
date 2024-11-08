@@ -100,15 +100,15 @@ def check_user_exists(conn, username):
     c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
     return c.fetchone() is not None
 # リザルトを保存する関数
-def save_study_data(conn, username, date,):
+def save_study_data(conn, username, date):
     c = conn.cursor()
-    c.execute('INSERT INTO study_data(username, date, study_hours, score, subject) VALUES (?, ?, ?, ?, ?)',
-              (username, date, study_hours, score, subject))
+    c.execute('INSERT INTO data_user(username) VALUES (?, ?, ?, ?, ?)',
+              (username, date))
     conn.commit()
 # ユーザーのリザルトを取得する関数
 def get_study_data(conn, username):
     c = conn.cursor()
-    c.execute('SELECT date, study_hours, score, subject FROM study_data WHERE username = ?', (username,))
+    c.execute('date_user WHERE username = ?', (username,))
     return c.fetchall()
 
 @st.cache_data
