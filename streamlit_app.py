@@ -164,3 +164,4 @@ else:
             st.write(f"残金 {womans_total} 円")
     
     st.title("終了！")
+    st.write("残金" + int(st.session_state.current_total) + "円")
