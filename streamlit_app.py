@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import random
 from PIL import Image
-import os
 import altair as alt
 import numpy as np
 import sqlite3
