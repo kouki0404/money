@@ -123,12 +123,15 @@ words_df = load_data()
 
 item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
 st.sidebar.title("性別を選択してください")
-gender = st.selectbox("", ("以下から選択してください", "男", "女"), horizontal=True)
+gender = st.selectbox(
+    "性別を選んでください",  # タイトルを追加
+    ["男", "女"],  # オプションのリストを変更
+)
 selected_item = st.sidebar.selectbox("基本値段", item_date)
 
 if st.button("名前、性別を決定"):
-    if gender == "以下から選択してください":
-        st.write("サイドバーから男女を選んでください(月収が変わります)")
+    if gender == "性別を選んでください":
+        st.write("性別を選択してください")
     else:
         st.session_state.app_started = True
         st.session_state.finished = False
