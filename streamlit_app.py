@@ -97,7 +97,8 @@ def main():
     # データベースに接続
     conn = sqlite3.connect('database.db')
     create_user_table(conn)
-    choose = st.sidebar.selectbox("", ("アカウント作成","ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
+    menu = []"アカウント作成","ゲーム画面", "肉類", "野菜", "調味料", "その他"]
+    choose = st.sidebar.selectbox("",menu)
     # アイテム選択
     item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
     
