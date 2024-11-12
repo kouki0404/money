@@ -146,7 +146,9 @@ def main():
     # ユーザー名の入力
     if 'username' in st.session_state and st.session_state.username:
         username = st.session_state['username']
-        reizouko = ["ホーム","肉類","野菜","調味料","その他"]
+        foods = ["ホーム","肉類","野菜","調味料","その他"]
+        reizouko = st.sidebar.selectbox("冷蔵庫",foods)
+
         # ゲーム画面
         selected_item = st.sidebar.selectbox("基本値段", item_date)
         if choose == "ゲーム画面" and reizouko == "ゲーム画面":
