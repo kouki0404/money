@@ -143,13 +143,11 @@ def main():
     # アイテム選択
     item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
 
-    # アイテム選択
-    selected_item = st.sidebar.selectbox("基本値段", item_date)
-
     # ユーザー名の入力
     if 'username' in st.session_state and st.session_state.username:
         username = st.session_state['username']
         # ゲーム画面
+        selected_item = st.sidebar.selectbox("基本値段", item_date)
         if choose == "ゲーム画面":
             st.write(f"{st.session_state.month}月 {st.session_state.days}日 {youbi}曜日")
             st.write(f"初期金額 {mens_total} 円 (光熱費が引かれています)")
