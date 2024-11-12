@@ -92,7 +92,7 @@ def add_user(conn, username):
     c = conn.cursor()
     c.execute('INSERT INTO userstable(username) VALUES (?)', (username,))
     conn.commit()
-
+choose = st.sidebar.radio("", ("アカウント作成","ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
 # メイン関数
 def main():
     # データベースに接続
@@ -104,13 +104,7 @@ def main():
     
     # 性別選択
     gender = st.selectbox("性別を選んでください", ["性別を選択してください", "男", "女"])
-    
-    # 名前決定ボタン
-    if st.button("名前、性別を決定"):
-        if gender == "性別を選んでください" or not st.session_state.username:
-            st.write("性別を選択、または名前を設定してください")
-        else:
-            st.write(f"ようこそ、{st.session_state.username}さん！")
+
     
     # アイテム選択
     selected_item = st.sidebar.selectbox("基本値段", item_date)
@@ -118,7 +112,6 @@ def main():
     # ユーザー名の入力
     if 'username' in st.session_state and st.session_state.username:
         username = st.session_state['username']
-        choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
         
         # ゲーム画面
         if choose == "ゲーム画面":
@@ -167,3 +160,31 @@ def main():
             st.image(images['pasta'])
             st.image(images['butter'])
             st.image(images['bacon'])
+
+ if choose == "アカウント作成":
+        st.subheader("ログイン画面です")
+        username = st.sidebar.text_input("ユーザー名を入力してください")
+        password = st.sidebar.text_input("パスワードを入力してください", type='password')
+ 
+        if st.sidebar.button("ログイン"):
+            user_info = login_user(conn, username, make_hashes(password))
+ 
+            if user_info:
+                st.session_state['username'] = username
+                st.success("{}さんでログインしました".format(username))
+                st.success('ホーム画面に移動して下さい')
+ 
+                # データ削除のオプション
+               
+ 
+            else:
+                st.warning("ユーザー名かパスワードが間違っています")
+ 
+            if username == "さとうハオ":
+                st.success("こんにちは、佐藤葉緒さん！")
+ 
+                if st.button("すべてのユーザーのデータを削除"):
+                    if delete_all_users(conn):
+                        st.success("すべてのユーザーのデータが削除されました。")
+                    else:
+                        st.error("データの削除に失敗しました。")
