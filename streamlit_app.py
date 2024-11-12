@@ -107,6 +107,13 @@ def check_user_exists(conn, username):
     c = conn.cursor()
     c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
     return c.fetchone() is not None
+def login_user(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
+    user = c.fetchone()
+    if user:
+        return user  # ユーザー情報を返す
+    return None
 # リザルトを保存する関数
 def save_study_data(conn, username, date):
     c = conn.cursor()
@@ -129,6 +136,7 @@ def load_data():
 words_df = load_data()
 
 def main():
+    menu = ["ホーム","ゲーム画面",""]
     # データベースに接続
     conn = sqlite3.connect('database.db')
     create_user_table(conn)
