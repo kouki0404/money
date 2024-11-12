@@ -2,9 +2,11 @@ import streamlit as st
 import pandas as pd
 import random
 from PIL import Image
-import os
 import altair as alt
 import numpy as np
+import sqlite3
+import hashlib
+import os
 #肉
 imagea = Image.open('牛肉.png')
 imageb = Image.open('豚肉.png')
@@ -58,7 +60,8 @@ if 'xx' not in st.session_state:
     st.session_state.xx = 0
 if 'number' not in st.session_state:
     st.session_state.number = 1
-
+youbi_list = [0,"月","火","水","木","金","土","日"]
+youbi = youbi_list[st.session_state.days]
 # 月に応じた条件設定
 month_serrect = ""
 if 3 <= st.session_state.month <= 5:
@@ -73,9 +76,55 @@ elif st.session_state.month == 12 or st.session_state.month in (1, 2):
 mens_money = 13000 + st.session_state.energy
 mens_total = 270400
 womans_total = 208000
-
-totalcount_days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-total_days = totalcount_days[st.session_state.month]
+def create_tables(con):
+    cc = con.cursor()
+    cc.execute('''
+        CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            message TEXT NOT NULL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    con.commit()
+# テーブルを作成（存在しない場合）
+def create_user_table(conn):
+    c = conn.cursor()
+    c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS user_data(username TEXT PRIMARY KEY, text_content TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS study_data(username TEXT, date TEXT, study_hours REAL, score INTEGER, subject TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS class_data(username TEXT PRIMARY KEY, class_grade TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS goals(username TEXT PRIMARY KEY, goal TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS projects(username TEXT, project_name TEXT, progress REAL)')
+    c.execute('CREATE TABLE IF NOT EXISTS events(username TEXT, date TEXT, description TEXT)')
+# 新しいユーザーを追加する関数
+def add_user(conn, username):
+    c = conn.cursor()
+    c.execute('INSERT INTO userstable(username) VALUES (?, ?)', (username,))
+    conn.commit()
+# ユーザー名の存在を確認する関数
+def check_user_exists(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
+    return c.fetchone() is not None
+def login_user(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
+    user = c.fetchone()
+    if user:
+        return user  # ユーザー情報を返す
+    return None
+# リザルトを保存する関数
+def save_study_data(conn, username, date):
+    c = conn.cursor()
+    c.execute('INSERT INTO data_user(username) VALUES (?, ?, ?, ?, ?)',
+              (username, date))
+    conn.commit()
+# ユーザーのリザルトを取得する関数
+def get_study_data(conn, username):
+    c = conn.cursor()
+    c.execute('date_user WHERE username = ?', (username,))
+    return c.fetchall()
 
 @st.cache_data
 def load_data():
@@ -86,81 +135,87 @@ def load_data():
 
 words_df = load_data()
 
-item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
-st.sidebar.title("性別を選択してください")
-gender = st.sidebar.radio("", ("以下から選択してください", "男", "女"), horizontal=True)
-selected_item = st.sidebar.selectbox("基本値段", item_date)
-
-if gender == "以下から選択してください":
-    st.write("サイドバーから男女を選んでください(月収が変わります)")
-else:
-    st.session_state.app_started = True
-    st.session_state.finished = False
-    st.write(f"{st.session_state.month}月 {st.session_state.days}日")
-
-    if gender == "男":
-        st.session_state.current_total = mens_total - mens_money
-    else:
-        st.session_state.current_total = womans_total
-
-    choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
-
-    if choose == "ゲーム画面":
-        st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
-        
-        if st.button("次の日へ"): 
-            st.session_state.days += 1
-            st.session_state.code += 1
-            st.session_state.current_total -= 500
-        st.write(f"現在の合計金額: {st.session_state.current_total}円")
-
-    elif choose in ["肉類", "野菜", "調味料", "その他"]:
-        # 画像を2カラムに表示
-        col1, col2 = st.columns(2)
-        images_to_show = []
-
-        if choose == "肉類":
-            st.image(imagea)
-            #仮
-            a = 100
-            st.subheader("残り" + str(a) + "g")
-            st.image(imageb)
-            st.image(imagec)
-            st.image(imaged)
-        elif choose == "野菜":
-            st.image(imagef)
-            st.image(imageg)
-            st.image(imagei)
-            st.image(imagej)
-            st.image(imagek)
-            st.image(imagel)
-            st.image(imagem)
-            st.image(imagen)
-            st.image(imageo)
-            st.image(imagep)
-            st.image(imageq)
-            st.image(imager)
-            st.image(images)
-            st.image(imaget)
-            st.image(imageu)
-            st.image(imagev)
-            st.image(imagew)
-            st.image(imagex)
-        elif choose == "調味料":
-            st.image(imagey)
-            st.image(imagez)
-            st.image(imageaa)
-            st.image(imageab)
-            st.image(imageac)
-        elif choose == "その他":
-            st.image(imagead)
-            st.image(imageae)
-            st.image(imageaf)
-            st.image(imageag)
-            st.image(imageah)
-            st.image(imageai)
-            st.image(imageaj)
-            st.image(imageak)
-            st.image(imageal)
-    if gender == "女":
-        st.write(f"残金 {womans_total} 円")
+def main():
+    menu = ["ホーム","ゲーム画面",""]
+    # データベースに接続
+    conn = sqlite3.connect('database.db')
+    create_user_table(conn)
+    item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
+    gender = st.selectbox(
+        "性別を選んでください",  # タイトルを追加
+        ["性別を選択してください","男", "女"],  # オプションのリストを変更
+    )
+    if st.button("名前、性別を決定"):
+        if gender == "性別を選んでください" or 'username' not in st.session_state:
+            st.write("性別を選択、または名前を設定してください")
+    selected_item = st.sidebar.selectbox("基本値段", item_date)
+    if 'username' in st.session_state:
+        username = st.session_state['username']
+        choose = st.sidebar.radio("", ("ゲーム画面", "肉類", "野菜", "調味料", "その他"), horizontal=True)
+        while st.session_state.days <= 7:
+            if gender == "男":
+                st.session_state.current_total = mens_total - mens_money
+                if choose == "ゲーム画面":
+                    st.write(f"{st.session_state.month}月 {st.session_state.days}日{youbi}曜日")
+                    st.write(f"初期金額 {st.session_state.current_total} 円 (光熱費が引かれています)")
+                    #食費1日1500円
+                    # Chatbot iframe を "ゲーム画面" の選択時に表示
+                    st.markdown("""
+                    <iframe
+                        src="https://www.chatbase.co/chatbot-iframe/nVm1Yf2i4qWPwWDlr9itc"
+                        width="100%" 
+                        style="height: 100%; min-height: 700px"
+                        frameborder="0">
+                    </iframe>
+                    """, unsafe_allow_html=True)
+                elif choose in ["肉類", "野菜", "調味料", "その他"]:
+                    # 画像を2カラムに表示
+                    col1, col2 = st.columns(2)
+                    images_to_show = []
+                    if choose == "肉類":
+                        st.image(imagea)
+                        #仮
+                        a = 100
+                        st.subheader("残り" + str(a) + "g")
+                        st.image(imageb)
+                        st.image(imagec)
+                        st.image(imaged)
+                    elif choose == "野菜":
+                        st.image(imagef)
+                        st.image(imageg)
+                        st.image(imagei)
+                        st.image(imagej)
+                        st.image(imagek)
+                        st.image(imagel)
+                        st.image(imagem)
+                        st.image(imagen)
+                        st.image(imageo)
+                        st.image(imagep)
+                        st.image(imageq)
+                        st.image(imager)
+                        st.image(images)
+                        st.image(imaget)
+                        st.image(imageu)
+                        st.image(imagev)
+                        st.image(imagew)
+                        st.image(imagex)
+                    elif choose == "調味料":
+                        st.image(imagey)
+                        st.image(imagez)
+                        st.image(imageaa)
+                        st.image(imageab)
+                        st.image(imageac)
+                    elif choose == "その他":
+                        st.image(imagead)
+                        st.image(imageae)
+                        st.image(imageaf)
+                        st.image(imageag)
+                        st.image(imageah)
+                        st.image(imageai)
+                        st.image(imageaj)
+                        st.image(imageak)
+                        st.image(imageal)
+            if gender == "女":
+                st.write(f"残金 {womans_total} 円")
+            st.title("終了！")
+            st.write("残金" + int(st.session_state.current_total) + "円")
