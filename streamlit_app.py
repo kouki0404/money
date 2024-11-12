@@ -216,6 +216,8 @@ def main():
                 st.success('ホーム画面に移動して下さい')
  
                 # データ削除のオプション
+            else:
+                st.warning("ユーザー名かパスワードが間違っています")
     elif choose == "アカウント作成":
         st.subheader("新しいアカウントを作成します")
         new_user = st.text_input("ユーザー名を入力してください")
@@ -231,10 +233,7 @@ def main():
                     st.info("ログイン画面からログインしてください")
                 except Exception as e:
                     st.error(f"アカウントの作成に失敗しました: {e}")
-               
- 
-            else:
-                st.warning("ユーザー名かパスワードが間違っています")
+
  
             if username == "sky0404":
                 st.success("こんにちは、北山さん！")
