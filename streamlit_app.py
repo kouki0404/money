@@ -79,19 +79,48 @@ mens_money = 13000 + st.session_state.energy
 mens_total = 270400
 womans_total = 208000
 
-# SQLiteデータベース接続
+# パスワードをハッシュ化する関数
+def make_hashes(password):
+    return hashlib.sha256(str.encode(password)).hexdigest()
+ 
+def delete_study_data(conn, username, date):
+    c = conn.cursor()
+    c.execute('DELETE FROM study_data WHERE username = ? AND date = ?', (username, date))
+    conn.commit()
+ 
+# ハッシュ化されたパスワードをチェックする関数
+def check_hashes(password, hashed_text):
+    return make_hashes(password) == hashed_text
+# テーブルを作成（存在しない場合）
 def create_user_table(conn):
     c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS user_data(username TEXT PRIMARY KEY, text_content TEXT)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS study_data(username TEXT, date TEXT, study_hours REAL, score INTEGER, subject TEXT)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS goals(username TEXT PRIMARY KEY, goal TEXT)''')
+    c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS user_data(username TEXT PRIMARY KEY, text_content TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS study_data(username TEXT, date TEXT, study_hours REAL, score INTEGER, subject TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS class_data(username TEXT PRIMARY KEY, class_grade TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS goals(username TEXT PRIMARY KEY, goal TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS projects(username TEXT, project_name TEXT, progress REAL)')
+    c.execute('CREATE TABLE IF NOT EXISTS events(username TEXT, date TEXT, description TEXT)')
     conn.commit()
-
-def add_user(conn, username):
+def add_user(conn, username, password):
+    hashed_password = make_hashes(password)
     c = conn.cursor()
-    c.execute('INSERT INTO userstable(username) VALUES (?)', (username,))
+    c.execute('INSERT INTO userstable(username, password) VALUES (?, ?)', (username, hashed_password))
     conn.commit()
+# ユーザー名の存在を確認する関数
+def check_user_exists(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
+    return c.fetchone() is not None
+ 
+# ユーザーをログインさせる関数
+def login_user(conn, username, password):
+    c = conn.cursor()
+    c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
+    user = c.fetchone()
+    if user and check_hashes(password, user[1]):  # user[1] はハッシュ化されたパスワード
+        return user  # ユーザー情報を返す
+    return None
 # メイン関数
 def main():
     # データベースに接続
