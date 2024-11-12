@@ -138,7 +138,7 @@ def main():
     # データベースに接続
     conn = sqlite3.connect('database.db')
     create_user_table(conn)
-    menu = ["アカウント作成","ゲーム画面", "肉類", "野菜", "調味料", "その他"]
+    menu = ["アカウント作成","ログイン","ゲーム画面", "肉類", "野菜", "調味料", "その他"]
     choose = st.sidebar.selectbox("",menu)
     # アイテム選択
     item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
@@ -202,7 +202,7 @@ def main():
             st.image(images['butter'])
             st.image(images['bacon'])
 
-    if choose == "アカウント作成":
+    if choose == "ログイン":
         st.subheader("ログイン画面です")
         username = st.sidebar.text_input("ユーザー名を入力してください")
         password = st.sidebar.text_input("パスワードを入力してください", type='password')
@@ -216,6 +216,21 @@ def main():
                 st.success('ホーム画面に移動して下さい')
  
                 # データ削除のオプション
+    elif choose == "アカウント作成":
+        st.subheader("新しいアカウントを作成します")
+        new_user = st.text_input("ユーザー名を入力してください")
+        new_password = st.text_input("パスワードを入力してください", type='password')
+ 
+        if st.button("サインアップ"):
+            if check_user_exists(conn, new_user):
+                st.error("このユーザー名は既に使用されています。別のユーザー名を選んでください。")
+            else:
+                try:
+                    add_user(conn, new_user, make_hashes(new_password))
+                    st.success("アカウントの作成に成功しました")
+                    st.info("ログイン画面からログインしてください")
+                except Exception as e:
+                    st.error(f"アカウントの作成に失敗しました: {e}")
                
  
             else:
