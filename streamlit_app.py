@@ -75,9 +75,9 @@ elif st.session_state.month == 12 or st.session_state.month in (1, 2):
     month_serrect = "12~2"
 
 # 基本的な金額設定
-mens_money = 13000 + st.session_state.energy
-mens_total = 270400
-womans_total = 208000
+mens_money = 3000 + st.session_state.energy
+mens_total = 61000
+womans_total = 47000
 
 # パスワードをハッシュ化する関数
 def make_hashes(password):
