@@ -161,7 +161,7 @@ def main():
             st.image(images['butter'])
             st.image(images['bacon'])
 
- if choose == "アカウント作成":
+    if choose == "アカウント作成":
         st.subheader("ログイン画面です")
         username = st.sidebar.text_input("ユーザー名を入力してください")
         password = st.sidebar.text_input("パスワードを入力してください", type='password')
@@ -180,8 +180,8 @@ def main():
             else:
                 st.warning("ユーザー名かパスワードが間違っています")
  
-            if username == "さとうハオ":
-                st.success("こんにちは、佐藤葉緒さん！")
+            if username == "sky0404":
+                st.success("こんにちは、北山さん！")
  
                 if st.button("すべてのユーザーのデータを削除"):
                     if delete_all_users(conn):
