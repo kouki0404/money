@@ -153,8 +153,11 @@ def main():
     # ユーザー名の入力
     if 'username' in st.session_state and st.session_state.username:
         username = st.session_state['username']
-        menu.append("ゲーム画面", "肉類", "野菜", "調味料", "その他")
-        
+        menu.append("ゲーム画面")
+        menu.append("肉類")
+        menu.append("野菜")
+        menu.append("調味料")
+        menu.append("その他")
         # ゲーム画面
         if choose == "ゲーム画面":
             st.write(f"{st.session_state.month}月 {st.session_state.days}日 {youbi}曜日")
