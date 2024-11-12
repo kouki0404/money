@@ -147,7 +147,7 @@ def main():
     # データベースに接続
     conn = sqlite3.connect('database.db')
     create_user_table(conn)
-    menu = ["アカウント作成","ログイン","ゲーム画面"]
+    menu = ["アカウント作成","ログイン","メイン画面"]
     choose = st.sidebar.selectbox("",menu)
     # アイテム選択
     item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
@@ -160,13 +160,9 @@ def main():
 
         # ゲーム画面
         selected_item = st.sidebar.selectbox("基本値段", item_date)
-        if choose == "ゲーム画面" and reizouko == "ホーム":
+        if choose == "メイン画面" and reizouko == "ホーム":
             st.write(f"{st.session_state.month}月 {st.session_state.days}日 {youbi}曜日")
             st.write(f"初期金額 {mens_total} 円 (光熱費が引かれています)")
-            
-            # 食費の処理（仮）
-            food_expense = 1500
-            remaining_balance = mens_total - food_expense
             st.write(f"残金: {remaining_balance} 円")
             
             # Chatbot iframe
@@ -218,7 +214,7 @@ def main():
             if user_info:
                 st.session_state['username'] = username
                 st.success("{}さんでログインしました".format(username))
-                st.success('ホーム画面に移動して下さい')
+                st.success('メイン画面に移動して下さい')
  
                 # データ削除のオプション
             else:
