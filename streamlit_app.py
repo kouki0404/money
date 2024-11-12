@@ -91,6 +91,17 @@ def delete_study_data(conn, username, date):
 # ハッシュ化されたパスワードをチェックする関数
 def check_hashes(password, hashed_text):
     return make_hashes(password) == hashed_text
+def create_tables(con):
+    cc = con.cursor()
+    cc.execute('''
+        CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            message TEXT NOT NULL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    con.commit()
 # テーブルを作成（存在しない場合）
 def create_user_table(conn):
     c = conn.cursor()
@@ -102,6 +113,7 @@ def create_user_table(conn):
     c.execute('CREATE TABLE IF NOT EXISTS projects(username TEXT, project_name TEXT, progress REAL)')
     c.execute('CREATE TABLE IF NOT EXISTS events(username TEXT, date TEXT, description TEXT)')
     conn.commit()
+#新しいユーザーを追加する関数
 def add_user(conn, username, password):
     hashed_password = make_hashes(password)
     c = conn.cursor()
