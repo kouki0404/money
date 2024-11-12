@@ -151,7 +151,7 @@ def main():
 
         # ゲーム画面
         selected_item = st.sidebar.selectbox("基本値段", item_date)
-        if choose == "ゲーム画面" and reizouko == "ゲーム画面":
+        if choose == "ゲーム画面" and reizouko == "ホーム":
             st.write(f"{st.session_state.month}月 {st.session_state.days}日 {youbi}曜日")
             st.write(f"初期金額 {mens_total} 円 (光熱費が引かれています)")
             
