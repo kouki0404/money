@@ -142,11 +142,7 @@ def main():
     choose = st.sidebar.selectbox("",menu)
     # アイテム選択
     item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
-    
-    # 性別選択
-    gender = st.selectbox("性別を選んでください", ["性別を選択してください", "男", "女"])
 
-    
     # アイテム選択
     selected_item = st.sidebar.selectbox("基本値段", item_date)
 
@@ -221,6 +217,7 @@ def main():
         st.subheader("新しいアカウントを作成します")
         new_user = st.text_input("ユーザー名を入力してください")
         new_password = st.text_input("パスワードを入力してください", type='password')
+        gender = st.selectbox("性別を選んでください", ["性別を選択してください", "男", "女"])
  
         if st.button("サインアップ"):
             if check_user_exists(conn, new_user):
