@@ -133,6 +133,15 @@ def login_user(conn, username, password):
     if user and check_hashes(password, user[1]):  # user[1] はハッシュ化されたパスワード
         return user  # ユーザー情報を返す
     return None
+@st.cache_data
+def load_data():
+    main = pd.read_excel("基本ストーリー.xlsx")
+    special = pd.read_excel("金銭リスト.xlsx")
+    cook = pd.read_excel("栄養・材料の量の内訳.xlsx")
+    swich = pd.read_excel("Nextday.xlsx")
+    return pd.concat([main, special], ignore_index=True)
+
+words_df = load_data()
 # メイン関数
 def main():
     # データベースに接続
