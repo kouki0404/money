@@ -135,17 +135,36 @@ def login_user(conn, username, password):
     return None
 @st.cache_data
 def load_data():
-    main = pd.read_excel("基本ストーリー.xlsx")
-    special = pd.read_excel("金銭リスト.xlsx")
-    cook = pd.read_excel("栄養・材料の量の内訳.xlsx")
-    swich = pd.read_excel("Nextday.xlsx")
-    return pd.concat([main, special, cook, swich], ignore_index=True)
+    # Excelファイルの読み込み
+    try:
+        main = pd.read_excel("基本ストーリー.xlsx")
+        special = pd.read_excel("金銭リスト.xlsx")
+        cook = pd.read_excel("栄養・材料の量の内訳.xlsx")
+        swich = pd.read_excel("Nextday.xlsx")
+    except FileNotFoundError as e:
+        st.error(f"ファイルが見つかりません: {e}")
+        return pd.DataFrame()  # 空の DataFrame を返す
 
+    # 4つのDataFrameを連結して1つにまとめる
+    combined_df = pd.concat([main, special, cook, swich], ignore_index=True)
+    
+    return combined_df
+
+# データを読み込んで DataFrame に格納
 words_df = load_data()
 
-one = 1
-thirty = 30
-filtered_words_df = words_df[(words_df['No.'] >= one) & (words_df['No.'] <= thirty)].sort_values(by='No.')
+# データが空でないことを確認
+if words_df.empty:
+    st.warning("データが読み込まれていません。アプリケーションを確認してください。")
+else:
+    # 'No.'列のフィルタリングとソート
+    # 'No.'列が存在するか確認
+    if 'No.' not in words_df.columns:
+        st.error("'No.' 列がデータに存在しません。列名を確認してください。")
+    else:
+        one = 1
+        thirty = 30
+        filtered_words_df = words_df[(words_df['No.'] >= one) & (words_df['No.'] <= thirty)].sort_values(by='No.')
 # メイン関数
 def main():
     # データベースに接続
