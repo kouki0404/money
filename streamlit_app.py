@@ -143,7 +143,7 @@ def load_data():
 
 words_df = load_data()
 
-filtered_words_df = words_df[(words_df['No.'] > 0) and (words_df)].sort_values(by='No.')
+filtered_words_df = words_df[(words_df['No.'] >= 1) and (words_df['No.'] <= 30)].sort_values(by='No.')
 # メイン関数
 def main():
     # データベースに接続
