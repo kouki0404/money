@@ -215,8 +215,16 @@ def main():
                 st.session_state['username'] = username
                 st.success("{}さんでログインしました".format(username))
                 st.success('メイン画面に移動して下さい')
+
+                if username == "sky0404":
+                    st.success("こんにちは、北山さん！")
  
-                # データ削除のオプション
+                    if st.button("すべてのユーザーのデータを削除"):
+                        if delete_all_users(conn):
+                            st.success("すべてのユーザーのデータが削除されました。")
+                        else:
+                            st.error("削除に失敗しました")
+                
             else:
                 st.warning("ユーザー名かパスワードが間違っています")
     elif choose == "アカウント作成":
@@ -235,15 +243,6 @@ def main():
                     st.info("ログイン画面からログインしてください")
                 except Exception as e:
                     st.error(f"アカウントの作成に失敗しました: {e}")
-
- 
-            if username == "sky0404":
-                st.success("こんにちは、北山さん！")
- 
-                if st.button("すべてのユーザーのデータを削除"):
-                    if delete_all_users(conn):
-                        st.success("すべてのユーザーのデータが削除されました。")
-                    else:
-                        st.error("データの削除に失敗しました。")
+                    
 if __name__ == '__main__':
     main()
