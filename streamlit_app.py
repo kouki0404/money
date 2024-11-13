@@ -130,11 +130,7 @@ def login_user(conn, username, password):
 # データ読み込み関数
 @st.cache_data
 def load_data():
-    main = pd.read_excel("基本ストーリー.xlsx")
-    special = pd.read_excel("金銭リスト.xlsx")
-    cook = pd.read_excel("栄養・材料の量の内訳.xlsx")
-    swich = pd.read_excel("Nextday.xlsx")
-    return pd.concat([main, special, cook, swich], ignore_index=True)
+    return pd.read_excel("Nextday.xlsx")
 
 words_df = load_data()
 
