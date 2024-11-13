@@ -142,7 +142,10 @@ def load_data():
     return pd.concat([main, special, cook, swich], ignore_index=True)
 
 words_df = load_data()
-filtered_words_df = words_df[(words_df['No.'] >= 1) & (words_df['No.'] <= 30)].sort_values(by='No.')
+
+one = 1
+thirty = 30
+filtered_words_df = words_df[(words_df['No.'] >= one) & (words_df['No.'] <= thirty)].sort_values(by='No.')
 # メイン関数
 def main():
     # データベースに接続
