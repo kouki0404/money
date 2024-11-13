@@ -176,8 +176,8 @@ def main():
             def update_dish(material):
 
                 dish_word = st.session_state.current_dish_data['材料']
-                material_name = words_df[(words_df['材料名'])]
-                material_value = words_df[(words_df['値段'])]
+                material_name = words_df[(words_df['No.'] >= 31) & (words_df['No.'] <= 67)]
+                material_value = words_df[(words_df['No.'] >= 68) & (words_df['No.'] <= 104)]
                 if answer == correct_answer:
                     st.session_state.correct_answers += 1
 
