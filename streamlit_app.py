@@ -62,7 +62,7 @@ if 'username' not in st.session_state:
 # 曜日設定
 youbi_list = ["月", "火", "水", "木", "金", "土", "日"]
 youbi = youbi_list[st.session_state.days % 7]
-
+total_days = 7
 # 月に応じた条件設定
 month_serrect = ""
 if 3 <= st.session_state.month <= 5:
@@ -142,6 +142,8 @@ def load_data():
     return pd.concat([main, special], ignore_index=True)
 
 words_df = load_data()
+
+filtered_words_df = words_df[(words_df['料理名'])].sort_values(by='No.')
 # メイン関数
 def main():
     # データベースに接続
@@ -164,11 +166,22 @@ def main():
             st.write(f"{st.session_state.month}月 {st.session_state.days}日 {youbi}曜日")
             st.write(f"初期金額 {mens_total} 円 (光熱費が引かれています)")
             st.write(f"残金: {remaining_balance} 円")
-            
-            # Chatbot iframe
-            st.markdown("""
-            <iframe src="https://www.chatbase.co/chatbot-iframe/nVm1Yf2i4qWPwWDlr9itc" width="100%" style="height: 100%; min-height: 700px" frameborder="0"></iframe>
-            """, unsafe_allow_html=True)
+            selected_dishes = filtered_words_df.sample(4).reset_index(drop=True)
+            st.session_state.update({
+                'selected_dishes': selected_dishes,
+                'total_dishes': len(selected_dishes),
+                'current_dish_data': selected_dishes.iloc[0],
+            })
+            options = list(st.session_state.current_dish_data['材料'])
+            st.session_state.material = None
+            def update_dish(material):
+
+                dish_word = st.session_state.current_dish_data['材料']
+                material_name = words_df[(words_df['材料名'])]
+                material_value = words_df[(words_df['値段'])]
+                if answer == correct_answer:
+                    st.session_state.correct_answers += 1
+
         
         # 肉類、野菜、調味料、その他の選択
         images = load_images()

@@ -1,6 +1,11 @@
 #メモ
+# Chatbot iframe
+            st.markdown("""
+            <iframe src="https://www.chatbase.co/chatbot-iframe/nVm1Yf2i4qWPwWDlr9itc" width="100%" style="height: 100%; min-height: 700px" frameborder="0"></iframe>
+            """, unsafe_allow_html=True)
 #豚肉１パック１７０g
 
+ and words_df['材料'] and words_df['材料名'] and words_df['値段']
 st.html(
   <a href="https://google.com">google</a>
   #ルール
