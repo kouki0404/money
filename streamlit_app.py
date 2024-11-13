@@ -139,7 +139,7 @@ def load_data():
     special = pd.read_excel("金銭リスト.xlsx")
     cook = pd.read_excel("栄養・材料の量の内訳.xlsx")
     swich = pd.read_excel("Nextday.xlsx")
-    return pd.concat([main, special], ignore_index=True)
+    return pd.concat([main, special, cook, swich], ignore_index=True)
 
 words_df = load_data()
 filtered_words_df = words_df[(words_df['No.'] >= 1) & (words_df['No.'] <= 30)].sort_values(by='No.')
