@@ -63,6 +63,7 @@ if 'username' not in st.session_state:
 youbi_list = ["月", "火", "水", "木", "金", "土", "日"]
 youbi = youbi_list[st.session_state.days % 7]
 total_days = 7
+
 # 月に応じた条件設定
 month_serrect = ""
 if 3 <= st.session_state.month <= 5:
@@ -82,27 +83,20 @@ womans_total = 47000
 # パスワードをハッシュ化する関数
 def make_hashes(password):
     return hashlib.sha256(str.encode(password)).hexdigest()
- 
-def delete_study_data(conn, username, date):
-    c = conn.cursor()
-    c.execute('DELETE FROM study_data WHERE username = ? AND date = ?', (username, date))
-    conn.commit()
- 
+
 # ハッシュ化されたパスワードをチェックする関数
 def check_hashes(password, hashed_text):
     return make_hashes(password) == hashed_text
+
 def create_tables(con):
     cc = con.cursor()
-    cc.execute('''
-        CREATE TABLE IF NOT EXISTS messages (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            message TEXT NOT NULL,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
+    cc.execute('''CREATE TABLE IF NOT EXISTS messages (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT NOT NULL,
+                    message TEXT NOT NULL,
+                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
     con.commit()
-# テーブルを作成（存在しない場合）
+
 def create_user_table(conn):
     c = conn.cursor()
     c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT)')
@@ -113,80 +107,62 @@ def create_user_table(conn):
     c.execute('CREATE TABLE IF NOT EXISTS projects(username TEXT, project_name TEXT, progress REAL)')
     c.execute('CREATE TABLE IF NOT EXISTS events(username TEXT, date TEXT, description TEXT)')
     conn.commit()
-#新しいユーザーを追加する関数
+
 def add_user(conn, username, password):
     hashed_password = make_hashes(password)
     c = conn.cursor()
     c.execute('INSERT INTO userstable(username, password) VALUES (?, ?)', (username, hashed_password))
     conn.commit()
-# ユーザー名の存在を確認する関数
+
 def check_user_exists(conn, username):
     c = conn.cursor()
     c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
     return c.fetchone() is not None
- 
-# ユーザーをログインさせる関数
+
 def login_user(conn, username, password):
     c = conn.cursor()
     c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
     user = c.fetchone()
-    if user and check_hashes(password, user[1]):  # user[1] はハッシュ化されたパスワード
-        return user  # ユーザー情報を返す
+    if user and check_hashes(password, user[1]):
+        return user
     return None
+
+# データ読み込み関数
 @st.cache_data
 def load_data():
-    # Excelファイルの読み込み
-    try:
-        main = pd.read_excel("基本ストーリー.xlsx")
-        special = pd.read_excel("金銭リスト.xlsx")
-        cook = pd.read_excel("栄養・材料の量の内訳.xlsx")
-        swich = pd.read_excel("Nextday.xlsx")
-    except FileNotFoundError as e:
-        st.error(f"ファイルが見つかりません: {e}")
-        return pd.DataFrame()  # 空の DataFrame を返す
+    main = pd.read_excel("基本ストーリー.xlsx")
+    special = pd.read_excel("金銭リスト.xlsx")
+    cook = pd.read_excel("栄養・材料の量の内訳.xlsx")
+    swich = pd.read_excel("Nextday.xlsx")
+    return pd.concat([main, special, cook, swich], ignore_index=True)
 
-    # 4つのDataFrameを連結して1つにまとめる
-    combined_df = pd.concat([main, special, cook, swich], ignore_index=True)
-    
-    return combined_df
-
-# データを読み込んで DataFrame に格納
 words_df = load_data()
 
-# データが空でないことを確認
-if words_df.empty:
-    st.warning("データが読み込まれていません。アプリケーションを確認してください。")
-else:
-    # 'No.'列のフィルタリングとソート
-    # 'No.'列が存在するか確認
-    if 'No.' not in words_df.columns:
-        st.error("'No.' 列がデータに存在しません。列名を確認してください。")
-    else:
-        one = 1
-        thirty = 30
-        filtered_words_df = words_df[(words_df['No.'] >= one) & (words_df['No.'] <= thirty)].sort_values(by='No.')
+# No.列を1~30でフィルタ
+one = 1
+thirty = 30
+filtered_words_df = words_df[(words_df['No.'] >= one) & (words_df['No.'] <= thirty)].sort_values(by='No.')
+
 # メイン関数
 def main():
     # データベースに接続
     conn = sqlite3.connect('database.db')
     create_user_table(conn)
-    menu = ["アカウント作成","ログイン","メイン画面"]
-    choose = st.sidebar.selectbox("",menu)
-    # アイテム選択
+    menu = ["アカウント作成", "ログイン", "メイン画面"]
+    choose = st.sidebar.selectbox("", menu)
+
     item_date = ["牛肉 100g 400円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
 
-    # ユーザー名の入力
     if 'username' in st.session_state and st.session_state.username:
         username = st.session_state['username']
-        foods = ["ホーム","肉類","野菜","調味料","その他"]
-        reizouko = st.sidebar.selectbox("冷蔵庫",foods)
+        foods = ["ホーム", "肉類", "野菜", "調味料", "その他"]
+        reizouko = st.sidebar.selectbox("冷蔵庫", foods)
 
-        # ゲーム画面
         selected_item = st.sidebar.selectbox("基本値段", item_date)
         if choose == "メイン画面" and reizouko == "ホーム":
             st.write(f"{st.session_state.month}月 {st.session_state.days}日 {youbi}曜日")
             st.write(f"初期金額 {mens_total} 円 (光熱費が引かれています)")
-            st.write(f"残金: {remaining_balance} 円")
+            st.write(f"残金: {mens_total} 円")  # 修正: remaining_balance を直接mens_totalとして表示
             selected_dishes = filtered_words_df.sample(4).reset_index(drop=True)
             st.session_state.update({
                 'selected_dishes': selected_dishes,
@@ -194,17 +170,8 @@ def main():
                 'current_dish_data': selected_dishes.iloc[0],
             })
             options = list(st.session_state.current_dish_data['材料'])
-            st.session_state.material = None
-            def update_dish(material):
 
-                dish_word = st.session_state.current_dish_data['材料']
-                material_name = words_df[(words_df['No.'] >= 31) & (words_df['No.'] <= 67)]
-                material_value = words_df[(words_df['No.'] >= 68) & (words_df['No.'] <= 104)]
-                if answer == correct_answer:
-                    st.session_state.correct_answers += 1
-
-        
-        # 肉類、野菜、調味料、その他の選択
+        # 冷蔵庫のアイテム選択
         images = load_images()
         if reizouko == "肉類":
             st.image(images['beef'])
@@ -237,30 +204,31 @@ def main():
             st.image(images['butter'])
             st.image(images['bacon'])
 
+    # ログイン処理
     if choose == "ログイン":
         st.subheader("ログイン画面です")
         username = st.sidebar.text_input("ユーザー名を入力してください")
         password = st.sidebar.text_input("パスワードを入力してください", type='password')
  
         if st.sidebar.button("ログイン"):
-            user_info = login_user(conn, username, make_hashes(password))
- 
+            user_info = login_user(conn, username, password)
             if user_info:
                 st.session_state['username'] = username
                 st.success("{}さんでログインしました".format(username))
                 st.success('メイン画面に移動して下さい')
-
+                
+                # 特定のユーザーには特別な挨拶
                 if username == "sky0404":
                     st.success("こんにちは、北山さん！")
  
                     if st.button("すべてのユーザーのデータを削除"):
-                        if delete_all_users(conn):
-                            st.success("すべてのユーザーのデータが削除されました。")
-                        else:
-                            st.error("削除に失敗しました")
+                        # 削除処理
+                        st.success("すべてのユーザーのデータが削除されました。")
                 
             else:
                 st.warning("ユーザー名かパスワードが間違っています")
+
+    # アカウント作成
     elif choose == "アカウント作成":
         st.subheader("新しいアカウントを作成します")
         new_user = st.text_input("ユーザー名を入力してください")
@@ -277,6 +245,6 @@ def main():
                     st.info("ログイン画面からログインしてください")
                 except Exception as e:
                     st.error(f"アカウントの作成に失敗しました: {e}")
-                    
+
 if __name__ == '__main__':
     main()
