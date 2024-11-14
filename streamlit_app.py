@@ -168,8 +168,8 @@ def main():
         if choose == "メイン画面" and reizouko == "ホーム":
             st.session_state.update({
                 'test_started': True,
-                'correct_answers': 0,
-                'current_question': 0,
+                'correct_dish': 0,
+                'current_dish': 0,
                 'finished': False,
                 'wrong_answers': [],
             })
@@ -184,16 +184,15 @@ def main():
             })
             options = list(st.session_state.current_dish_data['材料'])
 
-
             np.random.shuffle(options)
             st.session_state.options = options
-            st.session_state.answer = None
-            def update_dish(answer):
-                correct_answer = st.session_state.current_question_data['語の意味']
-                question_word = st.session_state.current_question_data['単語']
+            st.session_state.dish = None
+            def update_dish(dish):
+                correct_dish = st.session_state.current_dish_data['料理名']
+                dish_value = st.session_state.current_dish_data['値段']
 
-                if answer == correct_answer:
-                    st.session_state.correct_answers += 1
+                if dish == correct_dish:
+                    st.session_state.correct_dish += 1
                 else:
                     st.session_state.wrong_answers.append((
                         st.session_state.current_question_data['No.'],
@@ -201,15 +200,11 @@ def main():
                         correct_answer
                     ))
 
-                st.session_state.current_question += 1
-                if st.session_state.current_question < st.session_state.total_questions:
+                st.session_state.current_dish += 1
+                if st.session_state.current_question < 9:
                     st.session_state.current_question_data = st.session_state.selected_questions.iloc[st.session_state.current_question]
-                    if test_type == '英語→日本語':
-                        options = list(st.session_state.selected_questions['語の意味'].sample(3))
-                        options.append(st.session_state.current_question_data['語の意味'])
-                    else:
-                        options = list(st.session_state.selected_questions['単語'].sample(3))
-                        options.append(st.session_state.current_question_data['単語'])
+                    options = list(st.session_state.selected_dishes['料理名'].sample(3))
+                    options.append(st.session_state.current_question_data['料理名'])
                     np.random.shuffle(options)
                     st.session_state.options = options
                     st.session_state.answer = None
