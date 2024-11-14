@@ -132,11 +132,10 @@ def load_data():
     # Excelファイルを読み込む
     df = pd.read_excel("Nextday.xlsx", header=0)
     
-    # 列名に余分な空白がないか確認して削除
-    df.columns = df.columns.str.strip()
+    # 列名を文字列に変換してからstripする
+    df.columns = df.columns.astype(str).str.strip()
     
     return df
-
 # データを読み込む
 words_df = load_data()
 
