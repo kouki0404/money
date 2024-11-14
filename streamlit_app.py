@@ -256,22 +256,13 @@ def main():
         st.subheader("ログイン画面です")
         username = st.sidebar.text_input("ユーザー名を入力してください")
         password = st.sidebar.text_input("パスワードを入力してください", type='password')
- 
+
         if st.sidebar.button("ログイン"):
             user_info = login_user(conn, username, password)
             if user_info:
-                st.session_state['username'] = username
-                st.success("{}さんでログインしました".format(username))
+                st.session_state['username'] = username  # ログイン時にセッションにユーザー名を保存
+                st.success(f"{username}さんでログインしました")
                 st.success('メイン画面に移動して下さい')
-                
-                # 特定のユーザーには特別な挨拶
-                if username == "sky0404":
-                    st.success("こんにちは、北山さん！")
- 
-                    if st.button("すべてのユーザーのデータを削除"):
-                        # 削除処理
-                        st.success("すべてのユーザーのデータが削除されました。")
-                
             else:
                 st.warning("ユーザー名かパスワードが間違っています")
 
@@ -288,10 +279,12 @@ def main():
             else:
                 try:
                     add_user(conn, new_user, make_hashes(new_password))
+                    st.session_state['username'] = new_user  # ここでセッションにユーザー名を設定
                     st.success("アカウントの作成に成功しました")
                     st.info("ログイン画面からログインしてください")
                 except Exception as e:
                     st.error(f"アカウントの作成に失敗しました: {e}")
+
 
 def display_results():
     correct_answers = st.session_state.correct_answers
