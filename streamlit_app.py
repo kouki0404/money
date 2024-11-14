@@ -127,11 +127,15 @@ def login_user(conn, username, password):
         return user
     return None
 
-# データ読み込み関数
 @st.cache_data
 def load_data():
-    # Excelファイルを読み込む（header=0 で1行目を列名として設定）
-    return pd.read_excel("Nextday.xlsx", header=0)
+    # Excelファイルを読み込む
+    df = pd.read_excel("Nextday.xlsx", header=0)
+    
+    # 列名に余分な空白がないか確認して削除
+    df.columns = df.columns.str.strip()
+    
+    return df
 
 # データを読み込む
 words_df = load_data()
