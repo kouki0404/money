@@ -150,6 +150,7 @@ else:
 
     # "No."列が dish_start から dish_end の範囲に含まれるデータをフィルタリングし、"No."列でソート
     filtered_words_df = words_df[(words_df['No.'] >= dish_start) & (words_df['No.'] <= dish_end)].sort_values(by='No.')
+print("Columns in words_df:", words_df.columns)
 # メイン関数
 def main():
     # データベースに接続
