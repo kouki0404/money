@@ -130,7 +130,8 @@ def login_user(conn, username, password):
 # データ読み込み関数
 @st.cache_data
 def load_data():
-    return pd.read_excel("Nextday.xlsx")
+    # Excelファイルを読み込む
+    return pd.read_excel("Nextday.xlsx", header=0)
 
 words_df = load_data()
 
