@@ -130,13 +130,17 @@ def login_user(conn, username, password):
 # データ読み込み関数
 @st.cache_data
 def load_data():
-    # Excelファイルを読み込む
+    # Excelファイルを読み込む（header=0 で1行目を列名として設定）
     return pd.read_excel("Nextday.xlsx", header=0)
 
+# データを読み込む
 words_df = load_data()
 
+# 定義した範囲でフィルタリング（dish_start と dish_end を適用）
 dish_start = 1
 dish_end = 252
+
+# "No."列が dish_start から dish_end の範囲に含まれるデータをフィルタリングし、"No."列でソート
 filtered_words_df = words_df[(words_df['No.'] >= dish_start) & (words_df['No.'] <= dish_end)].sort_values(by='No.')
 
 # メイン関数
