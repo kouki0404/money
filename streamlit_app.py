@@ -132,11 +132,11 @@ def load_data():
     # Excelファイルを読み込む
     df = pd.read_excel("Nextday.xlsx", header=0)
     
-    # 列名を文字列に変換してからstripする
+    # 列名を文字列に変換してからstripする（余分な空白を取り除く）
     df.columns = df.columns.astype(str).str.strip()
     
-    # 列名を確認して、正しい列名を確認（デバッグ用）
-    print("Columns in the dataframe:", df.columns)
+    # 列名を表示して確認（デバッグ用）
+    st.write("Columns in the dataframe:", df.columns)
     
     return df
 # データを読み込む
