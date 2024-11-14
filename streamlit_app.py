@@ -135,7 +135,7 @@ def load_data():
 words_df = load_data()
 
 dish_start = 1
-dish_end = 289
+dish_end = 252
 filtered_words_df = words_df[(words_df['No.'] >= dish_start) & (words_df['No.'] <= dish_end)].sort_values(by='No.')
 
 # メイン関数
