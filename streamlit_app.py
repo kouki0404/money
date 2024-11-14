@@ -135,7 +135,7 @@ def load_data():
 words_df = load_data()
 
 dish_start = 1
-dish_end = 185
+dish_end = 289
 filtered_words_df = words_df[(words_df['No.'] >= dish_start) & (words_df['No.'] <= dish_end)].sort_values(by='No.')
 
 # メイン関数
@@ -155,6 +155,13 @@ def main():
 
         selected_item = st.sidebar.selectbox("基本値段", item_date)
         if choose == "メイン画面" and reizouko == "ホーム":
+            st.session_state.update({
+                'test_started': True,
+                'correct_answers': 0,
+                'current_question': 0,
+                'finished': False,
+                'wrong_answers': [],
+            })
             st.write(f"{st.session_state.month}月 {st.session_state.days}日 {youbi}曜日")
             st.write(f"初期金額 {mens_total} 円 (光熱費が引かれています)")
             st.write(f"残金: {mens_total} 円")  # 修正: remaining_balance を直接mens_totalとして表示
@@ -165,6 +172,39 @@ def main():
                 'current_dish_data': selected_dishes.iloc[0],
             })
             options = list(st.session_state.current_dish_data['材料'])
+
+
+            np.random.shuffle(options)
+            st.session_state.options = options
+            st.session_state.answer = None
+            def update_dish(answer):
+                correct_answer = st.session_state.current_question_data['語の意味']
+                question_word = st.session_state.current_question_data['単語']
+
+                if answer == correct_answer:
+                    st.session_state.correct_answers += 1
+                else:
+                    st.session_state.wrong_answers.append((
+                        st.session_state.current_question_data['No.'],
+                        question_word,
+                        correct_answer
+                    ))
+
+                st.session_state.current_question += 1
+                if st.session_state.current_question < st.session_state.total_questions:
+                    st.session_state.current_question_data = st.session_state.selected_questions.iloc[st.session_state.current_question]
+                    if test_type == '英語→日本語':
+                        options = list(st.session_state.selected_questions['語の意味'].sample(3))
+                        options.append(st.session_state.current_question_data['語の意味'])
+                    else:
+                        options = list(st.session_state.selected_questions['単語'].sample(3))
+                        options.append(st.session_state.current_question_data['単語'])
+                    np.random.shuffle(options)
+                    st.session_state.options = options
+                    st.session_state.answer = None
+                else:
+                    st.session_state.finished = True
+                
 
         # 冷蔵庫のアイテム選択
         images = load_images()
@@ -198,6 +238,7 @@ def main():
             st.image(images['pasta'])
             st.image(images['butter'])
             st.image(images['bacon'])
+        
 
     # ログイン処理
     if choose == "ログイン":
@@ -240,6 +281,45 @@ def main():
                     st.info("ログイン画面からログインしてください")
                 except Exception as e:
                     st.error(f"アカウントの作成に失敗しました: {e}")
+
+def display_results():
+    correct_answers = st.session_state.correct_answers
+    total_questions = st.session_state.total_questions
+    wrong_answers = [wa for wa in st.session_state.wrong_answers if wa[0] in st.session_state.selected_questions['No.'].values]
+    accuracy = correct_answers / total_questions
+
+    st.write(f"終了！正解数: {correct_answers}/{total_questions}")
+    st.progress(accuracy)
+    
+    st.write("正解数と不正解数")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.metric("正解数", correct_answers)
+    with col2:
+        st.metric("不正解数", total_questions - correct_answers)
+
+    st.write(f"正答率: {accuracy:.0%}")
+    st.progress(accuracy)
+    
+    st.markdown('<div class="results-container">', unsafe_allow_html=True)
+    if wrong_answers:
+        df_wrong_answers = pd.DataFrame(wrong_answers, columns=["問題番号", "単語", "語の意味"])
+        df_wrong_answers = df_wrong_answers.sort_values(by="問題番号")
+        st.markdown(df_wrong_answers.to_html(classes='results-table'), unsafe_allow_html=True)
+    else:
+        st.write("間違えた問題はありません。")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+if 'test_started' in st.session_state and not st.session_state.finished:
+    st.subheader(f"問題 {st.session_state.current_question + 1} / {st.session_state.total_questions}")
+    st.subheader(f"{st.session_state.current_question_data['単語']}" if test_type == '英語→日本語' else f"{st.session_state.current_question_data['語の意味']}")
+    st.markdown('<div class="choices-container">', unsafe_allow_html=True)
+    for idx, option in enumerate(st.session_state.options):
+        st.button(option, key=f"button_{st.session_state.current_question}_{idx}", on_click=update_question, args=(option,))
+    st.markdown('</div>', unsafe_allow_html=True)
+else:
+    if 'test_started' in st.session_state and st.session_state.finished:
+        display_results()
 
 if __name__ == '__main__':
     main()
