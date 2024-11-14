@@ -142,14 +142,12 @@ def load_data():
 # データを読み込む
 words_df = load_data()
 if 'No.' not in words_df.columns:
-    st.error("The column 'No.' does not exist in the DataFrame.")
-else:
-    # 定義した範囲でフィルタリング（dish_start と dish_end を適用）
-    dish_start = 1
-    dish_end = 252
-
-    # "No."列が dish_start から dish_end の範囲に含まれるデータをフィルタリングし、"No."列でソート
-    filtered_words_df = words_df[(words_df['No.'] >= dish_start) & (words_df['No.'] <= dish_end)].sort_values(by='No.')
+    df.columns = ['No.', '材料', '料理名', '値段', 'タンパク質', '脂質', '炭水化物', '無機質', 'ビタミン']
+# 定義した範囲でフィルタリング（dish_start と dish_end を適用）
+dish_start = 1
+dish_end = 252
+# "No."列が dish_start から dish_end の範囲に含まれるデータをフィルタリングし、"No."列でソート
+filtered_words_df = words_df[(words_df['No.'] >= dish_start) & (words_df['No.'] <= dish_end)].sort_values(by='No.')
 print("Columns in words_df:", words_df.columns)
 # メイン関数
 def main():
