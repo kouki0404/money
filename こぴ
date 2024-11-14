@@ -248,37 +248,37 @@ def main():
         
     # ログイン処理
     if choose == "ログイン":
-    st.subheader("ログイン画面です")
-    username = st.sidebar.text_input("ユーザー名を入力してください")
-    password = st.sidebar.text_input("パスワードを入力してください", type='password')
+        st.subheader("ログイン画面です")
+        username = st.sidebar.text_input("ユーザー名を入力してください")
+        password = st.sidebar.text_input("パスワードを入力してください", type='password')
 
-    if st.sidebar.button("ログイン"):
-        if login_user(conn, username, password):
-            st.session_state['username'] = username  # ログイン時にセッションにユーザー名を保存
-            st.success(f"{username}さんでログインしました")
-            st.success('メイン画面に移動して下さい')
-        else:
-            st.warning("ログインに失敗しました。ユーザー名またはパスワードを確認してください。")
+        if st.sidebar.button("ログイン"):
+            user_info = login_user(conn, username, password)
+            if user_info:
+                st.session_state['username'] = username  # ログイン時にセッションにユーザー名を保存
+                st.success(f"{username}さんでログインしました")
+                st.success('メイン画面に移動して下さい')
+            else:
+                st.warning("ユーザー名かパスワードが間違っています")
 
-# アカウント作成画面
-elif choose == "アカウント作成":
-    st.subheader("新しいアカウントを作成します")
-    new_user = st.text_input("ユーザー名を入力してください")
-    new_password = st.text_input("パスワードを入力してください", type='password')
-    gender = st.selectbox("性別を選んでください", ["性別を選択してください", "男", "女"])
-
-    if st.button("サインアップ"):
-        if check_user_exists(conn, new_user):
-            st.error("このユーザー名は既に使用されています。別のユーザー名を選んでください。")
-        else:
-            try:
-                add_user(conn, new_user, make_hash
-
-
-
-
-
-
+    # アカウント作成
+    elif choose == "アカウント作成":
+        st.subheader("新しいアカウントを作成します")
+        new_user = st.text_input("ユーザー名を入力してください")
+        new_password = st.text_input("パスワードを入力してください", type='password')
+        gender = st.selectbox("性別を選んでください", ["性別を選択してください", "男", "女"])
+ 
+        if st.button("サインアップ"):
+            if check_user_exists(conn, new_user):
+                st.error("このユーザー名は既に使用されています。別のユーザー名を選んでください。")
+            else:
+                try:
+                    add_user(conn, new_user, make_hashes(new_password))
+                    st.session_state['username'] = new_user  # ここでセッションにユーザー名を設定
+                    st.success("アカウントの作成に成功しました")
+                    st.info("ログイン画面からログインしてください")
+                except Exception as e:
+                    st.error(f"アカウントの作成に失敗しました: {e}")
 
 
 def display_results():
