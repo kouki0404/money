@@ -131,15 +131,7 @@ def login_user(conn, username, password):
 def load_data():
     # Excelファイルを読み込む
     df = pd.read_excel("Nextday.xlsx", header=0)
-    
-    # 列名を文字列に変換してからstripする（余分な空白を取り除く）
     df.columns = df.columns.astype(str).str.strip()
-
-    # 実際の列数と列名を確認
-    st.write("Actual columns in the dataframe:", df.columns)
-    st.write("Number of columns:", len(df.columns))
-    
-    
     return df
 # データを読み込む
 words_df = load_data()
