@@ -311,7 +311,7 @@ def display_results():
 
 if 'test_started' in st.session_state and not st.session_state.finished:
     st.subheader(f"問題 {st.session_state.current_dish + 1} / {st.session_state.total_dishes}")
-    st.subheader(f"{st.session_state.current_dish_data['単語']}")
+    st.subheader(f"{st.session_state.current_dish_data['料理名']}")
     st.markdown('<div class="choices-container">', unsafe_allow_html=True)
     for idx, option in enumerate(st.session_state.options):
         st.button(option, key=f"button_{st.session_state.current_dish}_{idx}", on_click=update_dish, args=(option,))
