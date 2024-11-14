@@ -139,6 +139,7 @@ def load_data():
     st.write("Actual columns in the dataframe:", df.columns)
     st.write("Number of columns:", len(df.columns))
     
+    
     return df
 # データを読み込む
 words_df = load_data()
