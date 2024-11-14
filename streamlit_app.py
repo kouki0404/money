@@ -135,17 +135,21 @@ def load_data():
     # 列名を文字列に変換してからstripする
     df.columns = df.columns.astype(str).str.strip()
     
+    # 列名を確認して、正しい列名を確認（デバッグ用）
+    print("Columns in the dataframe:", df.columns)
+    
     return df
 # データを読み込む
 words_df = load_data()
+if 'No.' not in words_df.columns:
+    st.error("The column 'No.' does not exist in the DataFrame.")
+else:
+    # 定義した範囲でフィルタリング（dish_start と dish_end を適用）
+    dish_start = 1
+    dish_end = 252
 
-# 定義した範囲でフィルタリング（dish_start と dish_end を適用）
-dish_start = 1
-dish_end = 252
-
-# "No."列が dish_start から dish_end の範囲に含まれるデータをフィルタリングし、"No."列でソート
-filtered_words_df = words_df[(words_df['No.'] >= dish_start) & (words_df['No.'] <= dish_end)].sort_values(by='No.')
-
+    # "No."列が dish_start から dish_end の範囲に含まれるデータをフィルタリングし、"No."列でソート
+    filtered_words_df = words_df[(words_df['No.'] >= dish_start) & (words_df['No.'] <= dish_end)].sort_values(by='No.')
 # メイン関数
 def main():
     # データベースに接続
