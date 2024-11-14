@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import random
 from PIL import Image
 import sqlite3
@@ -245,7 +246,6 @@ def main():
             st.image(images['butter'])
             st.image(images['bacon'])
         
-
     # ログイン処理
     if choose == "ログイン":
         st.subheader("ログイン画面です")
