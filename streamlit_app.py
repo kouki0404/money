@@ -134,10 +134,9 @@ def load_data():
 
 words_df = load_data()
 
-# No.列を1~30でフィルタ
-one = 1
-thirty = 30
-filtered_words_df = words_df[(words_df['No.'] >= one) & (words_df['No.'] <= thirty)].sort_values(by='No.')
+dish_start = 1
+dish_end = 185
+filtered_words_df = words_df[(words_df['No.'] >= dish_start) & (words_df['No.'] <= dish_end)].sort_values(by='No.')
 
 # メイン関数
 def main():
