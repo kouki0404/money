@@ -223,7 +223,7 @@ def main():
                 # 料理名ボタンを表示
                 if st.session_state.selected_dish is None:
                     st.subheader("料理を選んでください")
-
+                
                     for idx, dish in enumerate(dishes_df['料理名']):
                         if st.button(dish, key=f"dish_{idx}"):
                             # 料理名を選んだ時にその料理の材料を設定
@@ -231,11 +231,11 @@ def main():
                             # 選ばれた料理の材料をsession_stateに保存
                             st.session_state.selected_ingredients = dishes_df[dishes_df['料理名'] == dish]['材料'].values[0]
                             st.experimental_rerun()  # ページを再読み込みして、材料ボタンを表示する
-
+                
                 # 料理を選んだ後に材料のボタンを表示
                 if st.session_state.selected_dish is not None:
                     st.subheader(f"{st.session_state.selected_dish} の材料を選んでください")
-
+                    
                     for idx, ingredient in enumerate(st.session_state.selected_ingredients):
                         if st.button(ingredient, key=f"ingredient_{idx}"):
                             st.write(f"選んだ材料: {ingredient}")
