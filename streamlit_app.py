@@ -212,13 +212,34 @@ def main():
                 else:
                     st.session_state.finished = True
             if 'test_started' in st.session_state and not st.session_state.finished:
-                st.subheader(f"問題 {st.session_state.current_dish + 1} / {st.session_state.total_dishes}")
+                st.subheader(f"料理")
                 st.subheader(f"{st.session_state.current_dish_data['料理名']}")
                 st.markdown('<div class="choices-container">', unsafe_allow_html=True)
-                for idx, option in enumerate(st.session_state.options):
-                    if st.button(option, key=f"button_{st.session_state.current_dish}_{idx}", on_click=update_dish, args=(option,)):
-                        st.button(option, key=f"button_{st.session_state.current_dish}_{idx}", on_click=update_dish, args=(option,))
-                st.markdown('</div>', unsafe_allow_html=True)
+                if 'selected_dish' not in st.session_state:
+                    st.session_state.selected_dish = None
+                if 'selected_ingredients' not in st.session_state:
+                    st.session_state.selected_ingredients = []
+
+                # 料理名ボタンを表示
+                if st.session_state.selected_dish is None:
+                    st.subheader("料理を選んでください")
+
+                    for idx, dish in enumerate(dishes_df['料理名']):
+                        if st.button(dish, key=f"dish_{idx}"):
+                            # 料理名を選んだ時にその料理の材料を設定
+                            st.session_state.selected_dish = dish
+                            # 選ばれた料理の材料をsession_stateに保存
+                            st.session_state.selected_ingredients = dishes_df[dishes_df['料理名'] == dish]['材料'].values[0]
+                            st.experimental_rerun()  # ページを再読み込みして、材料ボタンを表示する
+
+                # 料理を選んだ後に材料のボタンを表示
+                if st.session_state.selected_dish is not None:
+                    st.subheader(f"{st.session_state.selected_dish} の材料を選んでください")
+
+                    for idx, ingredient in enumerate(st.session_state.selected_ingredients):
+                        if st.button(ingredient, key=f"ingredient_{idx}"):
+                            st.write(f"選んだ材料: {ingredient}")
+                                st.markdown('</div>', unsafe_allow_html=True)
             else:
                 if 'test_started' in st.session_state and st.session_state.finished:
                     display_results()    
