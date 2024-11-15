@@ -83,7 +83,7 @@ womans_total = 47000
 
 # パスワードをハッシュ化する関数
 def make_hashes(password):
-    return hashlib.sha256(str.encode(password)).hexdigest()
+    return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
 # ハッシュ化されたパスワードをチェックする関数
 def check_hashes(password, hashed_text):
@@ -124,9 +124,10 @@ def login_user(conn, username, password):
     c = conn.cursor()
     c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
     user = c.fetchone()
-    if user and check_hashes(password, user[1]):
-        return user
-    return None
+    if user:
+        if check_hashes(password, user[1]):
+            return user  # ログイン成功
+    return None  # ユーザー名かパスワードが間違っている
 
 @st.cache_data
 def load_data():
@@ -259,7 +260,12 @@ def main():
                 st.success(f"{username}さんでログインしました")
                 st.success('メイン画面に移動して下さい')
             else:
-                st.warning("ユーザー名かパスワードが間違っています")
+                st.warning("ユーザー名またはパスワードが間違っています")
+                if 'username' in st.session_state and st.session_state['username']:
+                    username = st.session_state['username']
+                    # ここでメイン画面の表示を行う
+                else:
+                    # ユーザー名がセッションに保存されていない場合、ログイン画面を表示
 
     # アカウント作成
     elif choose == "アカウント作成":
