@@ -219,9 +219,9 @@ def main():
                     if st.button(option, key=f"button_{st.session_state.current_dish}_{idx}", on_click=update_dish, args=(option,)):
                         st.button(option, key=f"button_{st.session_state.current_dish}_{idx}", on_click=update_dish, args=(option,))
                 st.markdown('</div>', unsafe_allow_html=True)
-else:
-    if 'test_started' in st.session_state and st.session_state.finished:
-        display_results()    
+            else:
+                if 'test_started' in st.session_state and st.session_state.finished:
+                    display_results()    
 
         # 冷蔵庫のアイテム選択
         images = load_images()
