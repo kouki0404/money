@@ -316,28 +316,10 @@ def display_results():
     correct_answers = st.session_state.correct_answers
     total_questions = st.session_state.total_questions
     wrong_answers = [wa for wa in st.session_state.wrong_answers if wa[0] in st.session_state.selected_questions['No.'].values]
-    accuracy = correct_answers / total_questions
-
-    st.write(f"終了！正解数: {correct_answers}/{total_questions}")
-    st.progress(accuracy)
-    
-    st.write("正解数と不正解数")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.metric("正解数", correct_answers)
-    with col2:
-        st.metric("不正解数", total_questions - correct_answers)
-
-    st.write(f"正答率: {accuracy:.0%}")
-    st.progress(accuracy)
+    result = mens_total //100
+    st.write(f"終了！スコア: {result}")
     
     st.markdown('<div class="results-container">', unsafe_allow_html=True)
-    if wrong_answers:
-        df_wrong_answers = pd.DataFrame(wrong_answers, columns=["問題番号", "単語", "語の意味"])
-        df_wrong_answers = df_wrong_answers.sort_values(by="問題番号")
-        st.markdown(df_wrong_answers.to_html(classes='results-table'), unsafe_allow_html=True)
-    else:
-        st.write("間違えた問題はありません。")
     st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == '__main__':
