@@ -239,7 +239,7 @@ def main():
                     for idx, ingredient in enumerate(st.session_state.selected_ingredients):
                         if st.button(ingredient, key=f"ingredient_{idx}"):
                             st.write(f"選んだ材料: {ingredient}")
-                                st.markdown('</div>', unsafe_allow_html=True)
+                st.markdown('</div>', unsafe_allow_html=True)
             else:
                 if 'test_started' in st.session_state and st.session_state.finished:
                     display_results()    
