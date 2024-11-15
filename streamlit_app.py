@@ -264,8 +264,6 @@ def main():
                 if 'username' in st.session_state and st.session_state['username']:
                     username = st.session_state['username']
                     # ここでメイン画面の表示を行う
-                else:
-                    # ユーザー名がセッションに保存されていない場合、ログイン画面を表示
 
     # アカウント作成
     elif choose == "アカウント作成":
