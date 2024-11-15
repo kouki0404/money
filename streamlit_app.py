@@ -211,7 +211,17 @@ def main():
                     st.session_state.answer = None
                 else:
                     st.session_state.finished = True
-                
+            if 'test_started' in st.session_state and not st.session_state.finished:
+                st.subheader(f"問題 {st.session_state.current_dish + 1} / {st.session_state.total_dishes}")
+                st.subheader(f"{st.session_state.current_dish_data['料理名']}")
+                st.markdown('<div class="choices-container">', unsafe_allow_html=True)
+                for idx, option in enumerate(st.session_state.options):
+                    if st.button(option, key=f"button_{st.session_state.current_dish}_{idx}", on_click=update_dish, args=(option,)):
+                        st.button(option, key=f"button_{st.session_state.current_dish}_{idx}", on_click=update_dish, args=(option,))
+                st.markdown('</div>', unsafe_allow_html=True)
+else:
+    if 'test_started' in st.session_state and st.session_state.finished:
+        display_results()    
 
         # 冷蔵庫のアイテム選択
         images = load_images()
@@ -308,17 +318,6 @@ def display_results():
     else:
         st.write("間違えた問題はありません。")
     st.markdown('</div>', unsafe_allow_html=True)
-
-if 'test_started' in st.session_state and not st.session_state.finished:
-    st.subheader(f"問題 {st.session_state.current_dish + 1} / {st.session_state.total_dishes}")
-    st.subheader(f"{st.session_state.current_dish_data['料理名']}")
-    st.markdown('<div class="choices-container">', unsafe_allow_html=True)
-    for idx, option in enumerate(st.session_state.options):
-        st.button(option, key=f"button_{st.session_state.current_dish}_{idx}", on_click=update_dish, args=(option,))
-    st.markdown('</div>', unsafe_allow_html=True)
-else:
-    if 'test_started' in st.session_state and st.session_state.finished:
-        display_results()
 
 if __name__ == '__main__':
     main()
