@@ -177,7 +177,7 @@ def main():
             })
             times = ["朝","昼","夜"]
             days_total = st.session_state.days//3 + 1
-            st.write(f"{st.session_state.month}月 {st.session_state.days_total}日 {youbi}曜日{times[st.session_state.days_zone]}")
+            st.write(f"{st.session_state.month}月 {days_total}日 {youbi}曜日{times[st.session_state.days_zone]}")
             st.write(f"初期金額 {mens_total} 円 (光熱費が引かれています)")
             st.write(f"残金: {mens_total} 円")  # 修正: remaining_balance を直接mens_totalとして表示
             selected_dishes = filtered_words_df.sample(4).reset_index(drop=True)
