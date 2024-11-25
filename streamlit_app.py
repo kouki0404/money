@@ -59,7 +59,8 @@ if 'code' not in st.session_state:
     st.session_state.code = 0
 if 'username' not in st.session_state:
     st.session_state.username = ""
-
+if 'days_zone' not in st.session_state:
+    st.session_state.days_zone = 0
 # 曜日設定
 youbi_list = ["月", "火", "水", "木", "金", "土", "日"]
 youbi = youbi_list[st.session_state.days % 7]
@@ -174,7 +175,9 @@ def main():
                 'finished': False,
                 'wrong_answers': [],
             })
-            st.write(f"{st.session_state.month}月 {st.session_state.days}日 {youbi}曜日")
+            times = ["朝","昼","夜"]
+            days_total = st.session_state.days//3 + 1
+            st.write(f"{st.session_state.month}月 {st.session_state.days_total}日 {youbi}曜日{times[st.session_state.days_zone]}")
             st.write(f"初期金額 {mens_total} 円 (光熱費が引かれています)")
             st.write(f"残金: {mens_total} 円")  # 修正: remaining_balance を直接mens_totalとして表示
             selected_dishes = filtered_words_df.sample(4).reset_index(drop=True)
@@ -192,17 +195,8 @@ def main():
                 correct_dish = st.session_state.current_dish_data['料理名']
                 dish_value = st.session_state.current_dish_data['値段']
 
-                if dish == correct_dish:
-                    st.session_state.correct_dish += 1
-                else:
-                    st.session_state.wrong_answers.append((
-                        st.session_state.current_question_data['No.'],
-                        question_word,
-                        correct_answer
-                    ))
-
                 st.session_state.current_dish += 1
-                if st.session_state.current_question < 9:
+                if st.session_state.current_dish < 9:
                     st.session_state.current_question_data = st.session_state.selected_questions.iloc[st.session_state.current_question]
                     options = list(st.session_state.selected_dishes['料理名'].sample(3))
                     options.append(st.session_state.current_question_data['料理名'])
@@ -242,7 +236,11 @@ def main():
             else:
                 if 'test_started' in st.session_state and st.session_state.finished:
                     display_results()    
-
+            if st.button("決定"):
+                st.session_state.days += 1
+                st.session_state.days_zone += 1
+                if st.session_state.days_zone == 2:
+                    st.session_state.days_zone = 0
         # 冷蔵庫のアイテム選択
         images = load_images()
         if reizouko == "肉類":
