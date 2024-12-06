@@ -249,7 +249,7 @@ def main():
             if st.button("購入する"):
                 st.session_state.total_niku += niku
                 st.session_state.total_money -= (900 // 100) * niku
-            st.write(f"現在{total_niku}g")
+            st.write(f"現在{st.session_state.total_niku}g")
             st.image(images['pork'])
             st.image(images['chicken'])
             st.image(images['hamburger'])
