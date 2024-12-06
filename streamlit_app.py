@@ -243,7 +243,8 @@ def main():
         images = load_images()
         if reizouko == "肉類":
             st.image(images['beef'])
-            st.session_state.total_niku = 0
+            if 'total_niku' not in st.session_state:
+                st.session_state.total_niku = 0
             niku = st.number_input("購入する量 100g900円", min_value=100, max_value=1000, step=100)
             if st.button("購入する"):
                 st.session_state.total_niku += niku
