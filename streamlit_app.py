@@ -77,11 +77,6 @@ elif 9 <= st.session_state.month <= 11:
 elif st.session_state.month == 12 or st.session_state.month in (1, 2):
     month_serrect = "12~2"
 
-# 基本的な金額設定
-mens_money = 3000 + st.session_state.energy
-mens_total = 61000
-womans_total = 47000
-
 # パスワードをハッシュ化する関数
 def make_hashes(password):
     return hashlib.sha256(str.encode(password)).hexdigest()
@@ -177,9 +172,12 @@ def main():
             })
             times = ["朝","昼","夜"]
             days_total = st.session_state.days//3 + 1
+            if gender == '男':
+                total_money = 58000-st.session_state.energy
+            else:
+                total_money = 44000-st.session_state.energy
             st.write(f"{st.session_state.month}月 {days_total}日 {youbi}曜日{times[st.session_state.days_zone]}")
-            st.write(f"初期金額 {mens_total} 円 (光熱費が引かれています)")
-            st.write(f"残金: {mens_total} 円")  # 修正: remaining_balance を直接mens_totalとして表示
+            st.write(f"残金: {total_money} 円")  # 修正: remaining_balance を直接mens_totalとして表示
             selected_dishes = filtered_words_df.sample(4).reset_index(drop=True)
             st.session_state.update({
                 'selected_dishes': selected_dishes,
@@ -245,6 +243,12 @@ def main():
         images = load_images()
         if reizouko == "肉類":
             st.image(images['beef'])
+            total_niku = 0
+            st.write(f"現在{total_niku}g")
+            niku = st.number_input("購入する量 100g900円", min_value=100, max_value=1000, step=100)
+            if st.button("購入する"):
+                total_niku += niku
+                total_money -= 900//100*niku
             st.image(images['pork'])
             st.image(images['chicken'])
             st.image(images['hamburger'])
