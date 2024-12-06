@@ -244,11 +244,11 @@ def main():
         if reizouko == "肉類":
             st.image(images['beef'])
             total_niku = 0
-            st.write(f"現在{total_niku}g")
             niku = st.number_input("購入する量 100g900円", min_value=100, max_value=1000, step=100)
             if st.button("購入する"):
                 total_niku += niku
                 total_money -= 900//100*niku
+            st.write(f"現在{total_niku}g")
             st.image(images['pork'])
             st.image(images['chicken'])
             st.image(images['hamburger'])
