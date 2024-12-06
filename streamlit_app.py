@@ -299,8 +299,8 @@ def main():
         st.subheader("新しいアカウントを作成します")
         new_user = st.text_input("ユーザー名を入力してください")
         new_password = st.text_input("パスワードを入力してください", type='password')
-        gender = st.selectbox("性別を選んでください", ["男", "女"])
- 
+        gender = st.selectbox("性別を選んでください", ["男", "女"], index=0)  # デフォルト値を設定
+
         if st.button("サインアップ"):
             if check_user_exists(conn, new_user):
                 st.error("このユーザー名は既に使用されています。別のユーザー名を選んでください。")
@@ -312,8 +312,6 @@ def main():
                     st.info("ログイン画面からログインしてください")
                 except Exception as e:
                     st.error(f"アカウントの作成に失敗しました: {e}")
-
-
 def display_results():
     correct_answers = st.session_state.correct_answers
     total_questions = st.session_state.total_questions
