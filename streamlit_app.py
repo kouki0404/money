@@ -1,4 +1,4 @@
-import streamlit as st
+impimport streamlit as st
 import pandas as pd
 import numpy as np
 import random
@@ -85,15 +85,6 @@ def make_hashes(password):
 def check_hashes(password, hashed_text):
     return make_hashes(password) == hashed_text
 
-def create_tables(con):
-    cc = con.cursor()
-    cc.execute('''CREATE TABLE IF NOT EXISTS messages (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    username TEXT NOT NULL,
-                    message TEXT NOT NULL,
-                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
-    con.commit()
-
 def create_user_table(conn):
     c = conn.cursor()
     c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT, gender TEXT)')
@@ -108,8 +99,12 @@ def create_user_table(conn):
 def add_user(conn, username, password, gender):
     hashed_password = make_hashes(password)  # パスワードをハッシュ化
     c = conn.cursor()
-    c.execute('INSERT INTO userstable(username, password, gender) VALUES (?, ?, ?)', (username, hashed_password, gender))
-    conn.commit()
+    try:
+        c.execute('INSERT INTO userstable(username, password, gender) VALUES (?, ?, ?)', (username, hashed_password, gender))
+        conn.commit()
+        return True
+    except sqlite3.IntegrityError:
+        return False
 
 def get_gender():
     # 性別を選択するための関数
@@ -129,29 +124,6 @@ def login_user(conn, username, password):
         return user
     return None
 
-@st.cache_data
-def load_data():
-    # Excelファイルを読み込む
-    df = pd.read_excel("Nextday.xlsx", header=0)
-    df.columns = df.columns.astype(str).str.strip()
-    return df
-# データを読み込む
-words_df = load_data()
-print("Columns in words_df:", words_df.columns)
-
-# 読み込まれた列数が予想通りか確認
-expected_columns = ['No.', '材料', '料理名', '値段', 'タンパク質', '脂質', '炭水化物', '無機質', 'ビタミン']
-if len(words_df.columns) != len(expected_columns):
-    st.error(f"Expected {len(expected_columns)} columns, but found {len(words_df.columns)} columns.")
-else:
-    # 列名が一致した場合、列名を設定
-    words_df.columns = expected_columns
-dish_start = 1
-dish_end = 252
-# "No."列が dish_start から dish_end の範囲に含まれるデータをフィルタリングし、"No."列でソート
-filtered_words_df = words_df[(words_df['No.'] >= dish_start) & (words_df['No.'] <= dish_end)].sort_values(by='No.')
-print("Columns in words_df:", words_df.columns)
-# メイン関数
 def main():
     # データベースに接続
     conn = sqlite3.connect('database.db')
@@ -159,8 +131,41 @@ def main():
     menu = ["アカウント作成", "ログイン", "メイン画面"]
     choose = st.sidebar.selectbox("", menu)
 
-    item_date = ["牛肉 100g 900円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
+    # アカウント作成
+    if choose == "アカウント作成":
+        st.subheader("新しいアカウントを作成します")
+        new_user = st.text_input("ユーザー名を入力してください")
+        new_password = st.text_input("パスワードを入力してください", type='password')
 
+        # 性別を取得
+        gender = get_gender()
+
+        if st.button("サインアップ"):
+            if check_user_exists(conn, new_user):
+                st.error("このユーザー名は既に使用されています。別のユーザー名を選んでください。")
+            else:
+                # ユーザー名、ハッシュ化されたパスワード、性別をデータベースに保存
+                if add_user(conn, new_user, new_password, gender):
+                    st.session_state['username'] = new_user  # セッションにユーザー名を設定
+                    st.success("アカウントの作成に成功しました")
+                    st.info("ログイン画面からログインしてください")
+                else:
+                    st.error("アカウント作成に失敗しました。")
+
+    # ログイン処理
+    elif choose == "ログイン":
+        st.subheader("ログイン画面です")
+        username = st.sidebar.text_input("ユーザー名を入力してください")
+        password = st.sidebar.text_input("パスワードを入力してください", type='password')
+
+        if st.sidebar.button("ログイン"):
+            user_info = login_user(conn, username, password)
+            if user_info:
+                st.session_state['username'] = username  # ログイン時にセッションにユーザー名を保存
+                st.success(f"{username}さんでログインしました")
+                st.success('メイン画面に移動して下さい')
+            else:
+                st.warning("ユーザー名かパスワードが間違っています")
     if 'username' in st.session_state and st.session_state.username:
         username = st.session_state['username']
         foods = ["ホーム", "肉類", "野菜", "調味料", "その他"]
@@ -283,43 +288,6 @@ def main():
             st.image(images['pasta'])
             st.image(images['butter'])
             st.image(images['bacon'])
-        
-    # ログイン処理
-    if choose == "ログイン":
-        st.subheader("ログイン画面です")
-        username = st.sidebar.text_input("ユーザー名を入力してください")
-        password = st.sidebar.text_input("パスワードを入力してください", type='password')
-
-        if st.sidebar.button("ログイン"):
-            user_info = login_user(conn, username, password)
-            if user_info:
-                st.session_state['username'] = username  # ログイン時にセッションにユーザー名を保存
-                st.success(f"{username}さんでログインしました")
-                st.success('メイン画面に移動して下さい')
-            else:
-                st.warning("ユーザー名かパスワードが間違っています")
-
-    # アカウント作成
-    elif choose == "アカウント作成":
-        st.subheader("新しいアカウントを作成します")
-        new_user = st.text_input("ユーザー名を入力してください")
-        new_password = st.text_input("パスワードを入力してください", type='password')
-    
-        # 性別を取得
-        gender = get_gender()
-    
-        if st.button("サインアップ"):
-            if check_user_exists(conn, new_user):
-                st.error("このユーザー名は既に使用されています。別のユーザー名を選んでください。")
-            else:
-                try:
-                    # ユーザー名、ハッシュ化されたパスワード、性別をデータベースに保存
-                    add_user(conn, new_user, new_password, gender)
-                    st.session_state['username'] = new_user  # セッションにユーザー名を設定
-                    st.success("アカウントの作成に成功しました")
-                    st.info("ログイン画面からログインしてください")
-                except Exception as e:
-                    st.error(f"アカウントの作成に失敗しました: {e}")
 
 def display_results():
     correct_answers = st.session_state.correct_answers
