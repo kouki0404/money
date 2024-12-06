@@ -96,7 +96,7 @@ def create_tables(con):
 
 def create_user_table(conn):
     c = conn.cursor()
-    c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT, gender TEXT)')
     c.execute('CREATE TABLE IF NOT EXISTS user_data(username TEXT PRIMARY KEY, text_content TEXT)')
     c.execute('CREATE TABLE IF NOT EXISTS study_data(username TEXT, date TEXT, study_hours REAL, score INTEGER, subject TEXT)')
     c.execute('CREATE TABLE IF NOT EXISTS class_data(username TEXT PRIMARY KEY, class_grade TEXT)')
@@ -105,11 +105,16 @@ def create_user_table(conn):
     c.execute('CREATE TABLE IF NOT EXISTS events(username TEXT, date TEXT, description TEXT)')
     conn.commit()
 
-def add_user(conn, username, password):
-    hashed_password = make_hashes(password)
+def add_user(conn, username, password, gender):
+    hashed_password = make_hashes(password)  # パスワードをハッシュ化
     c = conn.cursor()
-    c.execute('INSERT INTO userstable(username, password) VALUES (?, ?)', (username, hashed_password))
+    c.execute('INSERT INTO userstable(username, password, gender) VALUES (?, ?, ?)', (username, hashed_password, gender))
     conn.commit()
+
+def get_gender():
+    # 性別を選択するための関数
+    gender = st.selectbox("性別を選んでください", ["男", "女"], index=0)  # デフォルト値を設定
+    return gender
 
 def check_user_exists(conn, username):
     c = conn.cursor()
@@ -299,20 +304,23 @@ def main():
         st.subheader("新しいアカウントを作成します")
         new_user = st.text_input("ユーザー名を入力してください")
         new_password = st.text_input("パスワードを入力してください", type='password')
-        gender = st.selectbox("性別を選んでください", ["男", "女"], index=0)  # デフォルト値を設定
-
+    
+        # 性別を取得
+        gender = get_gender()
+    
         if st.button("サインアップ"):
             if check_user_exists(conn, new_user):
                 st.error("このユーザー名は既に使用されています。別のユーザー名を選んでください。")
             else:
                 try:
-                    hashed_password = make_hashes(new_password)
-                    add_user(conn, new_user, hashed_password, gender)
-                    st.session_state['username'] = new_user  # ここでセッションにユーザー名を設定
+                    # ユーザー名、ハッシュ化されたパスワード、性別をデータベースに保存
+                    add_user(conn, new_user, new_password, gender)
+                    st.session_state['username'] = new_user  # セッションにユーザー名を設定
                     st.success("アカウントの作成に成功しました")
                     st.info("ログイン画面からログインしてください")
                 except Exception as e:
                     st.error(f"アカウントの作成に失敗しました: {e}")
+
 def display_results():
     correct_answers = st.session_state.correct_answers
     total_questions = st.session_state.total_questions
