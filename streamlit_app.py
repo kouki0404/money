@@ -298,7 +298,7 @@ def main():
         st.subheader("新しいアカウントを作成します")
         new_user = st.text_input("ユーザー名を入力してください")
         new_password = st.text_input("パスワードを入力してください", type='password')
-        gender = st.selectbox("性別を選んでください", ["性別を選択してください", "男", "女"])
+        gender = st.selectbox("性別を選んでください", ["男", "女"])
  
         if st.button("サインアップ"):
             if check_user_exists(conn, new_user):
