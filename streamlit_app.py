@@ -306,7 +306,8 @@ def main():
                 st.error("このユーザー名は既に使用されています。別のユーザー名を選んでください。")
             else:
                 try:
-                    add_user(conn, new_user, make_hashes(new_password))
+                    hashed_password = make_hashes(new_password)
+                    add_user(conn, new_user, hashed_password, gender)
                     st.session_state['username'] = new_user  # ここでセッションにユーザー名を設定
                     st.success("アカウントの作成に成功しました")
                     st.info("ログイン画面からログインしてください")
