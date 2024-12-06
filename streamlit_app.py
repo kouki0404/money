@@ -97,13 +97,29 @@ def create_user_table(conn):
     conn.commit()
 
 def add_user(conn, username, password, gender):
-    hashed_password = make_hashes(password)  # パスワードをハッシュ化
-    c = conn.cursor()
     try:
-        c.execute('INSERT INTO userstable(username, password, gender) VALUES (?, ?, ?)', (username, hashed_password, gender))
+        # パスワードをハッシュ化
+        hashed_password = make_hashes(password)
+
+        # カーソルを作成
+        c = conn.cursor()
+        
+        # ユーザーを追加するSQL文
+        c.execute('INSERT INTO userstable(username, password, gender) VALUES (?, ?, ?)', 
+                  (username, hashed_password, gender))
+        
+        # コミットして変更を保存
         conn.commit()
+        
+        # 成功した場合にTrueを返す
         return True
-    except sqlite3.IntegrityError:
+    except sqlite3.IntegrityError as e:
+        # ユーザー名が重複している場合など、IntegrityErrorをキャッチ
+        st.error(f"エラーが発生しました: {e}")
+        return False
+    except Exception as e:
+        # 他のエラーに対応するための一般的な例外処理
+        st.error(f"予期しないエラーが発生しました: {e}")
         return False
 
 def get_gender():
