@@ -202,6 +202,9 @@ def main():
                 total_money = 58000-st.session_state.energy
             else:
                 total_money = 44000-st.session_state.energy
+            
+            if 'total_money' not in st.session_state:
+                st.session_state.total_money = total_money
             st.write(f"{st.session_state.month}月 {days_total}日 {youbi}曜日{times[st.session_state.days_zone]}")
             st.write(f"残金: {total_money} 円")  # 修正: remaining_balance を直接mens_totalとして表示
             selected_dishes = filtered_words_df.sample(4).reset_index(drop=True)
