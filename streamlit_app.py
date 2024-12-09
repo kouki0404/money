@@ -140,6 +140,30 @@ def login_user(conn, username, password):
         return user
     return None
 
+@st.cache_data
+def load_data():
+    # Excelファイルを読み込む
+    df = pd.read_excel("Nextday.xlsx", header=0)
+    df.columns = df.columns.astype(str).str.strip()
+    return df
+# データを読み込む
+words_df = load_data()
+print("Columns in words_df:", words_df.columns)
+
+# 読み込まれた列数が予想通りか確認
+expected_columns = ['No.', '材料', '料理名', '値段', 'タンパク質', '脂質', '炭水化物', '無機質', 'ビタミン']
+if len(words_df.columns) != len(expected_columns):
+    st.error(f"Expected {len(expected_columns)} columns, but found {len(words_df.columns)} columns.")
+else:
+    # 列名が一致した場合、列名を設定
+    words_df.columns = expected_columns
+dish_start = 1
+dish_end = 252
+# "No."列が dish_start から dish_end の範囲に含まれるデータをフィルタリングし、"No."列でソート
+filtered_words_df = words_df[(words_df['No.'] >= dish_start) & (words_df['No.'] <= dish_end)].sort_values(by='No.')
+print("Columns in words_df:", words_df.columns)
+# メイン関数
+
 def main():
     # データベースに接続
     conn = sqlite3.connect('database.db')
@@ -186,6 +210,8 @@ def main():
         username = st.session_state['username']
         foods = ["ホーム", "肉類", "野菜", "調味料", "その他"]
         reizouko = st.sidebar.selectbox("冷蔵庫", foods)
+        item_date = ["牛肉 100g 900円", "豚肉 100g 200円", "鶏肉 100g 150円", "卵 1パック 200円", "米 5kg 2500円", "大根 1本 200円", "キャベツ 1玉 300円", "みそ 1パック 300円", "合いびき肉 100g 200円"]
+
 
         selected_item = st.sidebar.selectbox("基本値段", item_date)
         if choose == "メイン画面" and reizouko == "ホーム":
