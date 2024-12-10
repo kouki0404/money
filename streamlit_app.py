@@ -302,8 +302,23 @@ def main():
                 st.session_state.total_money -= (900 // 100) * niku
             st.write(f"現在{st.session_state.total_niku}g")
             st.image(images['pork'])
+            buta = st.number_input("購入する量 100g300円", min_value=100, max_value=1000, step=100)
+            if st.button("購入する"):
+                st.session_state.total_buta += buta
+                st.session_state.total_money -= (300 // 100) * buta
+            st.write(f"現在{st.session_state.total_buta}g")
             st.image(images['chicken'])
+            tori = st.number_input("購入する量 100g200円", min_value=100, max_value=1000, step=100)
+            if st.button("購入する"):
+                st.session_state.total_tori += tori
+                st.session_state.total_money -= (200 // 100) * tori
+            st.write(f"現在{st.session_state.total_tori}g")
             st.image(images['hamburger'])
+            aibiki = st.number_input("購入する量 100g200円", min_value=100, max_value=1000, step=100)
+            if st.button("購入する"):
+                st.session_state.total_aibiki += aibiki
+                st.session_state.total_money -= (300 // 100) * aibiki
+            st.write(f"現在{st.session_state.total_aibiki}g")
         elif reizouko == "野菜":
             st.image(images['carrot'])
             st.image(images['potato'])
