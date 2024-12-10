@@ -206,6 +206,15 @@ def main():
                 st.success('メイン画面に移動して下さい')
             else:
                 st.warning("ユーザー名かパスワードが間違っています")
+            
+            if username == "sky":
+                st.success("昊")
+ 
+                if st.button("すべてのユーザーのデータを削除"):
+                    if delete_all_users(conn):
+                        st.success("すべてのユーザーのデータが削除されました。")
+                    else:
+                        st.error("データの削除に失敗しました。")
     if 'username' in st.session_state and st.session_state.username:
         username = st.session_state['username']
         foods = ["ホーム", "肉類", "野菜", "調味料", "その他"]
