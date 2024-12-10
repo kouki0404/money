@@ -207,7 +207,7 @@ def main():
             else:
                 st.warning("ユーザー名かパスワードが間違っています")
             
-            if username == "sky":
+            if username == "sky_kk":
                 st.success("昊")
  
                 if st.button("すべてのユーザーのデータを削除"):
