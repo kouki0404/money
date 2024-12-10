@@ -61,6 +61,8 @@ if 'username' not in st.session_state:
     st.session_state.username = ""
 if 'days_zone' not in st.session_state:
     st.session_state.days_zone = 0
+if 'total_niku' not in st.session_state:
+    st.session_state.total_niku = 0
 # 曜日設定
 youbi_list = ["月", "火", "水", "木", "金", "土", "日"]
 youbi = youbi_list[st.session_state.days % 7]
@@ -307,8 +309,6 @@ def main():
         images = load_images()
         if reizouko == "肉類":
             st.image(images['beef'])
-            if 'total_niku' not in st.session_state:
-                st.session_state.total_niku = 0
             niku = st.number_input("購入する量 100g900円", min_value=100, max_value=1000, step=100)
             if st.button("購入する"):
                 st.session_state.total_niku += niku
