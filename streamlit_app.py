@@ -126,8 +126,6 @@ def add_user(conn, username, password):
         st.error(f"予期しないエラーが発生しました: {e}")
         return False
 
-def count_money():
-
 def check_user_exists(conn, username):
     c = conn.cursor()
     c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
