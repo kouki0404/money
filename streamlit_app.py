@@ -194,7 +194,7 @@ def main():
 
     # ログイン処理
     elif choose == "ログイン":
-        st.subheader("ログイン画面です")
+        st.subheader("ログイン画面")
         username = st.sidebar.text_input("ユーザー名を入力してください")
         password = st.sidebar.text_input("パスワードを入力してください", type='password')
 
