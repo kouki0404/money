@@ -92,7 +92,7 @@ def check_hashes(password, hashed_text):
 def create_user_table(conn):
     c = conn.cursor()
     c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT)')
-    c.execute('CREATE TABLE IF NOT EXISTS user_data(username TEXT PRIMARY KEY, text_content TEXT)')
+    c.execute('CREATE TABLE IF NOT EXISTS user_data(username TEXT PRIMARY KEY, text_content TEXT, total_niku REAL DEFAULT 0, total_buta REAL DEFAULT 0, total_tori REAL DEFAULT 0,total_aibiki REAL DEFAULT 0,total_ninnjinn REAL DEFAULT 0)')
     c.execute('CREATE TABLE IF NOT EXISTS study_data(username TEXT, date TEXT, study_hours REAL, score INTEGER, subject TEXT)')
     c.execute('CREATE TABLE IF NOT EXISTS class_data(username TEXT PRIMARY KEY, class_grade TEXT)')
     c.execute('CREATE TABLE IF NOT EXISTS goals(username TEXT PRIMARY KEY, goal TEXT)')
@@ -138,7 +138,61 @@ def login_user(conn, username, password):
     if user and check_hashes(password, user[1]):
         return user
     return None
-
+def save_total_niku_to_db(conn, username, total_niku):
+    c = conn.cursor()
+    c.execute('INSERT OR REPLACE INTO user_data (username, total_niku) VALUES (?, ?)', (username, total_niku))
+    conn.commit()
+def get_total_niku_from_db(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT total_niku FROM user_data WHERE username = ?', (username,))
+    result = c.fetchone()
+    if result:
+        return result[0]
+    return 0  # ユーザーがいない場合は0を返す
+def save_total_buta_to_db(conn, username, total_buta):
+    c = conn.cursor()
+    c.execute('INSERT OR REPLACE INTO user_data (username, total_buta) VALUES (?, ?)', (username, total_buta))
+    conn.commit()
+def get_total_buta_from_db(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT total_buta FROM user_data WHERE username = ?', (username,))
+    result = c.fetchone()
+    if result:
+        return result[0]
+    return 0  # ユーザーがいない場合は0を返す
+def save_total_tori_to_db(conn, username, total_tori):
+    c = conn.cursor()
+    c.execute('INSERT OR REPLACE INTO user_data (username, total_tori) VALUES (?, ?)', (username, total_tori))
+    conn.commit()
+def get_total_tori_from_db(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT total_tori FROM user_data WHERE username = ?', (username,))
+    result = c.fetchone()
+    if result:
+        return result[0]
+    return 0  # ユーザーがいない場合は0を返す
+    ve_total_aibiki_to_db(conn, username, total_aibiki):
+    c = conn.cursor()
+    c.execute('INSERT OR REPLACE INTO user_data (username, total_aibiki) VALUES (?, ?)', (username, total_aibiki))
+    conn.commit()
+def get_total_aibiki_from_db(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT total_aibiki FROM user_data WHERE username = ?', (username,))
+    result = c.fetchone()
+    if result:
+        return result[0]
+    return 0  # ユーザーがいない場合は0を返す
+        ve_total_ninnjinn_to_db(conn, username, total_ninnjinn):
+    c = conn.cursor()
+    c.execute('INSERT OR REPLACE INTO user_data (username, total_ninnjinn) VALUES (?, ?)', (username, total_ninnjinn))
+    conn.commit()
+def get_total_ninnjinn_from_db(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT total_ninnjinn FROM user_data WHERE username = ?', (username,))
+    result = c.fetchone()
+    if result:
+        return result[0]
+    return 0  # ユーザーがいない場合は0を返す
 @st.cache_data
 def load_data():
     # Excelファイルを読み込む
