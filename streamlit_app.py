@@ -17,7 +17,7 @@ def load_images():
         'carrot': Image.open('人参.png'),#ninnjinn
         'potato': Image.open('じゃがいも.png'),#jaga
         'onion': Image.open('玉ねぎ.png'),#tama
-        'cabbage': Image.open('キャベツ.png'),
+        'cabbage': Image.open('キャベツ.png'),#cabb
         'lettuce': Image.open('レタス.png'),
         'tomato': Image.open('トマト.png'),
         'cucumber': Image.open('きゅうり.png'),
@@ -92,7 +92,7 @@ def check_hashes(password, hashed_text):
 def create_user_table(conn):
     c = conn.cursor()
     c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT)')
-    c.execute('CREATE TABLE IF NOT EXISTS user_data(username TEXT PRIMARY KEY, text_content TEXT, total_niku REAL DEFAULT 0, total_buta REAL DEFAULT 0, total_tori REAL DEFAULT 0, total_aibiki REAL DEFAULT 0, total_ninnjinn REAL DEFAULT 0, total_jaga REAL DEFAULT 0, total_tama REAL DEFAULT 0)')
+    c.execute('CREATE TABLE IF NOT EXISTS user_data(username TEXT PRIMARY KEY, text_content TEXT, total_niku REAL DEFAULT 0, total_buta REAL DEFAULT 0, total_tori REAL DEFAULT 0, total_aibiki REAL DEFAULT 0, total_ninnjinn REAL DEFAULT 0, total_jaga REAL DEFAULT 0, total_tama REAL DEFAULT 0, total_cabb REAL DEFAULT 0)')#, total_X REAL DEFAULT 0
     c.execute('CREATE TABLE IF NOT EXISTS study_data(username TEXT, date TEXT, study_hours REAL, score INTEGER, subject TEXT)')
     c.execute('CREATE TABLE IF NOT EXISTS class_data(username TEXT PRIMARY KEY, class_grade TEXT)')
     c.execute('CREATE TABLE IF NOT EXISTS goals(username TEXT PRIMARY KEY, goal TEXT)')
@@ -138,6 +138,17 @@ def login_user(conn, username, password):
     if user and check_hashes(password, user[1]):
         return user
     return None
+#                ve_total_X_to_db(conn, username, total_X):
+#    c = conn.cursor()
+#    c.execute('INSERT OR REPLACE INTO user_data (username, total_X) VALUES (?, ?)', (username, total_X))
+#    conn.commit()
+#def get_total_jaga_from_db(conn, username):
+#    c = conn.cursor()
+#    c.execute('SELECT total_X FROM user_data WHERE username = ?', (username,))
+#    result = c.fetchone()
+#    if result:
+#        return result[0]
+#    return 0  # ユーザーがいない場合は0を返す
 def save_total_niku_to_db(conn, username, total_niku):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_niku) VALUES (?, ?)', (username, total_niku))
@@ -211,6 +222,17 @@ def get_total_jaga_from_db(conn, username):
 def get_total_jaga_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_tama FROM user_data WHERE username = ?', (username,))
+    result = c.fetchone()
+    if result:
+        return result[0]
+    return 0  # ユーザーがいない場合は0を返す
+                ve_total_cabb_to_db(conn, username, total_cabb):
+    c = conn.cursor()
+    c.execute('INSERT OR REPLACE INTO user_data (username, total_cabb) VALUES (?, ?)', (username, total_cabb))
+    conn.commit()
+def get_total_jaga_from_db(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT total_cabb FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
