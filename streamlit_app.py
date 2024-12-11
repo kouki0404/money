@@ -15,7 +15,7 @@ def load_images():
         'chicken': Image.open('鶏肉.png'),
         'hamburger': Image.open('合いびき肉.png'),
         'carrot': Image.open('人参.png'),
-        'potato': Image.open('じゃがいも.png'),
+        'potato': Image.open('じゃがいも.png'),#
         'onion': Image.open('玉ねぎ.png'),
         'cabbage': Image.open('キャベツ.png'),
         'lettuce': Image.open('レタス.png'),
