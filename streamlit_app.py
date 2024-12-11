@@ -15,7 +15,7 @@ def load_images():
         'chicken': Image.open('鶏肉.png'),
         'hamburger': Image.open('合いびき肉.png'),
         'carrot': Image.open('人参.png'),
-        'potato': Image.open('じゃがいも.png'),#
+        'potato': Image.open('じゃがいも.png'),#now
         'onion': Image.open('玉ねぎ.png'),
         'cabbage': Image.open('キャベツ.png'),
         'lettuce': Image.open('レタス.png'),
@@ -189,6 +189,17 @@ def get_total_aibiki_from_db(conn, username):
 def get_total_ninnjinn_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_ninnjinn FROM user_data WHERE username = ?', (username,))
+    result = c.fetchone()
+    if result:
+        return result[0]
+    return 0  # ユーザーがいない場合は0を返す
+        ve_total_aibiki_to_db(conn, username, total_jaga):
+    c = conn.cursor()
+    c.execute('INSERT OR REPLACE INTO user_data (username, total_aibiki) VALUES (?, ?)', (username, total_aibiki))
+    conn.commit()
+def get_total_aibiki_from_db(conn, username):
+    c = conn.cursor()
+    c.execute('SELECT total_aibiki FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
