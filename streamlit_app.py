@@ -299,13 +299,13 @@ def main():
             choice = st.selectbox("", material)
             glam = st.number_input("購入する量", min_value=100, max_value=1000, step=100)
             if st.button("購入する"):
-                if material == "牛肉 100g900円":
+                if choice == "牛肉 100g900円":
                     st.session_state.total_niku += glam
                     st.session_state.total_money -= (900 // 100) * glam
-                elif material == "豚肉 100g300円":
+                elif choice == "豚肉 100g300円":
                     st.session_state.total_buta += glam
                     st.session_state.total_money -= (300 // 100) * glam
-                elif material == "鶏肉 100g200円":
+                elif choice == "鶏肉 100g200円":
                     st.session_state.total_tori += glam
                     st.session_state.total_money -= (200 // 100) * glam
                 else:
