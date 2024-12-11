@@ -295,29 +295,29 @@ def main():
         # 冷蔵庫のアイテム選択
         images = load_images()
         if reizouko == "肉類":
-            st.image(images['beef'])
-            niku = st.number_input("購入する量 100g900円", min_value=100, max_value=1000, step=100)
+            material = ["牛肉 100g900円", "豚肉 100g300円", "鶏肉 100g200円", "合いびき肉 100g200円"]
+            choice = st.selectbox("", material)
+            glam = st.number_input("購入する量", min_value=100, max_value=1000, step=100)
             if st.button("購入する"):
-                st.session_state.total_niku += niku
-                st.session_state.total_money -= (900 // 100) * niku
+                if material == "牛肉 100g900円":
+                    st.session_state.total_niku += glam
+                    st.session_state.total_money -= (900 // 100) * glam
+                elif material == "豚肉 100g300円":
+                    st.session_state.total_buta += glam
+                    st.session_state.total_money -= (300 // 100) * glam
+                elif material == "鶏肉 100g200円":
+                    st.session_state.total_tori += glam
+                    st.session_state.total_money -= (200 // 100) * glam
+                else:
+                    st.session_state.total_aibiki += glam 
+                    st.session_state.total_money -= (200 // 100) * glam
+            st.image(images['beef'])
             st.write(f"現在{st.session_state.total_niku}g")
             st.image(images['pork'])
-            buta = st.number_input("購入する量 100g300円", min_value=100, max_value=1000, step=100)
-            if st.button("購入する"):
-                st.session_state.total_buta += buta
-                st.session_state.total_money -= (300 // 100) * buta
             st.write(f"現在{st.session_state.total_buta}g")
             st.image(images['chicken'])
-            tori = st.number_input("購入する量 100g200円", min_value=100, max_value=1000, step=100)
-            if st.button("購入する"):
-                st.session_state.total_tori += tori
-                st.session_state.total_money -= (200 // 100) * tori
             st.write(f"現在{st.session_state.total_tori}g")
             st.image(images['hamburger'])
-            aibiki = st.number_input("購入する量 100g200円", min_value=100, max_value=1000, step=100)
-            if st.button("購入する"):
-                st.session_state.total_aibiki += aibiki
-                st.session_state.total_money -= (300 // 100) * aibiki
             st.write(f"現在{st.session_state.total_aibiki}g")
         elif reizouko == "野菜":
             st.image(images['carrot'])
