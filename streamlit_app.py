@@ -89,10 +89,13 @@ def make_hashes(password):
 def check_hashes(password, hashed_text):
     return make_hashes(password) == hashed_text
 
+# ユーザーテーブルとその他のテーブルを作成する関数
 def create_user_table(conn):
     c = conn.cursor()
+    # ユーザー情報を格納するテーブル
     c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT)')
-    c.execute('CREATE TABLE IF NOT EXISTS user_data(username TEXT PRIMARY KEY, text_content TEXT, total_niku REAL DEFAULT 0, total_buta REAL DEFAULT 0, total_tori REAL DEFAULT 0, total_aibiki REAL DEFAULT 0, total_ninnjinn REAL DEFAULT 0, total_jaga REAL DEFAULT 0, total_tama REAL DEFAULT 0, total_cabb REAL DEFAULT 0, total_lett REAL DEFAULT 0, total_tomato REAL DEFAULT 0, total_cucu REAL DEFAULT 0, total_shiitake REAL DEFAULT 0, total_gobo REAL DEFAULT 0, total_broc REAL DEFAULT 0, total_negi REAL DEFAULT 0, total_nira REAL DEFAULT 0, total_garl REAL DEFAULT 0, total_pepp REAL DEFAULT 0, total_ging REAL DEFAULT 0, total_peas REAL DEFAULT 0, total_bamboo REAL DEFAULT 0, total_salt REAL DEFAULT 0, total_sugar REAL DEFAULT 0, total_soy REAL DEFAULT 0, total_miso REAL DEFAULT 0, total_sala REAL DEFAULT 0, total_rice REAL DEFAULT 0, total_saba REAL DEFAULT 0, total_soba REAL DEFAULT 0, total_pasta REAL DEFAULT 0, total_butt REAL DEFAULT 0, total_bacon REAL DEFAULT 0, total_ebi REAL DEFAULT 0, total_tofu REAL DEFAULT 0)')#, total_X REAL DEFAULT 0
+    # その他のテーブルを作成
+    c.execute('CREATE TABLE IF NOT EXISTS user_data(username TEXT PRIMARY KEY, text_content TEXT, total_niku REAL DEFAULT 0, total_buta REAL DEFAULT 0, total_tori REAL DEFAULT 0, total_aibiki REAL DEFAULT 0, total_ninnjinn REAL DEFAULT 0, total_jaga REAL DEFAULT 0, total_tama REAL DEFAULT 0, total_cabb REAL DEFAULT 0, total_lett REAL DEFAULT 0, total_tomato REAL DEFAULT 0, total_cucu REAL DEFAULT 0, total_shiitake REAL DEFAULT 0, total_gobo REAL DEFAULT 0, total_broc REAL DEFAULT 0, total_negi REAL DEFAULT 0, total_nira REAL DEFAULT 0, total_garl REAL DEFAULT 0, total_pepp REAL DEFAULT 0, total_ging REAL DEFAULT 0, total_peas REAL DEFAULT 0, total_bamboo REAL DEFAULT 0, total_salt REAL DEFAULT 0, total_sugar REAL DEFAULT 0, total_soy REAL DEFAULT 0, total_miso REAL DEFAULT 0, total_sala REAL DEFAULT 0, total_rice REAL DEFAULT 0, total_saba REAL DEFAULT 0, total_soba REAL DEFAULT 0, total_pasta REAL DEFAULT 0, total_butt REAL DEFAULT 0, total_bacon REAL DEFAULT 0, total_ebi REAL DEFAULT 0, total_tofu REAL DEFAULT 0)')
     c.execute('CREATE TABLE IF NOT EXISTS study_data(username TEXT, date TEXT, study_hours REAL, score INTEGER, subject TEXT)')
     c.execute('CREATE TABLE IF NOT EXISTS class_data(username TEXT PRIMARY KEY, class_grade TEXT)')
     c.execute('CREATE TABLE IF NOT EXISTS goals(username TEXT PRIMARY KEY, goal TEXT)')
@@ -100,6 +103,7 @@ def create_user_table(conn):
     c.execute('CREATE TABLE IF NOT EXISTS events(username TEXT, date TEXT, description TEXT)')
     conn.commit()
 
+# ユーザーをデータベースに追加する関数
 def add_user(conn, username, password):
     try:
         # パスワードをハッシュ化
@@ -109,8 +113,7 @@ def add_user(conn, username, password):
         c = conn.cursor()
         
         # ユーザーを追加するSQL文
-        c.execute('INSERT INTO userstable(username, password) VALUES (?, ?, ?)', 
-                  (username, hashed_password))
+        c.execute('INSERT INTO userstable(username, password) VALUES (?, ?)', (username, hashed_password))
         
         # コミットして変更を保存
         conn.commit()
@@ -126,11 +129,13 @@ def add_user(conn, username, password):
         st.error(f"予期しないエラーが発生しました: {e}")
         return False
 
+# ユーザーが存在するかチェックする関数
 def check_user_exists(conn, username):
     c = conn.cursor()
     c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
     return c.fetchone() is not None
 
+# ユーザーのログインを確認する関数
 def login_user(conn, username, password):
     c = conn.cursor()
     c.execute('SELECT * FROM userstable WHERE username = ?', (username,))
@@ -565,24 +570,23 @@ def main():
     menu = ["アカウント作成", "ログイン", "メイン画面"]
     choose = st.sidebar.selectbox("", menu)
 
-    # アカウント作成
+    # 新規アカウント作成部分
     if choose == "アカウント作成":
         st.subheader("新しいアカウントを作成します")
         new_user = st.text_input("ユーザー名を入力してください")
         new_password = st.text_input("パスワードを入力してください", type='password')
-
+    
         if st.button("サインアップ"):
             if check_user_exists(conn, new_user):
                 st.error("このユーザー名は既に使用されています。別のユーザー名を選んでください。")
             else:
-                # ユーザー名、ハッシュ化されたパスワード、性別をデータベースに保存
+                # ユーザー名、ハッシュ化されたパスワードをデータベースに保存
                 if add_user(conn, new_user, new_password):
                     st.session_state['username'] = new_user  # セッションにユーザー名を設定
                     st.success("アカウントの作成に成功しました")
                     st.info("ログイン画面からログインしてください")
                 else:
                     st.error("アカウント作成に失敗しました。")
-
     # ログイン処理
     elif choose == "ログイン":
         st.subheader("ログイン画面")
