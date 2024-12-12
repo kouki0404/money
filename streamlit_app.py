@@ -437,7 +437,7 @@ def get_total_sala_from_db(conn, username):
     return 0  # ユーザーがいない場合は0を返す
 def save_total_rice_to_db(conn, username, total_rice):
     c = conn.cursor()
-    c.execute('INSERT OR REPLACE INTO user_data (username, total_rice) VALUES (?, ?)', (username, total_eice))
+    c.execute('INSERT OR REPLACE INTO user_data (username, total_rice) VALUES (?, ?)', (username, total_rice))
     conn.commit()
 def get_total_rice_from_db(conn, username):
     c = conn.cursor()
