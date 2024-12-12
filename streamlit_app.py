@@ -79,6 +79,10 @@ elif 9 <= st.session_state.month <= 11:
 elif st.session_state.month == 12 or st.session_state.month in (1, 2):
     month_serrect = "12~2"
 
+# セッション状態の初期化
+initialize_session_state()
+# DB接続
+conn = sqlite3.connect('user_data.db')
 # パスワードをハッシュ化する関数
 def make_hashes(password):
     return hashlib.sha256(str.encode(password)).hexdigest()
