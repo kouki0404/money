@@ -182,7 +182,7 @@ def get_total_tori_from_db(conn, username):
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-    ve_total_aibiki_to_db(conn, username, total_aibiki):
+def save_total_aibiki_to_db(conn, username, total_aibiki):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_aibiki) VALUES (?, ?)', (username, total_aibiki))
     conn.commit()
@@ -193,7 +193,7 @@ def get_total_aibiki_from_db(conn, username):
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-        ve_total_ninnjinn_to_db(conn, username, total_ninnjinn):
+def save_total_ninnjinn_to_db(conn, username, total_ninnjinn):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_ninnjinn) VALUES (?, ?)', (username, total_ninnjinn))
     conn.commit()
@@ -204,7 +204,7 @@ def get_total_ninnjinn_from_db(conn, username):
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-        ve_total_jaga_to_db(conn, username, total_jaga):
+def save_total_jaga_to_db(conn, username, total_jaga):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_jaga) VALUES (?, ?)', (username, total_jaga))
     conn.commit()
@@ -215,282 +215,282 @@ def get_total_jaga_from_db(conn, username):
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-            ve_total_tama_to_db(conn, username, total_tama):
+def save_total_tama_to_db(conn, username, total_tama):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_tama) VALUES (?, ?)', (username, total_tama))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_tama_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_tama FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_cabb_to_db(conn, username, total_cabb):
+def save_total_cabb_to_db(conn, username, total_cabb):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_cabb) VALUES (?, ?)', (username, total_cabb))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_cabb_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_cabb FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_lett_to_db(conn, username, total_lett):
+def save_total_lett_to_db(conn, username, total_lett):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_lett) VALUES (?, ?)', (username, total_lett))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_lett_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_lett FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_tomato_to_db(conn, username, total_tomato):
+def save_total_tomato_to_db(conn, username, total_tomato):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_tomato) VALUES (?, ?)', (username, total_tomato))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_tomato_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_tomato FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_cucu_to_db(conn, username, total_cucu):
+def save_total_cucu_to_db(conn, username, total_cucu):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_cucu) VALUES (?, ?)', (username, total_cucu))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_cucu_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_cucu FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_shiitake_to_db(conn, username, total_shiitake):
+def save_total_shiitake_to_db(conn, username, total_shiitake):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_shiitake) VALUES (?, ?)', (username, total_shiitake))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_shiitake_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_shiitake FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_gobo_to_db(conn, username, total_gobo):
+def save_total_gobo_to_db(conn, username, total_gobo):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_gobo) VALUES (?, ?)', (username, total_gobo))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_gobo_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_gobo FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_broc_to_db(conn, username, total_broc):
+def save_total_broc_to_db(conn, username, total_broc):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_broc) VALUES (?, ?)', (username, total_broc))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_broc_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_broc FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_negi_to_db(conn, username, total_negi):
+def save_total_negi_to_db(conn, username, total_negi):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_negi) VALUES (?, ?)', (username, total_negi))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_negi_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_negi FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_nira_to_db(conn, username, total_nira):
+def save_total_nira_to_db(conn, username, total_nira):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_nira) VALUES (?, ?)', (username, total_nira))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_nira_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_nira FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_garl_to_db(conn, username, total_garl):
+def save_total_garl_to_db(conn, username, total_garl):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_garl) VALUES (?, ?)', (username, total_garl))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_garl_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_garl FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_pepp_to_db(conn, username, total_pepp):
+def save_total_pepp_to_db(conn, username, total_pepp):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_pepp) VALUES (?, ?)', (username, total_pepp))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_pepp_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_pepp FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_ging_to_db(conn, username, total_ging):
+def save_total_ging_to_db(conn, username, total_ging):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_ging) VALUES (?, ?)', (username, total_ging))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_ging_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_ging FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_peas_to_db(conn, username, total_peas):
+def save_total_peas_to_db(conn, username, total_peas):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_peas) VALUES (?, ?)', (username, total_peas))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_peas_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_peas FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_bamboo_to_db(conn, username, total_bamboo):
+def save_total_bamboo_to_db(conn, username, total_bamboo):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_bamboo) VALUES (?, ?)', (username, total_bamboo))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_bamboo_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_bamboo FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_salt_to_db(conn, username, total_salt):
+def save_total_salt_to_db(conn, username, total_salt):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_salt) VALUES (?, ?)', (username, total_salt))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_salt_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_salt FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_sugar_to_db(conn, username, total_sugar):
+def save_total_sugar_to_db(conn, username, total_sugar):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_sugar) VALUES (?, ?)', (username, total_sugar))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_suger_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_sugar FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_soy_to_db(conn, username, total_soy):
+def save_total_soy_to_db(conn, username, total_soy):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_soy) VALUES (?, ?)', (username, total_soy))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_soy_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_soy FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_miso_to_db(conn, username, total_miso):
+def save_total_miso_to_db(conn, username, total_miso):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_miso) VALUES (?, ?)', (username, total_miso))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_miso_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_miso FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_sala_to_db(conn, username, total_sala):
+def save_total_sala_to_db(conn, username, total_sala):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_sala) VALUES (?, ?)', (username, total_sala))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_sala_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_sala FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_rice_to_db(conn, username, total_rice):
+def save_total_rice_to_db(conn, username, total_rice):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_rice) VALUES (?, ?)', (username, total_eice))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_rice_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_rice FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_egg_to_db(conn, username, total_egg):
+def save_total_egg_to_db(conn, username, total_egg):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_egg) VALUES (?, ?)', (username, total_egg))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_egg_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_egg FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_saba_to_db(conn, username, total_saba):
+def save_total_saba_to_db(conn, username, total_saba):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_saba) VALUES (?, ?)', (username, total_saba))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_saba_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_saba FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_soba_to_db(conn, username, total_soba):
+def save_total_soba_to_db(conn, username, total_soba):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_soba) VALUES (?, ?)', (username, total_soba))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_soba_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_soba FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_pasta_to_db(conn, username, total_pasta):
+def save_total_pasta_to_db(conn, username, total_pasta):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_pasta) VALUES (?, ?)', (username, total_pasta))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_pasta_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_pasta FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_butt_to_db(conn, username, total_butt):
+def save_total_butt_to_db(conn, username, total_butt):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_butt) VALUES (?, ?)', (username, total_butt))
     conn.commit()
@@ -505,29 +505,29 @@ def get_total_jaga_from_db(conn, username):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_bacon) VALUES (?, ?)', (username, total_bacon))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_bacon_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_bacon FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_ebi_to_db(conn, username, total_ebi):
+def save_total_ebi_to_db(conn, username, total_ebi):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_ebi) VALUES (?, ?)', (username, total_ebi))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_ebi_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_ebi FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_tofu_to_db(conn, username, total_tofu):
+def save_total_tofu_to_db(conn, username, total_tofu):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_tofu) VALUES (?, ?)', (username, total_tofu))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_tofu_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_tofu FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
