@@ -501,7 +501,7 @@ def get_total_butt_from_db(conn, username):
     if result:
         return result[0]
     return 0  # ユーザーがいない場合は0を返す
-                ve_total_bacon_to_db(conn, username, total_bacon):
+def save_total_bacon_to_db(conn, username, total_bacon):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_bacon) VALUES (?, ?)', (username, total_bacon))
     conn.commit()
