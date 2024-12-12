@@ -63,8 +63,6 @@ if 'days_zone' not in st.session_state:
     st.session_state.days_zone = 0
 if 'total_money' not in st.session_state:
     st.session_state.total_money = 100000
-if 'total_niku' not in st.session_state:
-    st.session_state.total_niku = 0
 # 曜日設定
 youbi_list = ["月", "火", "水", "木", "金", "土", "日"]
 youbi = youbi_list[st.session_state.days % 7]
@@ -575,7 +573,7 @@ def main():
         st.subheader("新しいアカウントを作成します")
         new_user = st.text_input("ユーザー名を入力してください")
         new_password = st.text_input("パスワードを入力してください", type='password')
-    
+
         if st.button("サインアップ"):
             if check_user_exists(conn, new_user):
                 st.error("このユーザー名は既に使用されています。別のユーザー名を選んでください。")
@@ -699,25 +697,25 @@ def main():
             glam = st.number_input("購入する量", min_value=100, max_value=1000, step=100)
             if st.button("購入する"):
                 if choice == "牛肉 100g900円":
-                    st.session_state.total_niku += glam
+                    total_niku += glam
                     st.session_state.total_money -= (900 // 100) * glam
                 elif choice == "豚肉 100g300円":
-                    st.session_state.total_buta += glam
+                    total_buta += glam
                     st.session_state.total_money -= (300 // 100) * glam
                 elif choice == "鶏肉 100g200円":
-                    st.session_state.total_tori += glam
+                    total_tori += glam
                     st.session_state.total_money -= (200 // 100) * glam
                 else:
-                    st.session_state.total_aibiki += glam 
+                    total_aibiki += glam 
                     st.session_state.total_money -= (200 // 100) * glam
             st.image(images['beef'])
-            st.write(f"現在{st.session_state.total_niku}g")
+            st.write(f"現在{total_niku}g")
             st.image(images['pork'])
-            st.write(f"現在{st.session_state.total_buta}g")
+            st.write(f"現在{total_buta}g")
             st.image(images['chicken'])
-            st.write(f"現在{st.session_state.total_tori}g")
+            st.write(f"現在{total_tori}g")
             st.image(images['hamburger'])
-            st.write(f"現在{st.session_state.total_aibiki}g")
+            st.write(f"現在{total_aibiki}g")
         elif reizouko == "野菜":
             st.image(images['carrot'])
             st.image(images['potato'])
