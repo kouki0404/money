@@ -395,7 +395,7 @@ def save_total_sugar_to_db(conn, username, total_sugar):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_sugar) VALUES (?, ?)', (username, total_sugar))
     conn.commit()
-def get_total_suger_from_db(conn, username):
+def get_total_sugar_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_sugar FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
@@ -494,7 +494,7 @@ def save_total_butt_to_db(conn, username, total_butt):
     c = conn.cursor()
     c.execute('INSERT OR REPLACE INTO user_data (username, total_butt) VALUES (?, ?)', (username, total_butt))
     conn.commit()
-def get_total_jaga_from_db(conn, username):
+def get_total_butt_from_db(conn, username):
     c = conn.cursor()
     c.execute('SELECT total_butt FROM user_data WHERE username = ?', (username,))
     result = c.fetchone()
