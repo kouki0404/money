@@ -79,8 +79,16 @@ elif 9 <= st.session_state.month <= 11:
 elif st.session_state.month == 12 or st.session_state.month in (1, 2):
     month_serrect = "12~2"
 
+# 基本的な金額設定
+mens_money = 3000 + st.session_state.energy
+mens_total = 61000
+womans_total = 47000
+
 # セッション状態の初期化
-initialize_session_state()
+def initialize_session_state():
+    if 'counter' not in st.session_state:
+        st.session_state.counter = 0
+
 # DB接続
 conn = sqlite3.connect('user_data.db')
 # パスワードをハッシュ化する関数
