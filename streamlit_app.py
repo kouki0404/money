@@ -261,7 +261,11 @@ def main():
 
             st.session_state.current_dish += 1
             if st.session_state.current_dish < 9:
-                    st.session_state.current_question_data = st.session_state.selected_questions.iloc[st.session_state.current_question]
+                    if "selected_questions" not in st.session_state:
+                      st.session_state.selected_questions = pd.DataFrame()  # 空のデータフレームで初期化
+
+                    if "current_question" not in st.session_state:
+                      st.session_state.current_question = 0  # 初期値を設定
                     options = list(st.session_state.selected_dishes['料理名'].sample(3))
                     options.append(st.session_state.current_question_data['料理名'])
                     np.random.shuffle(options)
