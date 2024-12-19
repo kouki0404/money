@@ -268,7 +268,14 @@ def main():
                       st.session_state.current_question = 0  # 初期値を設定
                     if 'selected_dishes' not in st.session_state:
                       st.session_state.selected_dishes = pd.DataFrame()  # 空のDataFrameで初期化
+                    if "selected_dishes" not in st.session_state:
+                      st.session_state.selected_dishes = pd.DataFrame(columns=["料理名"])  # 必要な列を初期化
+
+                    if len(st.session_state.selected_dishes) >= 3:
                       options = list(st.session_state.selected_dishes['料理名'].sample(3))
+                      st.write("Options:", options)
+                    else:
+                      st.error("選択可能な料理が不足しています。")
                     options.append(st.session_state.current_question_data['料理名'])
                     np.random.shuffle(options)
                     st.session_state.options = options
