@@ -9,6 +9,7 @@ import hashlib
 import os
 import plotly.express as px
 
+options = []
 # 画像をロードする関数
 def load_images():
     images = {
@@ -271,11 +272,10 @@ def main():
                     if "selected_dishes" not in st.session_state:
                       st.session_state.selected_dishes = pd.DataFrame(columns=["料理名"])  # 必要な列を初期化
 
-                    if len(st.session_state.selected_dishes) >= 3:
-                      options = list(st.session_state.selected_dishes['料理名'].sample(3))
-                      st.write("Options:", options)
+                    if "current_question_data" in st.session_state and '料理名' in st.session_state.current_question_data:
+                      options.append(st.session_state.current_question_data['料理名'])
                     else:
-                      st.error("選択可能な料理が不足しています。")
+                      st.error("current_question_dataが未定義、または料理名が存在しません。")
                     options.append(st.session_state.current_question_data['料理名'])
                     np.random.shuffle(options)
                     st.session_state.options = options
