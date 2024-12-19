@@ -267,7 +267,7 @@ def main():
                     np.random.shuffle(options)
                     st.session_state.options = options
                     st.session_state.answer = None
-                else:
+            else:
                     st.session_state.finished = True
             if 'test_started' in st.session_state and not st.session_state.finished:
                 ryouri_name = ['']
