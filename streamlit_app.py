@@ -120,7 +120,11 @@ def create_user_table(conn):
     c = conn.cursor()
     # ユーザー情報を格納するテーブル
     c.execute('CREATE TABLE IF NOT EXISTS userstable(username TEXT PRIMARY KEY, password TEXT)')
-    c.execute('CREATE TABLE IF NOT EXISTS grahu_data()')
+    c.execute('CREATE TABLE IF NOT EXISTS user_score(username TEXT PRIMARY KEY, score INTEGER)')
+def delete_all_users(conn, username):
+    c = conn.cursor()
+    c.execute('DELETE FROM user_score WHERE username = ?', (username,))
+    conn.commit()
 
 # ユーザーをデータベースに追加する関数
 def add_user(conn, username, password):
@@ -162,9 +166,21 @@ def login_user(conn, username, password):
     if user and check_hashes(password, user[1]):
         return user
     return None
-def save_user_score(conn, username):
+def save_user_score(conn, username, score):
     c = conn.cursor()
-
+    
+    # ユーザーがすでに存在しているか確認
+    c.execute('SELECT username FROM user_score WHERE username = ?', (username,))
+    existing_user = c.fetchone()
+    
+    if existing_user:
+        # すでにユーザーが存在する場合、スコアを更新
+        c.execute('UPDATE user_score SET score = ? WHERE username = ?', (score, username))
+    else:
+        # ユーザーが存在しない場合、新しいユーザーのスコアを挿入
+        c.execute('INSERT INTO user_score(username, score) VALUES (?, ?)', (username, score))
+    
+    conn.commit()
 def load_data():
     # Excelファイルを読み込む
     df = pd.read_excel("Nextday.xlsx", header=0)
@@ -242,20 +258,6 @@ def main():
             days_total = st.session_state.days//3 + 1
             st.write(f"{st.session_state.month}月 {days_total}日 {youbi}曜日{times[st.session_state.days_zone]}")
             st.write(f"残金: {st.session_state.total_money} 円")  # 修正: remaining_balance を直接mens_totalとして表示
-            selected_dishes = filtered_words_df.sample(4).reset_index(drop=True)
-            st.session_state.update({
-                'selected_dishes': selected_dishes,
-                'total_dishes': len(selected_dishes),
-                'current_dish_data': selected_dishes.iloc[0],
-            })
-            options = list(st.session_state.current_dish_data['材料'])
-
-            np.random.shuffle(options)
-            st.session_state.options = options
-            st.session_state.dish = None
-            def update_dish(dish):
-                correct_dish = st.session_state.current_dish_data['料理名']
-                dish_value = st.session_state.current_dish_data['値段']
 
                 st.session_state.current_dish += 1
                 if st.session_state.current_dish < 9:
