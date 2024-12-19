@@ -259,8 +259,8 @@ def main():
             st.write(f"{st.session_state.month}月 {days_total}日 {youbi}曜日{times[st.session_state.days_zone]}")
             st.write(f"残金: {st.session_state.total_money} 円")  # 修正: remaining_balance を直接mens_totalとして表示
 
-                st.session_state.current_dish += 1
-                if st.session_state.current_dish < 9:
+            st.session_state.current_dish += 1
+            if st.session_state.current_dish < 9:
                     st.session_state.current_question_data = st.session_state.selected_questions.iloc[st.session_state.current_question]
                     options = list(st.session_state.selected_dishes['料理名'].sample(3))
                     options.append(st.session_state.current_question_data['料理名'])
