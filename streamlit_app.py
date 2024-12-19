@@ -266,7 +266,8 @@ def main():
 
                     if "current_question" not in st.session_state:
                       st.session_state.current_question = 0  # 初期値を設定
-                    if len(st.session_state.selected_dishes) >= 3:
+                    if 'selected_dishes' not in st.session_state:
+                      st.session_state.selected_dishes = pd.DataFrame()  # 空のDataFrameで初期化
                       options = list(st.session_state.selected_dishes['料理名'].sample(3))
                     options.append(st.session_state.current_question_data['料理名'])
                     np.random.shuffle(options)
