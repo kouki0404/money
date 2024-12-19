@@ -9,7 +9,6 @@ import hashlib
 import os
 import plotly.express as px
 
-options = []
 # 画像をロードする関数
 def load_images():
     images = {
@@ -276,7 +275,19 @@ def main():
                       options.append(st.session_state.current_question_data['料理名'])
                     else:
                       st.error("current_question_dataが未定義、または料理名が存在しません。")
-                    options.append(st.session_state.current_question_data['料理名'])
+                    # セッションステートの初期化
+                    if "current_question_data" not in st.session_state:
+                      st.session_state.current_question_data = {}  # 必要に応じて初期値を設定
+
+# options を初期化
+                    options = []
+
+# current_question_data が設定されているか確認
+                    if "料理名" in st.session_state.current_question_data:
+                      options.append(st.session_state.current_question_data['料理名'])
+                    else:
+                      st.error("current_question_data に料理名が含まれていません。")
+
                     np.random.shuffle(options)
                     st.session_state.options = options
                     st.session_state.answer = None
