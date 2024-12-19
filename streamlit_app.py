@@ -246,62 +246,59 @@ def main():
 
 
         selected_item = st.sidebar.selectbox("基本値段", item_date)
-        if choose == "メイン画面" and reizouko == "ホーム":
-            st.session_state.update({
-                'test_started': True,
-                'correct_dish': 0,
-                'current_dish': 0,
-                'finished': False,
-                'wrong_answers': [],
-            })
-            times = ["朝","昼","夜"]
-            days_total = st.session_state.days//3 + 1
-            st.write(f"{st.session_state.month}月 {days_total}日 {youbi}曜日{times[st.session_state.days_zone]}")
-            st.write(f"残金: {st.session_state.total_money} 円")  # 修正: remaining_balance を直接mens_totalとして表示
+if choose == "メイン画面" and reizouko == "ホーム":
+    st.session_state.update({
+        'test_started': True,
+        'correct_dish': 0,
+        'current_dish': 0,
+        'finished': False,
+        'wrong_answers': [],
+    })
+    times = ["朝", "昼", "夜"]
+    days_total = st.session_state.days // 3 + 1
+    st.write(f"{st.session_state.month}月 {days_total}日 {youbi}曜日{times[st.session_state.days_zone]}")
+    st.write(f"残金: {st.session_state.total_money} 円")
 
-            st.session_state.current_dish += 1
-            if st.session_state.current_dish < 9:
-                    if "selected_questions" not in st.session_state:
-                      st.session_state.selected_questions = pd.DataFrame()  # 空のデータフレームで初期化
+    st.session_state.current_dish += 1
+    if st.session_state.current_dish < 9:
+        if "selected_questions" not in st.session_state:
+            st.session_state.selected_questions = pd.DataFrame()  # 空のデータフレームで初期化
 
-                    if "current_question" not in st.session_state:
-                      st.session_state.current_question = 0  # 初期値を設定
-                    if 'selected_dishes' not in st.session_state:
-                      st.session_state.selected_dishes = pd.DataFrame()  # 空のDataFrameで初期化
-                    if "selected_dishes" not in st.session_state:
-                      st.session_state.selected_dishes = pd.DataFrame(columns=["料理名"])  # 必要な列を初期化
+        if "current_question" not in st.session_state:
+            st.session_state.current_question = 0  # 初期値を設定
+        if 'selected_dishes' not in st.session_state:
+            st.session_state.selected_dishes = pd.DataFrame()  # 空のDataFrameで初期化
+        if "selected_dishes" not in st.session_state:
+            st.session_state.selected_dishes = pd.DataFrame(columns=["料理名"])  # 必要な列を初期化
 
-                    if "current_question_data" in st.session_state and '料理名' in st.session_state.current_question_data:
-                      options.append(st.session_state.current_question_data['料理名'])
-                    else:
-                      st.error("current_question_dataが未定義、または料理名が存在しません。")
-                    # セッションステートの初期化
-                    if "current_question_data" not in st.session_state:
-                      st.session_state.current_question_data = {}  # 必要に応じて初期値を設定
+        # 料理名を選ぶセレクトボックスを追加
+        dish_names = ["料理1", "料理2", "料理3"]  # ダミー料理名を追加
+        selected_dish = st.selectbox("料理を選んでください", dish_names)
 
-# options を初期化
-                    options = []
+        # 料理名が選ばれたら、それをセッションに保存
+        if selected_dish:
+            st.session_state.current_dish_data = {'料理名': selected_dish}
+        
+        # 選択された料理名を表示
+        if 'current_dish_data' in st.session_state and '料理名' in st.session_state.current_dish_data:
+            st.subheader(f"選ばれた料理: {st.session_state.current_dish_data['料理名']}")
+        else:
+            st.subheader("料理が選択されていません。")
 
-# current_question_data が設定されているか確認
-                    if "料理名" in st.session_state.current_question_data:
-                      options.append(st.session_state.current_question_data['料理名'])
-                    else:
-                      st.error("current_question_data に料理名が含まれていません。")
-
-                    np.random.shuffle(options)
-                    st.session_state.options = options
-                    st.session_state.answer = None
-            else:
-                    st.session_state.finished = True
-            if 'test_started' in st.session_state and not st.session_state.finished:
+        np.random.shuffle(options)
+        st.session_state.options = options
+        st.session_state.answer = None
+    else:
+        st.session_state.finished = True
+        if 'test_started' in st.session_state and not st.session_state.finished:
                 ryouri_name = ['']
                 st.subheader(f"料理")
                 st.subheader(f"{st.session_state.current_dish_data['料理名']}")
 
-            else:
+        else:
                 if 'test_started' in st.session_state and st.session_state.finished:
                     display_results()    
-            if st.button("決定"):
+        if st.button("決定"):
                 st.session_state.days += 1
                 st.session_state.days_zone += 1
                 if st.session_state.days_zone == 2:
