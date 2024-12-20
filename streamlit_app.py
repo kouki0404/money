@@ -9,43 +9,42 @@ import os
 
 # 画像をロードする関数
 def load_images():
-    # 各食材や調味料に対応する画像をロード
     images = {
-        '牛肉': Image.open('牛肉.png'),
-        '豚肉': Image.open('豚肉.png'),
-        '鶏肉': Image.open('鶏肉.png'),
-        '合いびき肉': Image.open('合いびき肉.png'),
-        '人参': Image.open('人参.png'),
-        'じゃがいも': Image.open('じゃがいも.png'),
-        '玉ねぎ': Image.open('玉ねぎ.png'),
-        'キャベツ': Image.open('キャベツ.png'),
-        'レタス': Image.open('レタス.png'),
-        'トマト': Image.open('トマト.png'),
-        'きゅうり': Image.open('きゅうり.png'),
-        'しいたけ': Image.open('しいたけ.png'),
-        'ごぼう': Image.open('ごぼう.png'),
-        'ブロッコリー': Image.open('ブロッコリー.png'),
-        'ネギ': Image.open('ネギ.png'),
-        'ニラ': Image.open('ニラ.png'),
-        'にんにく': Image.open('にんにく.png'),
-        'ピーマン': Image.open('ピーマン.png'),
-        '生姜': Image.open('生姜.png'),
-        'グリーンピース': Image.open('グリーンピース.png'),
-        '筍': Image.open('筍.png'),
-        '塩': Image.open("塩.png"),
-        '砂糖': Image.open("砂糖.png"),
-        '醤油': Image.open("醤油.png"),
-        'みそ': Image.open("みそ.png"),
-        'サラダ油': Image.open("サラダ油.png"),
-        '米': Image.open("米.png"),
-        '卵': Image.open("卵.png"),
-        'さば': Image.open("さば.png"),
-        'そば': Image.open("そば.png"),
-        'パスタ': Image.open("パスタ.png"),
-        'バター': Image.open("バター.png"),
-        'ベーコン': Image.open("ベーコン.png"),
-        '海老': Image.open("海老.png"),
-        '豆腐': Image.open("豆腐.png")
+        'beef': Image.open('牛肉.png'),#niku
+        'pork': Image.open('豚肉.png'),#buta
+        'chicken': Image.open('鶏肉.png'),#tori
+        'hamburger': Image.open('合いびき肉.png'),#aibiki
+        'carrot': Image.open('人参.png'),#ninnjinn
+        'potato': Image.open('じゃがいも.png'),#jaga
+        'onion': Image.open('玉ねぎ.png'),#tama
+        'cabbage': Image.open('キャベツ.png'),#cabb
+        'lettuce': Image.open('レタス.png'),
+        'tomato': Image.open('トマト.png'),
+        'cucumber': Image.open('きゅうり.png'),
+        'shiitake': Image.open('しいたけ.png'),
+        'gobo': Image.open('ごぼう.png'),
+        'broccoli': Image.open('ブロッコリー.png'),
+        'green_onion': Image.open('ネギ.png'),
+        'nira': Image.open('ニラ.png'),
+        'garlic': Image.open('にんにく.png'),
+        'green_pepper': Image.open('ピーマン.png'),
+        'ginger': Image.open('生姜.png'),
+        'green_peas': Image.open('グリーンピース.png'),
+        'bamboo_shoot': Image.open('筍.png'),
+        'salt': Image.open("塩.png"),
+        'sugar': Image.open("砂糖.png"),
+        'soy_sauce': Image.open("醤油.png"),
+        'miso': Image.open("みそ.png"),
+        'salad_oil': Image.open("サラダ油.png"),
+        'rice': Image.open("米.png"),
+        'egg': Image.open("卵.png"),
+        'saba': Image.open("さば.png"),
+        'soba': Image.open("そば.png"),
+        'pasta': Image.open("パスタ.png"),
+        'butter': Image.open("バター.png"),
+        'bacon': Image.open("ベーコン.png"),
+        'shrimp': Image.open("海老.png"),
+        'tofu': Image.open("豆腐.png")
     }
     return images
 
@@ -375,13 +374,13 @@ def main():
                 else:
                     total_aibiki += glam 
                     st.session_state.total_money -= (200 // 100) * glam
-            st.image(images['牛肉'])
+            st.image(images['beaf'])
             st.write(f"現在{total_niku}g")
-            st.image(images['豚肉'])
+            st.image(images['pork'])
             st.write(f"現在{total_buta}g")
-            st.image(images['鶏肉'])
+            st.image(images['chiken'])
             st.write(f"現在{total_tori}g")
-            st.image(images['合いびき肉'])
+            st.image(images['humburger'])
             st.write(f"現在{total_aibiki}g")
         elif reizouko == "野菜":
             st.image(images['carrot'])
