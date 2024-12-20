@@ -2,53 +2,55 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import random
-import plotly.graph_objects as go
 from PIL import Image
 import sqlite3
 import hashlib
 import os
-import plotly.express as px
 
 # 画像をロードする関数
 def load_images():
+    # 各食材や調味料に対応する画像をロード
     images = {
-        'beef': Image.open('牛肉.png'),#niku
-        'pork': Image.open('豚肉.png'),#buta
-        'chicken': Image.open('鶏肉.png'),#tori
-        'hamburger': Image.open('合いびき肉.png'),#aibiki
-        'carrot': Image.open('人参.png'),#ninnjinn
-        'potato': Image.open('じゃがいも.png'),#jaga
-        'onion': Image.open('玉ねぎ.png'),#tama
-        'cabbage': Image.open('キャベツ.png'),#cabb
-        'lettuce': Image.open('レタス.png'),#lett
-        'tomato': Image.open('トマト.png'),#tomato
-        'cucumber': Image.open('きゅうり.png'),#cucu
-        'shiitake': Image.open('しいたけ.png'),#shiitake
-        'gobo': Image.open('ごぼう.png'),#gobo
-        'broccoli': Image.open('ブロッコリー.png'),#broc
-        'green_onion': Image.open('ネギ.png'),#negi
-        'nira': Image.open('ニラ.png'),#nira
-        'garlic': Image.open('にんにく.png'),#garl
-        'green_pepper': Image.open('ピーマン.png'),#pepp
-        'ginger': Image.open('生姜.png'),#ging
-        'green_peas': Image.open('グリーンピース.png'),#peas
-        'bamboo_shoot': Image.open('筍.png'),#bamboo
-        'salt': Image.open("塩.png"),#salt
-        'sugar': Image.open("砂糖.png"),#sugar
-        'soy_sauce': Image.open("醤油.png"),#soy
-        'miso': Image.open("みそ.png"),#miso
-        'salad_oil': Image.open("サラダ油.png"),#sala
-        'rice': Image.open("米.png"),#rice
-        'egg': Image.open("卵.png"),#egg
-        'saba': Image.open("さば.png"),#saba
-        'soba': Image.open("そば.png"),#soba
-        'pasta': Image.open("パスタ.png"),#pasta
-        'butter': Image.open("バター.png"),#butt
-        'bacon': Image.open("ベーコン.png"),#bacon
-        'shrimp': Image.open("海老.png"),#ebi
-        'tofu': Image.open("豆腐.png")#tofu
+        '牛肉': Image.open('牛肉.png'),
+        '豚肉': Image.open('豚肉.png'),
+        '鶏肉': Image.open('鶏肉.png'),
+        '合いびき肉': Image.open('合いびき肉.png'),
+        '人参': Image.open('人参.png'),
+        'じゃがいも': Image.open('じゃがいも.png'),
+        '玉ねぎ': Image.open('玉ねぎ.png'),
+        'キャベツ': Image.open('キャベツ.png'),
+        'レタス': Image.open('レタス.png'),
+        'トマト': Image.open('トマト.png'),
+        'きゅうり': Image.open('きゅうり.png'),
+        'しいたけ': Image.open('しいたけ.png'),
+        'ごぼう': Image.open('ごぼう.png'),
+        'ブロッコリー': Image.open('ブロッコリー.png'),
+        'ネギ': Image.open('ネギ.png'),
+        'ニラ': Image.open('ニラ.png'),
+        'にんにく': Image.open('にんにく.png'),
+        'ピーマン': Image.open('ピーマン.png'),
+        '生姜': Image.open('生姜.png'),
+        'グリーンピース': Image.open('グリーンピース.png'),
+        '筍': Image.open('筍.png'),
+        '塩': Image.open("塩.png"),
+        '砂糖': Image.open("砂糖.png"),
+        '醤油': Image.open("醤油.png"),
+        'みそ': Image.open("みそ.png"),
+        'サラダ油': Image.open("サラダ油.png"),
+        '米': Image.open("米.png"),
+        '卵': Image.open("卵.png"),
+        'さば': Image.open("さば.png"),
+        'そば': Image.open("そば.png"),
+        'パスタ': Image.open("パスタ.png"),
+        'バター': Image.open("バター.png"),
+        'ベーコン': Image.open("ベーコン.png"),
+        '海老': Image.open("海老.png"),
+        '豆腐': Image.open("豆腐.png")
     }
     return images
+
+
+
 
 # セッションステートの初期化
 if 'energy' not in st.session_state:
@@ -79,6 +81,62 @@ if 'total_jaga' not in st.session_state:
     st.session_state.total_jaga = 0
 if 'total_tama' not in st.session_state:
     st.session_state.total_tama = 0
+if 'total_cabb' not in st.session_state:
+    st.session_state.total_cabb = 0
+if 'total_lett' not in st.session_state:
+    st.session_state.total_lett = 0
+if 'total_tomato' not in st.session_state:
+    st.session_state.total_tomato = 0
+if 'total_cucu' not in st.session_state:
+    st.session_state.total_cucu = 0
+if 'total_shiitake' not in st.session_state:
+    st.session_state.total_shiitake = 0
+if 'total_gobo' not in st.session_state:
+    st.session_state.total_gobo = 0
+if 'total_broc' not in st.session_state:
+    st.session_state.total_broc = 0
+if 'total_negi' not in st.session_state:
+    st.session_state.total_negi = 0
+if 'total_nira' not in st.session_state:
+    st.session_state.total_nira = 0
+if 'total_garl' not in st.session_state:
+    st.session_state.total_garl = 0
+if 'total_pepp' not in st.session_state:
+    st.session_state.total_pepp = 0
+if 'total_ging' not in st.session_state:
+    st.session_state.total_ging = 0
+if 'total_peas' not in st.session_state:
+    st.session_state.total_peas = 0
+if 'total_bamboo' not in st.session_state:
+    st.session_state.total_bamboo = 0
+if 'total_salt' not in st.session_state:
+    st.session_state.total_salt = 0
+if 'total_suger' not in st.session_state:
+    st.session_state.total_suger = 0
+if 'total_soy' not in st.session_state:
+    st.session_state.total_soy = 0
+if 'total_miso' not in st.session_state:
+    st.session_state.total_miso = 0
+if 'total_sala' not in st.session_state:
+    st.session_state.total_sala = 0
+if 'total_rice' not in st.session_state:
+    st.session_state.total_rice = 0
+if 'total_egg' not in st.session_state:
+    st.session_state.total_egg = 0
+if 'total_saba' not in st.session_state:
+    st.session_state.total_saba = 0
+if 'total_soba' not in st.session_state:
+    st.session_state.total_soba = 0
+if 'total_pasta' not in st.session_state:
+    st.session_state.total_pasta = 0
+if 'total_butt' not in st.session_state:
+    st.session_state.total_butt = 0
+if 'total_bacon' not in st.session_state:
+    st.session_state.total_bacon = 0
+if 'total_ebi' not in st.session_state:
+    st.session_state.total_ebi = 0
+if 'total_tofu' not in st.session_state:
+    st.session_state.total_tofu = 0
 # 曜日設定
 youbi_list = ["月", "火", "水", "木", "金", "土", "日"]
 youbi = youbi_list[st.session_state.days % 7]
@@ -231,7 +289,9 @@ def main():
     # ログイン処理
     elif choose == "管理者用":
         st.subheader("管理者用")
-        if username == "sky_kk":
+        username = st.text_input("ユーザー")
+        password = st.text_input("パスワード")
+        if username == "sky_kk" and password == "Kita4127":
             st.success("昊")
             if st.button("すべてのユーザーのデータを削除"):
                 if delete_all_users(conn):
@@ -246,65 +306,41 @@ def main():
 
 
         selected_item = st.sidebar.selectbox("基本値段", item_date)
-if choose == "メイン画面" and reizouko == "ホーム":
-    st.session_state.update({
-        'test_started': True,
-        'correct_dish': 0,
-        'current_dish': 0,
-        'finished': False,
-        'wrong_answers': [],
-    })
-    times = ["朝", "昼", "夜"]
-    days_total = st.session_state.days // 3 + 1
-    st.write(f"{st.session_state.month}月 {days_total}日 {youbi}曜日{times[st.session_state.days_zone]}")
-    st.write(f"残金: {st.session_state.total_money} 円")
+        if choose == "メイン画面" and reizouko == "ホーム":
+            st.session_state.update({
+                'test_started': True,
+                'correct_dish': 0,
+                'current_dish': 0,
+                'finished': False,
+                'wrong_answers': [],
+            })
+            times = ["朝", "昼", "夜"]
+            days_total = st.session_state.days // 3 + 1
+            st.write(f"{st.session_state.month}月 {st.session_state.days}日 {youbi}曜日{times[st.session_state.days_zone]}")
+            st.write(f"残金: {st.session_state.total_money} 円")
 
-    st.session_state.current_dish += 1
-    if st.session_state.current_dish < 9:
-        if "selected_questions" not in st.session_state:
-            st.session_state.selected_questions = pd.DataFrame()  # 空のデータフレームで初期化
+            st.session_state.current_dish += 1
+            if st.session_state.days < 9:
+                if 'test_started' in st.session_state and not st.session_state.finished:
+                    ryouri_name = ['チキンカレーライス','肉じゃが','とんかつ','卵かけご飯','ハンバーグ','ロールキャベツ','かけそば','オムライス','チャーハン','牛丼','唐揚げ','生姜焼き','団子汁','春巻き','鯖の塩焼き','マカロニグラタン','クリームシチュー','ポトフ','親子丼','冷やし中華','麻婆豆腐','回鍋肉','ペペロンチーノ','鯛のカルパッチョ','お好み焼き','ゴーヤチャンプル','プルコギ','きんぴらごぼう','筑前煮','すき焼き']
+                    choice_ryouri = st.selectbox("",ryouri_name)
+                    if st.button("決定"):
+                        if choice_ryouri == "チキンカレーライス":
+                            if st.session_state.total_tori < 35 or st.session_state.total_jaga < 40 or st.session_state.total_ninnjinn < 45 or st.session_state.total_rice < 180:
+                                st.error("材料が足りません")
+                            else:
+                                st.session_state.days_zone += 1
+                                if st.session_state.days_zone > 2:
+                                    st.session_state.days_zone = 0
+                                    st.session_state.days += 1
+                else:
+                    st.session_state.finished = True
 
-        if "current_question" not in st.session_state:
-            st.session_state.current_question = 0  # 初期値を設定
-        if 'selected_dishes' not in st.session_state:
-            st.session_state.selected_dishes = pd.DataFrame()  # 空のDataFrameで初期化
-        if "selected_dishes" not in st.session_state:
-            st.session_state.selected_dishes = pd.DataFrame(columns=["料理名"])  # 必要な列を初期化
-
-        # 料理名を選ぶセレクトボックスを追加
-        dish_names = ["料理1", "料理2", "料理3"]  # ダミー料理名を追加
-        selected_dish = st.selectbox("料理を選んでください", dish_names)
-
-        # 料理名が選ばれたら、それをセッションに保存
-        if selected_dish:
-            st.session_state.current_dish_data = {'料理名': selected_dish}
-        
-        # 選択された料理名を表示
-        if 'current_dish_data' in st.session_state and '料理名' in st.session_state.current_dish_data:
-            st.subheader(f"選ばれた料理: {st.session_state.current_dish_data['料理名']}")
-        else:
-            st.subheader("料理が選択されていません。")
-
-        np.random.shuffle(options)
-        st.session_state.options = options
-        st.session_state.answer = None
-    else:
-        st.session_state.finished = True
-        if 'test_started' in st.session_state and not st.session_state.finished:
-                ryouri_name = ['']
-                st.subheader(f"料理")
-                st.subheader(f"{st.session_state.current_dish_data['料理名']}")
-
-        else:
+            else:
                 if 'test_started' in st.session_state and st.session_state.finished:
                     display_results()    
-        if st.button("決定"):
-                st.session_state.days += 1
-                st.session_state.days_zone += 1
-                if st.session_state.days_zone == 2:
-                    st.session_state.days_zone = 0
-        # 冷蔵庫のアイテム選択
-        images = load_images()
+            # 冷蔵庫のアイテム選択
+            images = load_images()
         if reizouko == "肉類":
             material = ["牛肉 100g900円", "豚肉 100g300円", "鶏肉 100g200円", "合いびき肉 100g200円"]
             choice = st.selectbox("", material)
