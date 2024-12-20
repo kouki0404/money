@@ -328,10 +328,28 @@ def main():
                             if st.session_state.total_tori < 35 or st.session_state.total_jaga < 40 or st.session_state.total_ninnjinn < 45 or st.session_state.total_rice < 180:
                                 st.error("材料が足りません")
                             else:
+                                st.session_state.total_tori -= 35
+                                st.session_state.total_jaga -= 40
+                                st.session_state.total_ninnjinn -= 45
+                                st.session_state.total_rice -= 180
                                 st.session_state.days_zone += 1
                                 if st.session_state.days_zone > 2:
                                     st.session_state.days_zone = 0
                                     st.session_state.days += 1
+                        elif choice_ryouri == "肉じゃが":
+                            if st.session_state.total_jaga < 70 or st.session_state.total_niku < 22 or st.session_state.total_tama < 22:
+                                st.error("材料が足りません")
+                            else:
+                                st.session_state.total_jaga -= 70
+                                st.session_state.total_niku -= 22
+                                st.session_state.total_tama -= 22
+                                st.session_state.days_zone += 1
+                                if st.session_state.days_zone > 2:
+                                    st.session_state.days_zone = 0
+                                    st.session_state.days += 1
+                        elif choice_ryouri == "とんかつ":
+                            if st.session_state.total_buta < 100 or st.session_state.total_egg < 1 or st.session_state.total_sala < 13:
+                                st.error("材料が足りません")
                 else:
                     st.session_state.finished = True
 
@@ -357,13 +375,13 @@ def main():
                 else:
                     total_aibiki += glam 
                     st.session_state.total_money -= (200 // 100) * glam
-            st.image(images['beef'])
+            st.image(images['牛肉'])
             st.write(f"現在{total_niku}g")
-            st.image(images['pork'])
+            st.image(images['豚肉'])
             st.write(f"現在{total_buta}g")
-            st.image(images['chicken'])
+            st.image(images['鶏肉'])
             st.write(f"現在{total_tori}g")
-            st.image(images['hamburger'])
+            st.image(images['合いびき肉'])
             st.write(f"現在{total_aibiki}g")
         elif reizouko == "野菜":
             st.image(images['carrot'])
@@ -384,7 +402,7 @@ def main():
             st.image(images['salad_oil'])
         elif reizouko == "その他":
             st.image(images['rice'])
-            st.image(images['egg'])
+            st.image(images['egg'])#10個入りパック
             st.image(images['saba'])
             st.image(images['soba'])
             st.image(images['pasta'])
