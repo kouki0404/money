@@ -246,7 +246,6 @@ def load_data():
     return df
 # データを読み込む
 words_df = load_data()
-print("Columns in words_df:", words_df.columns)
 
 # 読み込まれた列数が予想通りか確認
 expected_columns = ['No.', '材料', '料理名', '値段', 'タンパク質', '脂質', '炭水化物', '無機質', 'ビタミン']
