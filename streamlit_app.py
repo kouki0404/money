@@ -409,7 +409,7 @@ def main():
             st.image(images['bacon'])
 
 def display_results():
-    #スコアリング方法　金額//100+1000*栄養観点
+    #スコアリング方法　金額//100+1000-(6-摂取した回数)*30
     correct_answers = st.session_state.correct_answers
     total_questions = st.session_state.total_questions
     wrong_answers = [wa for wa in st.session_state.wrong_answers if wa[0] in st.session_state.selected_questions['No.'].values]
