@@ -9,47 +9,44 @@ import os
 
 # 画像をロードする関数
 def load_images():
-    images = [
-        'beef'== Image.open('牛肉.png'),#niku
-        'pork'== Image.open('豚肉.png'),#buta
-        'chicken'== Image.open('鶏肉.png'),#tori
-        'hamburger'== Image.open('合いびき肉.png'),#aibiki
-        'carrot'== Image.open('人参.png'),#ninnjinn
-        'potato'== Image.open('じゃがいも.png'),#jaga
-        'onion'== Image.open('玉ねぎ.png'),#tama
-        'cabbage'== Image.open('キャベツ.png'),#cabb
-        'lettuce'== Image.open('レタス.png'),
-        'tomato'== Image.open('トマト.png'),
-        'cucumber'== Image.open('きゅうり.png'),
-        'shiitake'== Image.open('しいたけ.png'),
-        'gobo'== Image.open('ごぼう.png'),
-        'broccoli'== Image.open('ブロッコリー.png'),
-        'green_onion'== Image.open('ネギ.png'),
-        'nira'== Image.open('ニラ.png'),
-        'garlic'== Image.open('にんにく.png'),
-        'green_pepper'== Image.open('ピーマン.png'),
-        'ginger'== Image.open('生姜.png'),
-        'green_peas'== Image.open('グリーンピース.png'),
-        'bamboo_shoot'== Image.open('筍.png'),
-        'salt'== Image.open("塩.png"),
-        'sugar'== Image.open("砂糖.png"),
-        'soy_sauce'== Image.open("醤油.png"),
-        'miso'== Image.open("みそ.png"),
-        'salad_oil'== Image.open("サラダ油.png"),
-        'rice'== Image.open("米.png"),
-        'egg'== Image.open("卵.png"),
-        'saba'== Image.open("さば.png"),
-        'soba'== Image.open("そば.png"),
-        'pasta'== Image.open("パスタ.png"),
-        'butter'== Image.open("バター.png"),
-        'bacon'== Image.open("ベーコン.png"),
-        'shrimp'== Image.open("海老.png"),
-        'tofu'== Image.open("豆腐.png")
-    ]
+    images = {
+        'beef': Image.open('牛肉.png'),
+        'pork': Image.open('豚肉.png'),
+        'chicken': Image.open('鶏肉.png'),
+        'hamburger': Image.open('合いびき肉.png'),
+        'carrot': Image.open('人参.png'),
+        'potato': Image.open('じゃがいも.png'),
+        'onion': Image.open('玉ねぎ.png'),
+        'cabbage': Image.open('キャベツ.png'),
+        'lettuce': Image.open('レタス.png'),
+        'tomato': Image.open('トマト.png'),
+        'cucumber': Image.open('きゅうり.png'),
+        'shiitake': Image.open('しいたけ.png'),
+        'gobo': Image.open('ごぼう.png'),
+        'broccoli': Image.open('ブロッコリー.png'),
+        'green_onion': Image.open('ネギ.png'),
+        'nira': Image.open('ニラ.png'),
+        'garlic': Image.open('にんにく.png'),
+        'green_pepper': Image.open('ピーマン.png'),
+        'ginger': Image.open('生姜.png'),
+        'green_peas': Image.open('グリーンピース.png'),
+        'bamboo_shoot': Image.open('筍.png'),
+        'salt': Image.open("塩.png"),
+        'sugar': Image.open("砂糖.png"),
+        'soy_sauce': Image.open("醤油.png"),
+        'miso': Image.open("みそ.png"),
+        'salad_oil': Image.open("サラダ油.png"),
+        'rice': Image.open("米.png"),
+        'egg': Image.open("卵.png"),
+        'saba': Image.open("さば.png"),
+        'soba': Image.open("そば.png"),
+        'pasta': Image.open("パスタ.png"),
+        'butter': Image.open("バター.png"),
+        'bacon': Image.open("ベーコン.png"),
+        'shrimp': Image.open("海老.png"),
+        'tofu': Image.open("豆腐.png")
+    }
     return images
-
-
-
 
 # セッションステートの初期化
 if 'energy' not in st.session_state:
